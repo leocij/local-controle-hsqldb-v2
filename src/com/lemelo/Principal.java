@@ -1,6 +1,6 @@
 package com.lemelo;
 
-import com.lemelo.entrada.EntradaGridPane;
+import com.lemelo.entrada.EntradaNode;
 import com.lemelo.util.FabricaConexao;
 import javafx.application.Application;
 import javafx.geometry.Side;
@@ -12,9 +12,10 @@ import javafx.stage.Stage;
 
 public class Principal extends Application {
     public static void main(String[] args) throws ClassNotFoundException {
-        launch(args);
         Class.forName("org.hsqldb.jdbcDriver");
         new FabricaConexao().createTables();
+
+        launch(args);
     }
 
     @Override
@@ -27,17 +28,39 @@ public class Principal extends Application {
         entradaTab.setText("Entrada de Valores");
         entradaTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
         entradaTab.setClosable(false);
-        entradaTab.setContent(new EntradaGridPane().executar());
+        entradaTab.setContent(new EntradaNode().executar());
         tabPane.getTabs().add(entradaTab);
 
         Tab saidaTab = new Tab();
         saidaTab.setText("Saída de Valores");
         saidaTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        saidaTab.setClosable(false);
         saidaTab.setContent(null);
         tabPane.getTabs().add(saidaTab);
 
-        Scene scene = new Scene(tabPane, 640, 480, Color.GRAY);
+        Tab parcelamentoTab = new Tab();
+        parcelamentoTab.setText("Parcelamento");
+        parcelamentoTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        parcelamentoTab.setClosable(false);
+        parcelamentoTab.setContent(null);
+        tabPane.getTabs().add(parcelamentoTab);
 
+        Tab fixaTab = new Tab();
+        fixaTab.setText("Fixa");
+        fixaTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        fixaTab.setClosable(false);
+        fixaTab.setContent(null);
+        tabPane.getTabs().add(fixaTab);
+
+        Tab ganhoTab = new Tab();
+        ganhoTab.setText("Ganhos");
+        ganhoTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        ganhoTab.setClosable(false);
+        ganhoTab.setContent(null);
+        tabPane.getTabs().add(ganhoTab);
+
+        Scene scene = new Scene(tabPane, 628, 480, Color.GRAY);
+        primaryStage.setMinWidth(628);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Controle local de gastos");
 

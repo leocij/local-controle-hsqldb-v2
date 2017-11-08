@@ -5,6 +5,9 @@ public class Entrada {
     private String dataHora;
     private String descricao;
     private String valor;
+    private String ultimaEdicao;
+
+    //@Atenção: Não transformar os métodos abaixo em PRIVATE.
 
     public Integer getId() {
         return id;
@@ -38,13 +41,19 @@ public class Entrada {
         this.valor = valor;
     }
 
+    public String getUltimaEdicao() {
+        return ultimaEdicao;
+    }
+
+    public void setUltimaEdicao(String ultimaEdicao) {
+        this.ultimaEdicao = ultimaEdicao;
+    }
+
     @Override
     public String toString() {
-        return "Entrada{" +
-                "id=" + id +
-                ", dataHora='" + dataHora + '\'' +
-                ", descricao='" + descricao + '\'' +
-                ", valor='" + valor + '\'' +
-                '}';
+        return "Dt./Hr.: " + dataHora +
+                "\nDescrição: " + descricao +
+                "\nValor: " + valor +
+                "\nÚltima edição: " + ultimaEdicao;
     }
 }
