@@ -1,6 +1,7 @@
 package com.lemelo;
 
 import com.lemelo.entrada.EntradaNode;
+import com.lemelo.saida.SaidaNode;
 import com.lemelo.util.FabricaConexao;
 import javafx.application.Application;
 import javafx.geometry.Side;
@@ -28,14 +29,16 @@ public class Principal extends Application {
         entradaTab.setText("Entrada de Valores");
         entradaTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
         entradaTab.setClosable(false);
-        entradaTab.setContent(new EntradaNode().executar());
+        entradaTab.setContent(new EntradaNode().executar(entradaTab));
         tabPane.getTabs().add(entradaTab);
+
+
 
         Tab saidaTab = new Tab();
         saidaTab.setText("Saída de Valores");
         saidaTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
         saidaTab.setClosable(false);
-        saidaTab.setContent(null);
+        saidaTab.setContent(new SaidaNode().executar(saidaTab));
         tabPane.getTabs().add(saidaTab);
 
         Tab parcelamentoTab = new Tab();
@@ -61,10 +64,11 @@ public class Principal extends Application {
 
         Scene scene = new Scene(tabPane, 628, 480, Color.GRAY);
         primaryStage.setMinWidth(628);
+        primaryStage.setMinHeight(480);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Controle local de gastos");
 
-        //primaryStage.setMaximized(true);
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 }

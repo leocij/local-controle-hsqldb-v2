@@ -8,9 +8,10 @@ public class FabricaConexao {
         Connection connection = null;
         Statement statement = null;
         try {
-             connection = DriverManager.getConnection("jdbc:hsqldb:file:~/local_controle_hsqldb/banco","SA","");
+             connection = DriverManager.getConnection(new BibliotecaString().urlBanco(),"SA","");
              statement = connection.createStatement();
-            statement.executeUpdate("create table if not exists entrada (id integer identity primary key, data_hora varchar(20), descricao varchar(100), valor varchar(30), ultima_edicao varchar(20))");
+            statement.executeUpdate(new BibliotecaString().createEntradaTable());
+            statement.executeUpdate(new BibliotecaString().createSaidaTable());
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
@@ -29,7 +30,7 @@ public class FabricaConexao {
         Statement statement = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:hsqldb:file:~/local_controle_hsqldb/banco","SA","");
+            connection = DriverManager.getConnection(new BibliotecaString().urlBanco(),"SA","");
             statement = connection.createStatement();
             statement.executeQuery(sqlInsert);
         } catch (SQLException e) {
@@ -49,7 +50,7 @@ public class FabricaConexao {
         Connection connection = null;
         Statement statement = null;
         try {
-            connection = DriverManager.getConnection("jdbc:hsqldb:file:~/local_controle_hsqldb/banco","SA","");
+            connection = DriverManager.getConnection(new BibliotecaString().urlBanco(),"SA","");
             statement = connection.createStatement();
             return statement.executeQuery(sqlSelect);
         } catch (SQLException e) {
@@ -71,7 +72,7 @@ public class FabricaConexao {
         Statement statement = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:hsqldb:file:~/local_controle_hsqldb/banco","SA","");
+            connection = DriverManager.getConnection(new BibliotecaString().urlBanco(),"SA","");
             statement = connection.createStatement();
             statement.executeQuery(sqlDelete);
         } catch (SQLException e) {
@@ -92,7 +93,7 @@ public class FabricaConexao {
         Statement statement = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:hsqldb:file:~/local_controle_hsqldb/banco","SA","");
+            connection = DriverManager.getConnection(new BibliotecaString().urlBanco(),"SA","");
             statement = connection.createStatement();
             statement.executeQuery(sqlUpdate);
         } catch (SQLException e) {

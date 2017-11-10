@@ -1,4 +1,4 @@
-package com.lemelo.entrada;
+package com.lemelo.saida;
 
 import com.lemelo.util.Flag;
 import javafx.application.Platform;
@@ -12,20 +12,20 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
-import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class EntradaNode {
-    private Integer idEditar;
-    private String ultimaEdicaoEditar;
+public class SaidaNode {
+
     private Flag flag;
+    private String ultimaEdicaoEditar;
+    private Integer idEditar;
 
-    public Node executar(Tab entradaTab) throws SQLException {
+    public Node executar(Tab saidaTab) throws SQLException {
 
-        Text tituloLabel = new Text("\nEntrada de Valores");
+        Text tituloLabel = new Text("\nSaída de Valores");
         tituloLabel.setStyle("-fx-font: normal bold 17px 'verdana' ");
 
         GridPane gridPane = new GridPane();
@@ -33,7 +33,6 @@ public class EntradaNode {
         gridPane.setVgap(5);
         gridPane.setHgap(5);
         gridPane.setAlignment(Pos.TOP_LEFT);
-
 
         Text dataHoraLabel = new Text("Dt/Hr: ");
         TextField dataHoraTextField = new TextField();
@@ -50,9 +49,9 @@ public class EntradaNode {
         gridPane.add(descricaoLabel, 0, 1);
         gridPane.add(descricaoTextField, 1, 1);
 
-        entradaTab.setOnSelectionChanged(e->{
-            if (entradaTab.isSelected() == true) {
-                Platform.runLater(()->descricaoTextField.requestFocus());
+        saidaTab.setOnSelectionChanged(e->{
+            if (saidaTab.isSelected()) {
+                Platform.runLater(descricaoTextField::requestFocus);
             }
         });
 
@@ -66,26 +65,29 @@ public class EntradaNode {
         salvarButton.setStyle("-fx-font: normal bold 15px 'verdana' ");
         gridPane.add(salvarButton, 1, 3);
 
-        TableView<Entrada> tableView = new TableView<>();
+        Text avisoLabel = new Text("Dê dois cliques na linha da tabela para Editar ou Excluir um registro.");
+        avisoLabel.setStyle("-fx-font: normal 15px 'verdana' ");
 
-        TableColumn<Entrada, String> dataHoraColuna = new TableColumn<>("Dt./Hr.");
+        TableView<Saida> tableView = new TableView<>();
+
+        TableColumn<Saida, String> dataHoraColuna = new TableColumn<>("Dt./Hr.");
         dataHoraColuna.setMinWidth(100);
         dataHoraColuna.setMaxWidth(100);
         dataHoraColuna.setCellValueFactory(new PropertyValueFactory<>("dataHora"));
 
-        TableColumn<Entrada, String> descricaoColuna = new TableColumn<>("Descrição");
+        TableColumn<Saida, String> descricaoColuna = new TableColumn<>("Descrição");
         descricaoColuna.setCellValueFactory(new PropertyValueFactory<>("descricao"));
 
-        TableColumn<Entrada, String> valorColuna = new TableColumn<>("Valor");
+        TableColumn<Saida, String> valorColuna = new TableColumn<>("Valor");
         valorColuna.setCellValueFactory(new PropertyValueFactory<>("valor"));
 
-        TableColumn<Entrada, String> ultimaEdicaoColuna = new TableColumn<>("Última edição");
+        TableColumn<Saida, String> ultimaEdicaoColuna = new TableColumn<>("Última edição");
         ultimaEdicaoColuna.setMinWidth(100);
         ultimaEdicaoColuna.setCellValueFactory(new PropertyValueFactory<>("ultimaEdicao"));
 
-        EntradaDao entradaDao = new EntradaDao();
+        SaidaDao saidaDao = new SaidaDao();
 
-        entradaTableView(entradaDao, tableView, dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
+        saidaTableView(saidaDao, tableView, dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
 
         salvarButton.defaultButtonProperty().bind(salvarButton.focusedProperty());
 
@@ -94,20 +96,20 @@ public class EntradaNode {
             String descricaoStr = descricaoTextField.getText();
             String valorStr = valorTextField.getText();
 
-            Entrada entrada = new Entrada();
-            entrada.setDataHora(dataHoraStr);
-            entrada.setDescricao(descricaoStr);
-            entrada.setValor(valorStr);
-            entrada.setUltimaEdicao("-");
+            Saida saida = new Saida();
+            saida.setDataHora(dataHoraStr);
+            saida.setDescricao(descricaoStr);
+            saida.setValor(valorStr);
+            saida.setUltimaEdicao("-");
 
             try {
                 if (flag == Flag.EDITAR) {
                     SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
                     ultimaEdicaoEditar = sdf3.format(Calendar.getInstance().getTime());
-                    entradaDao.update(entrada, idEditar, ultimaEdicaoEditar);
+                    saidaDao.update(saida, ultimaEdicaoEditar, idEditar);
                     flag = null;
                 } else {
-                    entradaDao.insert(entrada);
+                    saidaDao.insert(saida);
                 }
                 SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
                 dataHoraTextField.setText(sdf2.format(Calendar.getInstance().getTime()));
@@ -117,7 +119,7 @@ public class EntradaNode {
 
                 valorTextField.setText("");
 
-                entradaTableView(entradaDao, tableView, dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
+                saidaTableView(saidaDao, tableView, dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -126,7 +128,7 @@ public class EntradaNode {
         tableView.setOnMousePressed(event -> {
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
 
-                Entrada entrada = tableView.getSelectionModel().getSelectedItem();
+                Saida saida = tableView.getSelectionModel().getSelectedItem();
 
                 Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
 
@@ -134,29 +136,29 @@ public class EntradaNode {
                 ButtonType excluirButtonType = new ButtonType("Excluir");
                 ButtonType cancelarButtonType = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-                alert1.setHeaderText("O que deseja fazer com?\n\n" + entrada.toString());
+                alert1.setHeaderText("O que deseja fazer com?\n\n" + saida.toString());
                 alert1.getButtonTypes().setAll(editarButtonType, excluirButtonType, cancelarButtonType);
                 alert1.showAndWait().ifPresent(escolha1 -> {
                     if (escolha1 == editarButtonType) {
                         flag = Flag.EDITAR;
-                        idEditar = entrada.getId();
-                        dataHoraTextField.setText(entrada.getDataHora());
-                        descricaoTextField.setText(entrada.getDescricao());
-                        valorTextField.setText(entrada.getValor());
-                        ultimaEdicaoEditar = entrada.getUltimaEdicao();
+                        idEditar = saida.getId();
+                        dataHoraTextField.setText(saida.getDataHora());
+                        descricaoTextField.setText(saida.getDescricao());
+                        valorTextField.setText(saida.getValor());
+                        ultimaEdicaoEditar = saida.getUltimaEdicao();
                     } else if (escolha1 == excluirButtonType) {
                         Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
 
                         ButtonType simButtonType = new ButtonType("Sim");
                         ButtonType naoButtonType = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-                        alert2.setHeaderText("Deseja realmente excluir?\n\n" + entrada.toString());
+                        alert2.setHeaderText("Deseja realmente excluir?\n\n" + saida.toString());
                         alert2.getButtonTypes().setAll(simButtonType, naoButtonType);
                         alert2.showAndWait().ifPresent(escolha2 -> {
                             if (escolha2 == simButtonType) {
-                                entradaDao.apagar(entrada.getId());
+                                saidaDao.apagar(saida.getId());
                                 try {
-                                    entradaTableView(entradaDao, tableView, dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
+                                    saidaTableView(saidaDao, tableView, dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
                                 } catch (SQLException e) {
                                     e.printStackTrace();
                                 }
@@ -166,10 +168,7 @@ public class EntradaNode {
                 });
             }
         });
-
-        Text avisoLabel = new Text("Dê dois cliques na linha da tabela para Editar ou Excluir um registro.");
-        avisoLabel.setStyle("-fx-font: normal 15px 'verdana' ");
-
+        
         VBox vBox = new VBox(10);
         vBox.setPadding(new Insets(0, 2, 0, 2));
         vBox.getChildren().addAll(tituloLabel, gridPane, avisoLabel, tableView);
@@ -177,11 +176,10 @@ public class EntradaNode {
         return vBox;
     }
 
-    private void entradaTableView(EntradaDao entradaDao, TableView<Entrada> tableView, TableColumn dataHoraColuna, TableColumn descricaoColuna, TableColumn valorColuna, TableColumn ultimaEdicaoColuna) throws SQLException {
-        ObservableList<Entrada> list = entradaDao.listAll();
+    private void saidaTableView(SaidaDao saidaDao, TableView<Saida> tableView, TableColumn dataHoraColuna, TableColumn descricaoColuna, TableColumn valorColuna, TableColumn ultimaEdicaoColuna) throws SQLException {
+        ObservableList<Saida> list = saidaDao.listAll();
         tableView.getColumns().clear();
         tableView.setItems(list);
         tableView.getColumns().addAll(dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
     }
-
 }
