@@ -3,6 +3,7 @@ package com.lemelo;
 import com.lemelo.entrada.EntradaNode;
 import com.lemelo.saida.SaidaNode;
 import com.lemelo.util.FabricaConexao;
+import com.lemelo.util.SaldoResumoNode;
 import javafx.application.Application;
 import javafx.geometry.Side;
 import javafx.scene.Scene;
@@ -32,8 +33,6 @@ public class Principal extends Application {
         entradaTab.setContent(new EntradaNode().executar(entradaTab));
         tabPane.getTabs().add(entradaTab);
 
-
-
         Tab saidaTab = new Tab();
         saidaTab.setText("Saída de Valores");
         saidaTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
@@ -62,13 +61,22 @@ public class Principal extends Application {
         ganhoTab.setContent(null);
         tabPane.getTabs().add(ganhoTab);
 
-        Scene scene = new Scene(tabPane, 628, 480, Color.GRAY);
-        primaryStage.setMinWidth(628);
-        primaryStage.setMinHeight(480);
+        Tab saldoResumoTab = new Tab();
+        saldoResumoTab.setText("Saldo e Resumo");
+        saldoResumoTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        saldoResumoTab.setClosable(false);
+        saldoResumoTab.setContent(new SaldoResumoNode().executar(saldoResumoTab));
+        tabPane.getTabs().add(saldoResumoTab);
+
+        Integer WIDTH_TAM = 763;
+        Integer HEIGHT_TAM = 680;
+        Scene scene = new Scene(tabPane, WIDTH_TAM, HEIGHT_TAM, Color.GRAY);
+        primaryStage.setMinWidth(WIDTH_TAM);
+        primaryStage.setMinHeight(HEIGHT_TAM);
         primaryStage.setScene(scene);
         primaryStage.setTitle("Controle local de gastos");
 
-        primaryStage.setMaximized(true);
+        //primaryStage.setMaximized(true);
         primaryStage.show();
     }
 }

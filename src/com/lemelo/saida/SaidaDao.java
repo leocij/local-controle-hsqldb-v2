@@ -19,7 +19,7 @@ public class SaidaDao {
         new FabricaConexao().insert(saidaSqlInsert);
     }
 
-    ObservableList<Saida> listAll() throws SQLException {
+    public ObservableList<Saida> listAll() throws SQLException {
         ObservableList<Saida> saidas = FXCollections.observableArrayList();
         String saidaSqlSelect = "select * from saida order by id desc";
         ResultSet resultSet = new FabricaConexao().getResultSet(saidaSqlSelect);

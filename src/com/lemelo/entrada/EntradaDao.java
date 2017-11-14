@@ -7,7 +7,7 @@ import javafx.collections.ObservableList;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-class EntradaDao {
+public class EntradaDao {
     void insert(Entrada entrada) throws SQLException {
         String dataHoraStr = entrada.getDataHora();
         String descricaoStr = entrada.getDescricao();
@@ -18,7 +18,7 @@ class EntradaDao {
         new FabricaConexao().insert(entradaSqlInsert);
     }
 
-    ObservableList<Entrada> listAll() throws SQLException {
+    public ObservableList<Entrada> listAll() throws SQLException {
         ObservableList<Entrada> entradas = FXCollections.observableArrayList();
         String entradaSqlSelect = "select * from entrada order by id desc";
         ResultSet resultSet = new FabricaConexao().getResultSet(entradaSqlSelect);
