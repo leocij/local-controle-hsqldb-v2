@@ -7,14 +7,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3964637d-e7cf-4860-9139-eb470604e409" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/db.lck" afterPath="$PROJECT_DIR$/database/db.lck" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/util/SaldoResumoNode.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/util/SaldoResumoNode.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/db.log" afterPath="$PROJECT_DIR$/database/db.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/db.properties" afterPath="$PROJECT_DIR$/database/db.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/db.script" afterPath="$PROJECT_DIR$/database/db.script" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local-controle-hsqldb-v2.iml" afterPath="$PROJECT_DIR$/local-controle-hsqldb-v2.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lemelo/util/SaldoResumoNode.java" afterPath="$PROJECT_DIR$/src/com/lemelo/util/SaldoResumoNode.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -353,6 +347,14 @@
       <option name="presentableId" value="Default" />
       <updated>1510073562394</updated>
     </task>
+    <task id="LOCAL-00001" summary="Coloquei o jar o hsqldb no projeto e atualizei a tela do saldo.">
+      <created>1510863920767</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1510863920767</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -388,6 +390,10 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Coloquei o jar o hsqldb no projeto e atualizei a tela do saldo." />
+    <option name="LAST_COMMIT_MESSAGE" value="Coloquei o jar o hsqldb no projeto e atualizei a tela do saldo." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
