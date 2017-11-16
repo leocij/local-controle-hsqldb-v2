@@ -74,17 +74,23 @@ public class SaldoResumoNode{
         dataAtualTextField.setEditable(false);
         gridPane.add(dataAtualTextField, 0, 1);
 
-        Text saldoLabel = new Text("Saldo: ");
-        saldoLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
-        gridPane.add(saldoLabel, 0, 2);
-        TextField saldoTextField = new TextField();
-        gridPane.add(saldoTextField,0,3);
+        Text saldoPassadoLabel = new Text("Saldo mês passado: ");
+        saldoPassadoLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        gridPane.add(saldoPassadoLabel, 0, 2);
+        TextField saldoPassadoTextField = new TextField();
+        gridPane.add(saldoPassadoTextField,0,3);
+
+        Text saldoAtualLabel = new Text("Saldo mês atual: ");
+        saldoAtualLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        gridPane.add(saldoAtualLabel, 1, 2);
+        TextField saldoAtualTextField = new TextField();
+        gridPane.add(saldoAtualTextField, 1, 3);
 
         Text ganhoRealLabel = new Text("Ganho real: ");
         ganhoRealLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
-        gridPane.add(ganhoRealLabel, 1, 2);
+        gridPane.add(ganhoRealLabel, 2,2);
         TextField ganhoRealTextField = new TextField();
-        gridPane.add(ganhoRealTextField, 1, 3);
+        gridPane.add(ganhoRealTextField,2, 3);
 
         return gridPane;
     }

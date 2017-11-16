@@ -1,18 +1,12 @@
-/*C7*/SET SCHEMA PUBLIC
+/*C17*/SET SCHEMA PUBLIC
 create table if not exists entrada (id integer identity primary key, data_hora varchar(20), descricao varchar(100), valor varchar(30), ultima_edicao varchar(20))
 create table if not exists saida (id integer identity primary key, data_hora varchar(20), descricao varchar(100), valor varchar(30), ultima_edicao varchar(20))
 DISCONNECT
-/*C8*/SET SCHEMA PUBLIC
+/*C18*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C9*/SET SCHEMA PUBLIC
+/*C19*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C10*/SET SCHEMA PUBLIC
+/*C20*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C11*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C12*/SET SCHEMA PUBLIC
-INSERT INTO SAIDA VALUES(10,'14/11/2017 21:19','teste 11','R$ 11,00','-')
-COMMIT
-DISCONNECT
-/*C13*/SET SCHEMA PUBLIC
+/*C21*/SET SCHEMA PUBLIC
 DISCONNECT

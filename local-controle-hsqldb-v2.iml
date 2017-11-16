@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" inherit-compiler-output="true">
+  <component name="NewModuleRootManager">
+    <output url="file://$MODULE_DIR$/out/production/local-controle-hsqldb-v2" />
+    <output-test url="file://$MODULE_DIR$/out/test/local-controle-hsqldb-v2" />
     <exclude-output />
     <content url="file://$MODULE_DIR$">
       <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
@@ -11,6 +13,15 @@
       <library>
         <CLASSES>
           <root url="jar://$USER_HOME$/Downloads/hsqldb-2.4.0/hsqldb-2.4.0/hsqldb/lib/hsqldb.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/hsqldb_jar/hsqldb.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
