@@ -174,12 +174,15 @@ public class EntradaNode {
                     flag = null;
                 } else {
                     //Atualiza total da entrada
-                    String mesAno = dataHoraStr.substring(3,10);
+
 
                     SaldoLogica saldoLogica = new SaldoLogica();
-                    saldoLogica.calcularEntrada(mesAno, valorStr);
+                    saldoLogica.calcularEntrada(dataHoraStr, valorStr);
+
                     SaldoResumoNode saldoResumoNode = new SaldoResumoNode();
+                    String mesAno = dataHoraStr.substring(3,10);
                     saldoResumoNode.atualizaTotalEntrada(mesAno);
+
                     entradaDao.insert(entrada);
                 }
 

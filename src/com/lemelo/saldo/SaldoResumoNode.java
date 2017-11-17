@@ -224,6 +224,7 @@ public class SaldoResumoNode{
     }
 
     public void atualizaTotalEntrada(String mesAno) throws SQLException, ParseException {
+
         SaldoLogica saldoLogica = new SaldoLogica();
         String totalEntradaStr = saldoLogica.buscaTotalEntrada(mesAno);
         Platform.runLater(()->totalEntradaTextField.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(new BigDecimal(totalEntradaStr))));

@@ -1,5 +1,6 @@
 /*C12*/SET SCHEMA PUBLIC
-create table if not exists saldo (id integer identity primary key, data varchar(20), total_entrada varchar(30), total_saida varchar(30), saldo varchar(30))
+create table if not exists total_entrada (id integer identity primary key, data varchar(20), valor varchar(30))
+create table if not exists saldo (id integer identity primary key, data varchar(20), saldo varchar(30))
 create table if not exists entrada (id integer identity primary key, data_hora varchar(20), descricao varchar(100), valor varchar(30), ultima_edicao varchar(20))
 create table if not exists saida (id integer identity primary key, data_hora varchar(20), descricao varchar(100), valor varchar(30), ultima_edicao varchar(20))
 DISCONNECT
@@ -14,13 +15,14 @@ DISCONNECT
 /*C17*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C18*/SET SCHEMA PUBLIC
-INSERT INTO SALDO VALUES(5,NULL,'R$ 6,00',NULL,NULL)
+DELETE FROM TOTAL_ENTRADA WHERE ID=2
+INSERT INTO TOTAL_ENTRADA VALUES(2,'17/11/2017','R$ 40,00')
 COMMIT
 DISCONNECT
 /*C19*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C20*/SET SCHEMA PUBLIC
-INSERT INTO ENTRADA VALUES(5,'17/11/2017 01:18','teste 6','R$ 6,00','-')
+INSERT INTO ENTRADA VALUES(10,'17/11/2017 10:12','teste 11','R$ 11,00','-')
 COMMIT
 DISCONNECT
 /*C21*/SET SCHEMA PUBLIC

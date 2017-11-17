@@ -12,7 +12,7 @@ public class BibliotecaString {
     }
 
     public String createSaldoTable() {
-        return "create table if not exists saldo (id integer identity primary key, data varchar(20), total_entrada varchar(30), total_saida varchar(30), saldo varchar(30))";
+        return "create table if not exists saldo (id integer identity primary key, data varchar(20), saldo varchar(30))";
     }
 
     public String createEntradaTable() {
@@ -29,5 +29,9 @@ public class BibliotecaString {
 
     public String saidaSqlUpdate(Saida saida, String ultimaEdicaoEditar, Integer idEditar) {
         return "update saida set data_hora = '" + saida.getDataHora() + "', descricao = '" + saida.getDescricao() + "', valor = '" + saida.getValor() + "', ultima_edicao = '" + ultimaEdicaoEditar + "' where id = " + idEditar;
+    }
+
+    public String createTotalEntradaTable() {
+        return "create table if not exists total_entrada (id integer identity primary key, data varchar(20), valor varchar(30))";
     }
 }
