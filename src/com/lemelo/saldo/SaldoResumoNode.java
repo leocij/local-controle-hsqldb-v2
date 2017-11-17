@@ -29,6 +29,8 @@ import java.util.Locale;
 public class SaldoResumoNode{
 
     private TextField totalEntradaTextField;
+    private TextField totalSaidaTextField;
+    private TextField saldoAtualTextField;
 
     public Node executar(Tab saldoResumoTab) throws SQLException, ParseException {
 
@@ -50,6 +52,26 @@ public class SaldoResumoNode{
                 }
                 String finalTotalEntradaStr = totalEntradaStr;
                 Platform.runLater(()->totalEntradaTextField.setText(finalTotalEntradaStr));
+
+                String totalSaidaStr = null;
+                try {
+                    totalSaidaStr = saldoLogica.buscaTotalSaida(mesAno);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+                String finalTotalSaidaStr = totalSaidaStr;
+                Platform.runLater(()->totalSaidaTextField.setText(finalTotalSaidaStr));
+
+                try {
+                    String totalEntradaNf = NumberFormat.getCurrencyInstance().parse(finalTotalEntradaStr).toString();
+                    BigDecimal totalEntradaBdc = new BigDecimal(totalEntradaNf);
+                    String totalSaidaNf = NumberFormat.getCurrencyInstance().parse(finalTotalSaidaStr).toString();
+                    BigDecimal totalSaidaBdc = new BigDecimal(totalSaidaNf);
+                    BigDecimal saldoMensalAtual = totalEntradaBdc.subtract(totalSaidaBdc);
+                    Platform.runLater(()->saldoAtualTextField.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(saldoMensalAtual)));
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
 
@@ -110,7 +132,7 @@ public class SaldoResumoNode{
         Text totalSaidaLabel = new Text("Total da Saída: ");
         totalSaidaLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
         gridPane.add(totalSaidaLabel,1,2);
-        TextField totalSaidaTextField = new TextField();
+        totalSaidaTextField = new TextField();
         gridPane.add(totalSaidaTextField,1,3);
 
         Text saldoPassadoLabel = new Text("Saldo mês passado: ");
@@ -122,7 +144,7 @@ public class SaldoResumoNode{
         Text saldoAtualLabel = new Text("Saldo mês atual: ");
         saldoAtualLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
         gridPane.add(saldoAtualLabel, 1, 4);
-        TextField saldoAtualTextField = new TextField();
+        saldoAtualTextField = new TextField();
         gridPane.add(saldoAtualTextField, 1, 5);
 
         Text ganhoRealLabel = new Text("Ganho real: ");

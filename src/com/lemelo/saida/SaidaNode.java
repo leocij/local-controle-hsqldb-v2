@@ -182,6 +182,8 @@ public class SaidaNode {
                 saidaTableView(saidaDao, tableView, dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
             } catch (SQLException e) {
                 e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
         });
 

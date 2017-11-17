@@ -20,7 +20,6 @@ public class SaldoLogica {
         String totalEntradaStr = totalEntradaDao.buscaTotalEntrada(mesAno);
 
         if(totalEntradaStr.equals("")) {
-            //TODO inserir data
             totalEntradaDao.insertTotalEntrada(dataStr, valorStr);
         } else {
             String totalEntradaNf = NumberFormat.getCurrencyInstance().parse(totalEntradaStr).toString();
@@ -45,10 +44,27 @@ public class SaldoLogica {
         return totalEntradaStr;
     }
 
-    public void calcularSaida(String dataHoraStr, String valorStr) {
+    public void calcularSaida(String dataHoraStr, String valorStr) throws SQLException, ParseException {
         String mesAno = dataHoraStr.substring(3,10);
         String dataStr = dataHoraStr.substring(0,10);
         TotalSaidaDao totalSaidaDao = new TotalSaidaDao();
+        String totalSaidaStr = totalSaidaDao.buscaTotalSaida(mesAno);
+        if(totalSaidaStr.equals("")) {
+            totalSaidaDao.insertTotalSaida(dataStr, valorStr);
+        } else {
+            String totalSaidaNf = NumberFormat.getCurrencyInstance().parse(totalSaidaStr).toString();
+            BigDecimal totalSaidaBdc = new BigDecimal(totalSaidaNf);
+            String valorNf = NumberFormat.getCurrencyInstance().parse(valorStr).toString();
+            BigDecimal valorBdc = new BigDecimal(valorNf);
+            totalSaidaBdc = totalSaidaBdc.add(valorBdc);
+            String novoTotalSaidaStr = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(totalSaidaBdc);
+            totalSaidaDao.updateTotalSaida(mesAno, novoTotalSaidaStr);
+        }
+    }
 
+    public String buscaTotalSaida(String mesAno) throws SQLException {
+        TotalSaidaDao totalSaidaDao = new TotalSaidaDao();
+        String totalSaidaStr = totalSaidaDao.buscaTotalSaida(mesAno);
+        return totalSaidaStr;
     }
 }
