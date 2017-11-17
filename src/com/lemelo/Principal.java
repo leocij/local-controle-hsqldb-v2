@@ -26,19 +26,19 @@ public class Principal extends Application {
         TabPane tabPane = new TabPane();
         tabPane.setSide(Side.BOTTOM);
 
-        Tab entradaTab = new Tab();
-        entradaTab.setText("Entrada de Valores");
-        entradaTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
-        entradaTab.setClosable(false);
-        entradaTab.setContent(new EntradaNode().executar(entradaTab));
-        tabPane.getTabs().add(entradaTab);
-
         Tab saidaTab = new Tab();
         saidaTab.setText("Saída de Valores");
         saidaTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
         saidaTab.setClosable(false);
         saidaTab.setContent(new SaidaNode().executar(saidaTab));
         tabPane.getTabs().add(saidaTab);
+
+        Tab entradaTab = new Tab();
+        entradaTab.setText("Entrada de Valores");
+        entradaTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        entradaTab.setClosable(false);
+        entradaTab.setContent(new EntradaNode().executar(entradaTab));
+        tabPane.getTabs().add(entradaTab);
 
         Tab parcelamentoTab = new Tab();
         parcelamentoTab.setText("Parcelamento");

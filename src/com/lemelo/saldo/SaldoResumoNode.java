@@ -34,6 +34,25 @@ public class SaldoResumoNode{
 
         GridPane cabecalhoGridPane = geraCabecalhoGridPane();
 
+        saldoResumoTab.setOnSelectionChanged(e->{
+            if(saldoResumoTab.isSelected()==true) {
+                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+                String dataAtual = sdf1.format(Calendar.getInstance().getTime());
+                String mesAno = dataAtual.substring(3,10);
+                SaldoLogica saldoLogica = new SaldoLogica();
+                String totalEntradaStr = null;
+                try {
+                    totalEntradaStr = saldoLogica.buscaTotalEntrada(mesAno);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
+                String finalTotalEntradaStr = totalEntradaStr;
+                Platform.runLater(()->totalEntradaTextField.setText(finalTotalEntradaStr));
+            }
+        });
+
         TableView<Entrada> entradaTableView = geraEntradaTableView();
         GridPane entradaGridPane = geraEntradaGridPane(entradaTableView);
 
@@ -223,10 +242,4 @@ public class SaldoResumoNode{
         return gridPane;
     }
 
-    public void atualizaTotalEntrada(String mesAno) throws SQLException, ParseException {
-
-        SaldoLogica saldoLogica = new SaldoLogica();
-        String totalEntradaStr = saldoLogica.buscaTotalEntrada(mesAno);
-        Platform.runLater(()->totalEntradaTextField.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(new BigDecimal(totalEntradaStr))));
-    }
 }

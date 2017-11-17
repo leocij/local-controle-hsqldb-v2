@@ -1,29 +1,16 @@
-/*C12*/SET SCHEMA PUBLIC
+/*C7*/SET SCHEMA PUBLIC
 create table if not exists total_entrada (id integer identity primary key, data varchar(20), valor varchar(30))
 create table if not exists saldo (id integer identity primary key, data varchar(20), saldo varchar(30))
 create table if not exists entrada (id integer identity primary key, data_hora varchar(20), descricao varchar(100), valor varchar(30), ultima_edicao varchar(20))
 create table if not exists saida (id integer identity primary key, data_hora varchar(20), descricao varchar(100), valor varchar(30), ultima_edicao varchar(20))
 DISCONNECT
-/*C13*/SET SCHEMA PUBLIC
+/*C8*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C14*/SET SCHEMA PUBLIC
+/*C9*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C15*/SET SCHEMA PUBLIC
+/*C10*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C16*/SET SCHEMA PUBLIC
+/*C11*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C17*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C18*/SET SCHEMA PUBLIC
-DELETE FROM TOTAL_ENTRADA WHERE ID=2
-INSERT INTO TOTAL_ENTRADA VALUES(2,'17/11/2017','R$ 40,00')
-COMMIT
-DISCONNECT
-/*C19*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C20*/SET SCHEMA PUBLIC
-INSERT INTO ENTRADA VALUES(10,'17/11/2017 10:12','teste 11','R$ 11,00','-')
-COMMIT
-DISCONNECT
-/*C21*/SET SCHEMA PUBLIC
+/*C12*/SET SCHEMA PUBLIC
 DISCONNECT

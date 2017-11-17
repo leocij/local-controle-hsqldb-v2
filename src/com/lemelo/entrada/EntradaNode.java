@@ -179,10 +179,6 @@ public class EntradaNode {
                     SaldoLogica saldoLogica = new SaldoLogica();
                     saldoLogica.calcularEntrada(dataHoraStr, valorStr);
 
-                    SaldoResumoNode saldoResumoNode = new SaldoResumoNode();
-                    String mesAno = dataHoraStr.substring(3,10);
-                    saldoResumoNode.atualizaTotalEntrada(mesAno);
-
                     entradaDao.insert(entrada);
                 }
 

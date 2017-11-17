@@ -1,6 +1,7 @@
 package com.lemelo.saldo;
 
 import com.lemelo.entrada.TotalEntradaDao;
+import com.lemelo.saida.TotalSaidaDao;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import java.text.ParseException;
 import java.util.Locale;
 
 public class SaldoLogica {
+
     public void calcularEntrada(String dataHoraStr, String valorStr) throws SQLException, ParseException {
 
         String mesAno = dataHoraStr.substring(3,10);
@@ -41,5 +43,12 @@ public class SaldoLogica {
         String totalEntradaStr = totalEntradaDao.buscaTotalEntrada(mesAno);
 
         return totalEntradaStr;
+    }
+
+    public void calcularSaida(String dataHoraStr, String valorStr) {
+        String mesAno = dataHoraStr.substring(3,10);
+        String dataStr = dataHoraStr.substring(0,10);
+        TotalSaidaDao totalSaidaDao = new TotalSaidaDao();
+
     }
 }

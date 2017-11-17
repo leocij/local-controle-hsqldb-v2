@@ -8,6 +8,7 @@ public class BibliotecaString {
         //java -classpath hsqldb.jar org.hsqldb.util.DatabaseManager
         //Standalone
         //jdbc:hsqldb:file:E:/Leoci/Projetos Intellij/local-controle-hsqldb-v2/database/db
+        //jdbc:hsqldb:file:D:/ProjetosIntellij/local-controle-hsqldb-v2/database/db
         return "jdbc:hsqldb:file:database/db";
     }
 

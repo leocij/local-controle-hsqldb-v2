@@ -1,5 +1,6 @@
 package com.lemelo.saida;
 
+import com.lemelo.saldo.SaldoLogica;
 import com.lemelo.util.Flag;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -168,6 +169,11 @@ public class SaidaNode {
                     saidaDao.update(saida, ultimaEdicaoEditar, idEditar);
                     flag = null;
                 } else {
+
+                    //Atualiza total da saida
+                    SaldoLogica saldoLogica = new SaldoLogica();
+                    saldoLogica.calcularSaida(dataHoraStr, valorStr);
+
                     saidaDao.insert(saida);
                 }
 
