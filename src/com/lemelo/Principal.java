@@ -3,7 +3,7 @@ package com.lemelo;
 import com.lemelo.entrada.EntradaNode;
 import com.lemelo.saida.SaidaNode;
 import com.lemelo.util.FabricaConexao;
-import com.lemelo.util.SaldoResumoNode;
+import com.lemelo.saldo.SaldoResumoNode;
 import javafx.application.Application;
 import javafx.geometry.Side;
 import javafx.scene.Scene;

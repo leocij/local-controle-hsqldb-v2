@@ -1,9 +1,10 @@
-package com.lemelo.util;
+package com.lemelo.saldo;
 
 import com.lemelo.entrada.Entrada;
 import com.lemelo.entrada.EntradaDao;
 import com.lemelo.saida.Saida;
 import com.lemelo.saida.SaidaDao;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -17,14 +18,19 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 public class SaldoResumoNode{
 
-    public Node executar(Tab saldoResumoTab) throws SQLException {
+    private TextField totalEntradaTextField;
+
+    public Node executar(Tab saldoResumoTab) throws SQLException, ParseException {
 
         GridPane cabecalhoGridPane = geraCabecalhoGridPane();
 
@@ -57,7 +63,7 @@ public class SaldoResumoNode{
         return gridPane;
     }
 
-    private GridPane geraCabecalhoGridPane() {
+    private GridPane geraCabecalhoGridPane() throws SQLException, ParseException {
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(5, 2, 0, 2));
         gridPane.setVgap(5);
@@ -65,32 +71,46 @@ public class SaldoResumoNode{
         gridPane.setAlignment(Pos.TOP_LEFT);
 
         Text dataAtualLabel = new Text("Data Atual: ");
-        dataAtualLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        dataAtualLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
         gridPane.add(dataAtualLabel, 0, 0);
         TextField dataAtualTextField = new TextField();
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        dataAtualTextField.setText(sdf1.format(Calendar.getInstance().getTime()));
+        String dataAtualStr = sdf1.format(Calendar.getInstance().getTime());
+        dataAtualTextField.setText(dataAtualStr);
         dataAtualTextField.setFocusTraversable(false);
         dataAtualTextField.setEditable(false);
         gridPane.add(dataAtualTextField, 0, 1);
 
+        Text totalEntradaLabel = new Text("Total da Entrada: ");
+        totalEntradaLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        gridPane.add(totalEntradaLabel,0,2);
+        totalEntradaTextField = new TextField();
+        gridPane.add(totalEntradaTextField,0,3);
+
+
+        Text totalSaidaLabel = new Text("Total da Saída: ");
+        totalSaidaLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        gridPane.add(totalSaidaLabel,1,2);
+        TextField totalSaidaTextField = new TextField();
+        gridPane.add(totalSaidaTextField,1,3);
+
         Text saldoPassadoLabel = new Text("Saldo mês passado: ");
-        saldoPassadoLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
-        gridPane.add(saldoPassadoLabel, 0, 2);
+        saldoPassadoLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        gridPane.add(saldoPassadoLabel, 0, 4);
         TextField saldoPassadoTextField = new TextField();
-        gridPane.add(saldoPassadoTextField,0,3);
+        gridPane.add(saldoPassadoTextField,0,5);
 
         Text saldoAtualLabel = new Text("Saldo mês atual: ");
-        saldoAtualLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
-        gridPane.add(saldoAtualLabel, 1, 2);
+        saldoAtualLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        gridPane.add(saldoAtualLabel, 1, 4);
         TextField saldoAtualTextField = new TextField();
-        gridPane.add(saldoAtualTextField, 1, 3);
+        gridPane.add(saldoAtualTextField, 1, 5);
 
         Text ganhoRealLabel = new Text("Ganho real: ");
-        ganhoRealLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
-        gridPane.add(ganhoRealLabel, 2,2);
+        ganhoRealLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        gridPane.add(ganhoRealLabel, 2,4);
         TextField ganhoRealTextField = new TextField();
-        gridPane.add(ganhoRealTextField,2, 3);
+        gridPane.add(ganhoRealTextField,2, 5);
 
         return gridPane;
     }
@@ -132,13 +152,13 @@ public class SaldoResumoNode{
         gridPane.setAlignment(Pos.TOP_LEFT);
 
         Text entradaBuscarPorDataLabel = new Text("Buscar Entrada por data: ");
-        entradaBuscarPorDataLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        entradaBuscarPorDataLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
         TextField entradaBuscarPorDataTextField = new TextField();
         gridPane.add(entradaBuscarPorDataLabel,0,0);
         gridPane.add(entradaBuscarPorDataTextField,0,1);
 
         Text entradaBuscarPorDescricaoLabel = new Text("Buscar Entrada por descrição: ");
-        entradaBuscarPorDescricaoLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        entradaBuscarPorDescricaoLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
         TextField entradaBuscarPorDescricaoTextField = new TextField();
         entradaBuscarPorDescricaoTextField.setPrefWidth(5000);
         gridPane.add(entradaBuscarPorDescricaoLabel,0,2);
@@ -186,13 +206,13 @@ public class SaldoResumoNode{
         gridPane.setAlignment(Pos.TOP_LEFT);
 
         Text saidaBuscarPorDataLabel = new Text("Buscar Saída por data: ");
-        saidaBuscarPorDataLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        saidaBuscarPorDataLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
         TextField saidaBuscarPorDataTextField = new TextField();
         gridPane.add(saidaBuscarPorDataLabel,0,0);
         gridPane.add(saidaBuscarPorDataTextField,0,1);
 
         Text saidaBuscarPorDescricaoLabel = new Text("Buscar Saída por descrição: ");
-        saidaBuscarPorDescricaoLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        saidaBuscarPorDescricaoLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
         TextField saidaBuscarPorDescricaoTextField = new TextField();
         saidaBuscarPorDescricaoTextField.setPrefWidth(5000);
         gridPane.add(saidaBuscarPorDescricaoLabel,0,2);
@@ -201,5 +221,11 @@ public class SaldoResumoNode{
         gridPane.add(saidaTableView, 0, 5);
 
         return gridPane;
+    }
+
+    public void atualizaTotalEntrada(String mesAno) throws SQLException, ParseException {
+        SaldoLogica saldoLogica = new SaldoLogica();
+        String totalEntradaStr = saldoLogica.buscaTotalEntrada(mesAno);
+        Platform.runLater(()->totalEntradaTextField.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(new BigDecimal(totalEntradaStr))));
     }
 }

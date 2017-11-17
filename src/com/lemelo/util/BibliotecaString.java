@@ -4,7 +4,15 @@ import com.lemelo.saida.Saida;
 
 public class BibliotecaString {
     public String urlBanco() {
+        //Como conectar no banco.
+        //java -classpath hsqldb.jar org.hsqldb.util.DatabaseManager
+        //Standalone
+        //jdbc:hsqldb:file:E:/Leoci/Projetos Intellij/local-controle-hsqldb-v2/database/db
         return "jdbc:hsqldb:file:database/db";
+    }
+
+    public String createSaldoTable() {
+        return "create table if not exists saldo (id integer identity primary key, data varchar(20), total_entrada varchar(30), total_saida varchar(30), saldo varchar(30))";
     }
 
     public String createEntradaTable() {
@@ -16,7 +24,6 @@ public class BibliotecaString {
     }
 
     public String saidaSqlInsert(String dataHoraStr, String descricaoStr, String valorStr, String ultimaEdicaoStr) {
-
         return "insert into saida (data_hora, descricao, valor, ultima_edicao) values ('" + dataHoraStr + "','" + descricaoStr + "','" + valorStr + "', '" + ultimaEdicaoStr + "')";
     }
 

@@ -1,5 +1,7 @@
 package com.lemelo.entrada;
 
+import com.lemelo.saldo.SaldoLogica;
+import com.lemelo.saldo.SaldoResumoNode;
 import com.lemelo.util.Flag;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -171,6 +173,13 @@ public class EntradaNode {
                     entradaDao.update(entrada, idEditar, ultimaEdicaoEditar);
                     flag = null;
                 } else {
+                    //Atualiza total da entrada
+                    String mesAno = dataHoraStr.substring(3,10);
+
+                    SaldoLogica saldoLogica = new SaldoLogica();
+                    saldoLogica.calcularEntrada(mesAno, valorStr);
+                    SaldoResumoNode saldoResumoNode = new SaldoResumoNode();
+                    saldoResumoNode.atualizaTotalEntrada(mesAno);
                     entradaDao.insert(entrada);
                 }
 
@@ -178,6 +187,8 @@ public class EntradaNode {
 
                 entradaTableView(entradaDao, tableView, dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
             } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
         });

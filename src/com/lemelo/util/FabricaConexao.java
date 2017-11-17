@@ -8,8 +8,10 @@ public class FabricaConexao {
         Connection connection = null;
         Statement statement = null;
         try {
-             connection = DriverManager.getConnection(new BibliotecaString().urlBanco(),"SA","");
-             statement = connection.createStatement();
+            connection = DriverManager.getConnection(new BibliotecaString().urlBanco(),"SA","");
+            statement = connection.createStatement();
+
+            statement.executeUpdate(new BibliotecaString().createSaldoTable());
             statement.executeUpdate(new BibliotecaString().createEntradaTable());
             statement.executeUpdate(new BibliotecaString().createSaidaTable());
         } catch (SQLException e) {
