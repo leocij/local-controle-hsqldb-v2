@@ -1,19 +1,23 @@
-/*C27*/SET SCHEMA PUBLIC
+/*C13*/SET SCHEMA PUBLIC
 create table if not exists total_saida (id integer identity primary key, data varchar(20), valor varchar(30))
 create table if not exists total_entrada (id integer identity primary key, data varchar(20), valor varchar(30))
 create table if not exists saldo (id integer identity primary key, data varchar(20), saldo varchar(30))
 create table if not exists entrada (id integer identity primary key, data_hora varchar(20), descricao varchar(100), valor varchar(30), ultima_edicao varchar(20))
 create table if not exists saida (id integer identity primary key, data_hora varchar(20), descricao varchar(100), valor varchar(30), ultima_edicao varchar(20))
 DISCONNECT
-/*C28*/SET SCHEMA PUBLIC
+/*C14*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C29*/SET SCHEMA PUBLIC
+/*C15*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C30*/SET SCHEMA PUBLIC
+/*C16*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C31*/SET SCHEMA PUBLIC
+/*C17*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C32*/SET SCHEMA PUBLIC
+/*C18*/SET SCHEMA PUBLIC
 DISCONNECT
-/*C33*/SET SCHEMA PUBLIC
+/*C19*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C20*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C21*/SET SCHEMA PUBLIC
 DISCONNECT

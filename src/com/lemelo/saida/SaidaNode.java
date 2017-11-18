@@ -268,7 +268,8 @@ public class SaidaNode {
     }
 
     private void saidaTableView(SaidaDao saidaDao, TableView<Saida> tableView, TableColumn dataHoraColuna, TableColumn descricaoColuna, TableColumn valorColuna, TableColumn ultimaEdicaoColuna) throws SQLException {
-        ObservableList<Saida> list = saidaDao.listAll();
+        //ObservableList<Saida> list = saidaDao.listAll();
+        ObservableList<Saida> list = saidaDao.mostraTudoDoMesAtual();
         tableView.getColumns().clear();
         tableView.setItems(list);
         tableView.getColumns().addAll(dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);

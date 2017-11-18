@@ -7,6 +7,9 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class SaidaDao {
     void insert(Saida saida) throws SQLException {
@@ -45,5 +48,27 @@ public class SaidaDao {
     void update(Saida saida, String ultimaEdicaoEditar, Integer idEditar) {
         String saidaSqlUpdate = new BibliotecaString().saidaSqlUpdate(saida,ultimaEdicaoEditar,idEditar);
         new FabricaConexao().update(saidaSqlUpdate);
+    }
+
+    public ObservableList<Saida> mostraTudoDoMesAtual() throws SQLException {
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String dataAtual = sdf1.format(Calendar.getInstance().getTime());
+        String mesAno = dataAtual.substring(3,10);
+
+        ObservableList<Saida> saidas = FXCollections.observableArrayList();
+        String saidaSqlSelect = "select * from saida where data_hora like '%"+mesAno+"%' order by id desc";
+        ResultSet resultSet = new FabricaConexao().getResultSet(saidaSqlSelect);
+        while (resultSet.next()) {
+            Saida saida = new Saida();
+            saida.setId(resultSet.getInt("id"));
+            saida.setDataHora(resultSet.getString("data_hora"));
+            saida.setDescricao(resultSet.getString("descricao"));
+            saida.setValor(resultSet.getString("valor"));
+            saida.setUltimaEdicao(resultSet.getString("ultima_edicao"));
+
+            saidas.add(saida);
+        }
+        resultSet.close();
+        return saidas;
     }
 }

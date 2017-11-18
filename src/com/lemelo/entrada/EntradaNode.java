@@ -1,5 +1,6 @@
 package com.lemelo.entrada;
 
+import com.lemelo.saida.Saida;
 import com.lemelo.saldo.SaldoLogica;
 import com.lemelo.saldo.SaldoResumoNode;
 import com.lemelo.util.Flag;
@@ -277,7 +278,8 @@ public class EntradaNode {
     }
 
     private void entradaTableView(EntradaDao entradaDao, TableView<Entrada> tableView, TableColumn dataHoraColuna, TableColumn descricaoColuna, TableColumn valorColuna, TableColumn ultimaEdicaoColuna) throws SQLException {
-        ObservableList<Entrada> list = entradaDao.listAll();
+        //ObservableList<Entrada> list = entradaDao.listAll();
+        ObservableList<Entrada> list = entradaDao.mostraTudoDoMesAtual();
         tableView.getColumns().clear();
         tableView.setItems(list);
         tableView.getColumns().addAll(dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
