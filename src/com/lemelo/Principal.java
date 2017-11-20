@@ -1,6 +1,7 @@
 package com.lemelo;
 
 import com.lemelo.entrada.EntradaNode;
+import com.lemelo.parcelamento.ParcelamentoNode;
 import com.lemelo.saida.SaidaNode;
 import com.lemelo.util.FabricaConexao;
 import com.lemelo.saldo.SaldoResumoNode;
@@ -44,7 +45,7 @@ public class Principal extends Application {
         parcelamentoTab.setText("Parcelamento");
         parcelamentoTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
         parcelamentoTab.setClosable(false);
-        parcelamentoTab.setContent(null);
+        parcelamentoTab.setContent(new ParcelamentoNode().executar(parcelamentoTab));
         tabPane.getTabs().add(parcelamentoTab);
 
         Tab fixaTab = new Tab();

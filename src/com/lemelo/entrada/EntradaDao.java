@@ -70,4 +70,40 @@ public class EntradaDao {
         resultSet.close();
         return entradas;
     }
+
+    public ObservableList<Entrada> buscaEntradaPorData(String newValue) throws SQLException {
+        ObservableList<Entrada> entradas = FXCollections.observableArrayList();
+        String entradaSqlSelect = "select * from entrada where data_hora like '%"+newValue+"%'";
+        ResultSet resultSet = new FabricaConexao().getResultSet(entradaSqlSelect);
+        while (resultSet.next()) {
+            Entrada entrada = new Entrada();
+            entrada.setId(resultSet.getInt("id"));
+            entrada.setDataHora(resultSet.getString("data_hora"));
+            entrada.setDescricao(resultSet.getString("descricao"));
+            entrada.setValor(resultSet.getString("valor"));
+            entrada.setUltimaEdicao(resultSet.getString("ultima_edicao"));
+
+            entradas.add(entrada);
+        }
+        resultSet.close();
+        return entradas;
+    }
+
+    public ObservableList<Entrada> buscaEntradaPorDescricao(String newValue) throws SQLException {
+        ObservableList<Entrada> entradas = FXCollections.observableArrayList();
+        String entradaSqlSelect = "select * from entrada where descricao like '%"+newValue+"%'";
+        ResultSet resultSet = new FabricaConexao().getResultSet(entradaSqlSelect);
+        while (resultSet.next()) {
+            Entrada entrada = new Entrada();
+            entrada.setId(resultSet.getInt("id"));
+            entrada.setDataHora(resultSet.getString("data_hora"));
+            entrada.setDescricao(resultSet.getString("descricao"));
+            entrada.setValor(resultSet.getString("valor"));
+            entrada.setUltimaEdicao(resultSet.getString("ultima_edicao"));
+
+            entradas.add(entrada);
+        }
+        resultSet.close();
+        return entradas;
+    }
 }

@@ -14,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -31,6 +32,10 @@ public class SaldoResumoNode{
     private TextField totalEntradaTextField;
     private TextField totalSaidaTextField;
     private TextField saldoAtualTextField;
+    private TextField saidaBuscarPorDataTextField;
+    private TextField saidaBuscarPorDescricaoTextField;
+    private TextField entradaBuscarPorDataTextField;
+    private TextField entradaBuscarPorDescricaoTextField;
 
     public Node executar(Tab saldoResumoTab) throws SQLException, ParseException {
 
@@ -75,11 +80,13 @@ public class SaldoResumoNode{
             }
         });
 
-        TableView<Entrada> entradaTableView = geraEntradaTableView();
-        GridPane entradaGridPane = geraEntradaGridPane(entradaTableView);
+
 
         TableView<Saida> saidaTableView = geraSaidaTableView();
         GridPane saidaGridPane = geraSaidaGridPane(saidaTableView);
+
+        TableView<Entrada> entradaTableView = geraEntradaTableView();
+        GridPane entradaGridPane = geraEntradaGridPane(entradaTableView);
 
         GridPane principalGridPane = geraPrincipalGridPane(cabecalhoGridPane, entradaGridPane, saidaGridPane);
 
@@ -98,8 +105,8 @@ public class SaldoResumoNode{
         gridPane.setAlignment(Pos.TOP_LEFT);
 
         gridPane.add(cabecalhoGridPane, 0, 0);
-        gridPane.add(entradaGridPane, 0, 1);
-        gridPane.add(saidaGridPane, 0, 2);
+        gridPane.add(saidaGridPane, 0, 1);
+        gridPane.add(entradaGridPane, 0, 2);
 
         return gridPane;
     }
@@ -128,7 +135,6 @@ public class SaldoResumoNode{
         totalEntradaTextField = new TextField();
         gridPane.add(totalEntradaTextField,0,3);
 
-
         Text totalSaidaLabel = new Text("Total da Saída: ");
         totalSaidaLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
         gridPane.add(totalSaidaLabel,1,2);
@@ -156,60 +162,6 @@ public class SaldoResumoNode{
         return gridPane;
     }
 
-    private TableView<Entrada> geraEntradaTableView() throws SQLException {
-
-        TableColumn<Entrada, String> dataHoraColuna = new TableColumn<>("Dt./Hr.");
-        dataHoraColuna.setMinWidth(100);
-        dataHoraColuna.setMaxWidth(100);
-        dataHoraColuna.setCellValueFactory(new PropertyValueFactory<>("dataHora"));
-
-        TableColumn<Entrada, String> descricaoColuna = new TableColumn<>("Descrição");
-        descricaoColuna.setCellValueFactory(new PropertyValueFactory<>("descricao"));
-
-        TableColumn<Entrada, String> valorColuna = new TableColumn<>("Valor");
-        valorColuna.setCellValueFactory(new PropertyValueFactory<>("valor"));
-
-        TableColumn<Entrada, String> ultimaEdicaoColuna = new TableColumn<>("Última edição");
-        ultimaEdicaoColuna.setMinWidth(100);
-        ultimaEdicaoColuna.setCellValueFactory(new PropertyValueFactory<>("ultimaEdicao"));
-
-        EntradaDao entradaDao = new EntradaDao();
-
-        TableView<Entrada> tableView = new TableView<>();
-
-        ObservableList<Entrada> list = entradaDao.listAll();
-        tableView.getColumns().clear();
-        tableView.setItems(list);
-        tableView.getColumns().addAll(dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
-
-        return tableView;
-    }
-
-    private GridPane geraEntradaGridPane(TableView<Entrada> entradaTableView) {
-        GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(5, 2, 0, 2));
-        gridPane.setVgap(5);
-        gridPane.setHgap(5);
-        gridPane.setAlignment(Pos.TOP_LEFT);
-
-        Text entradaBuscarPorDataLabel = new Text("Buscar Entrada por data: ");
-        entradaBuscarPorDataLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
-        TextField entradaBuscarPorDataTextField = new TextField();
-        gridPane.add(entradaBuscarPorDataLabel,0,0);
-        gridPane.add(entradaBuscarPorDataTextField,0,1);
-
-        Text entradaBuscarPorDescricaoLabel = new Text("Buscar Entrada por descrição: ");
-        entradaBuscarPorDescricaoLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
-        TextField entradaBuscarPorDescricaoTextField = new TextField();
-        entradaBuscarPorDescricaoTextField.setPrefWidth(5000);
-        gridPane.add(entradaBuscarPorDescricaoLabel,0,2);
-        gridPane.add(entradaBuscarPorDescricaoTextField,0,3);
-
-        gridPane.add(entradaTableView,0,5);
-
-        return gridPane;
-    }
-
     private TableView<Saida> geraSaidaTableView() throws SQLException {
 
         TableColumn<Saida, String> dataHoraColuna = new TableColumn<>("Dt./Hr.");
@@ -231,10 +183,42 @@ public class SaldoResumoNode{
 
         TableView<Saida> tableView = new TableView<>();
 
-        ObservableList<Saida> list = saidaDao.listAll();
-        tableView.getColumns().clear();
-        tableView.setItems(list);
-        tableView.getColumns().addAll(dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
+        Platform.runLater(()->saidaBuscarPorDataTextField.textProperty().addListener((observable, oldValue, newValue) ->{
+            ObservableList<Saida> list = null;
+            try {
+                list = saidaDao.buscaSaidaPorData(newValue);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            tableView.getColumns().clear();
+            tableView.setItems(list);
+            tableView.getColumns().addAll(dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
+        }));
+
+        Platform.runLater(()->saidaBuscarPorDescricaoTextField.textProperty().addListener((observable, oldValue, newValue) ->{
+            ObservableList<Saida> list = null;
+            try {
+                list = saidaDao.buscaSaidaPorDescricao(newValue);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            tableView.getColumns().clear();
+            tableView.setItems(list);
+            tableView.getColumns().addAll(dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
+        }));
+
+
+//        Platform.runLater(()->saidaBuscarPorDataTextField.addEventFilter(KeyEvent.KEY_PRESSED, e->{
+//            ObservableList<Saida> list = null;
+//            try {
+//                list = saidaDao.buscaSaidaPorData(saidaBuscarPorDataTextField.getText());
+//            } catch (SQLException e1) {
+//                e1.printStackTrace();
+//            }
+//            tableView.getColumns().clear();
+//            tableView.setItems(list);
+//            tableView.getColumns().addAll(dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
+//        }));
 
         return tableView;
     }
@@ -248,13 +232,14 @@ public class SaldoResumoNode{
 
         Text saidaBuscarPorDataLabel = new Text("Buscar Saída por data: ");
         saidaBuscarPorDataLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
-        TextField saidaBuscarPorDataTextField = new TextField();
+        saidaBuscarPorDataTextField = new TextField();
         gridPane.add(saidaBuscarPorDataLabel,0,0);
         gridPane.add(saidaBuscarPorDataTextField,0,1);
 
+
         Text saidaBuscarPorDescricaoLabel = new Text("Buscar Saída por descrição: ");
         saidaBuscarPorDescricaoLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
-        TextField saidaBuscarPorDescricaoTextField = new TextField();
+        saidaBuscarPorDescricaoTextField = new TextField();
         saidaBuscarPorDescricaoTextField.setPrefWidth(5000);
         gridPane.add(saidaBuscarPorDescricaoLabel,0,2);
         gridPane.add(saidaBuscarPorDescricaoTextField,0,3);
@@ -264,4 +249,77 @@ public class SaldoResumoNode{
         return gridPane;
     }
 
+    private TableView<Entrada> geraEntradaTableView() throws SQLException {
+
+        TableColumn<Entrada, String> dataHoraColuna = new TableColumn<>("Dt./Hr.");
+        dataHoraColuna.setMinWidth(100);
+        dataHoraColuna.setMaxWidth(100);
+        dataHoraColuna.setCellValueFactory(new PropertyValueFactory<>("dataHora"));
+
+        TableColumn<Entrada, String> descricaoColuna = new TableColumn<>("Descrição");
+        descricaoColuna.setCellValueFactory(new PropertyValueFactory<>("descricao"));
+
+        TableColumn<Entrada, String> valorColuna = new TableColumn<>("Valor");
+        valorColuna.setCellValueFactory(new PropertyValueFactory<>("valor"));
+
+        TableColumn<Entrada, String> ultimaEdicaoColuna = new TableColumn<>("Última edição");
+        ultimaEdicaoColuna.setMinWidth(100);
+        ultimaEdicaoColuna.setCellValueFactory(new PropertyValueFactory<>("ultimaEdicao"));
+
+        EntradaDao entradaDao = new EntradaDao();
+
+        TableView<Entrada> tableView = new TableView<>();
+
+        Platform.runLater(()->entradaBuscarPorDataTextField.textProperty().addListener((observable, oldValue, newValue) ->{
+            ObservableList<Entrada> list = null;
+            try {
+                list = entradaDao.buscaEntradaPorData(newValue);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            tableView.getColumns().clear();
+            tableView.setItems(list);
+            tableView.getColumns().addAll(dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
+        }));
+
+        Platform.runLater(()->entradaBuscarPorDescricaoTextField.textProperty().addListener((observable, oldValue, newValue) ->{
+            ObservableList<Entrada> list = null;
+            try {
+                list = entradaDao.buscaEntradaPorDescricao(newValue);
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+            }
+            tableView.getColumns().clear();
+            tableView.setItems(list);
+            tableView.getColumns().addAll(dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
+        }));
+
+
+        return tableView;
+    }
+
+    private GridPane geraEntradaGridPane(TableView<Entrada> entradaTableView) {
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(5, 2, 0, 2));
+        gridPane.setVgap(5);
+        gridPane.setHgap(5);
+        gridPane.setAlignment(Pos.TOP_LEFT);
+
+        Text entradaBuscarPorDataLabel = new Text("Buscar Entrada por data: ");
+        entradaBuscarPorDataLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        entradaBuscarPorDataTextField = new TextField();
+        gridPane.add(entradaBuscarPorDataLabel,0,0);
+        gridPane.add(entradaBuscarPorDataTextField,0,1);
+
+        Text entradaBuscarPorDescricaoLabel = new Text("Buscar Entrada por descrição: ");
+        entradaBuscarPorDescricaoLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        entradaBuscarPorDescricaoTextField = new TextField();
+        entradaBuscarPorDescricaoTextField.setPrefWidth(5000);
+        gridPane.add(entradaBuscarPorDescricaoLabel,0,2);
+        gridPane.add(entradaBuscarPorDescricaoTextField,0,3);
+
+        gridPane.add(entradaTableView,0,5);
+
+        return gridPane;
+    }
 }
