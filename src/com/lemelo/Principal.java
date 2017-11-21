@@ -1,6 +1,7 @@
 package com.lemelo;
 
 import com.lemelo.entrada.EntradaNode;
+import com.lemelo.fixa.FixaNode;
 import com.lemelo.parcelamento.ParcelamentoNode;
 import com.lemelo.saida.SaidaNode;
 import com.lemelo.util.FabricaConexao;
@@ -52,7 +53,7 @@ public class Principal extends Application {
         fixaTab.setText("Fixa");
         fixaTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
         fixaTab.setClosable(false);
-        fixaTab.setContent(null);
+        fixaTab.setContent(new FixaNode().executar(fixaTab));
         tabPane.getTabs().add(fixaTab);
 
         Tab ganhoTab = new Tab();
