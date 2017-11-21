@@ -176,7 +176,6 @@ public class EntradaNode {
                 } else {
                     //Atualiza total da entrada
 
-
                     SaldoLogica saldoLogica = new SaldoLogica();
                     saldoLogica.calcularEntrada(dataHoraStr, valorStr);
 

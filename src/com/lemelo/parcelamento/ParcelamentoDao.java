@@ -1,7 +1,11 @@
 package com.lemelo.parcelamento;
 
 import com.lemelo.util.FabricaConexao;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -35,5 +39,72 @@ public class ParcelamentoDao {
             SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
             vencimentoStr = sdf2.format(date2);
         }
+    }
+
+    public ObservableList<Parcelamento> buscaPorMesAno() throws SQLException {
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String dataAtual = sdf1.format(Calendar.getInstance().getTime());
+        String mesAno = dataAtual.substring(3,10);
+
+        ObservableList<Parcelamento> parcelamentos = FXCollections.observableArrayList();
+        String parcelamentoSqlSelect = "select * from parcelamento where vencimento like '%"+mesAno+"%'";
+        ResultSet resultSet = new FabricaConexao().getResultSet(parcelamentoSqlSelect);
+        while (resultSet.next()) {
+            Parcelamento parcelamento = new Parcelamento();
+            parcelamento.setId(resultSet.getInt("id"));
+            parcelamento.setDescricao(resultSet.getString("descricao"));
+            parcelamento.setVencimento(resultSet.getString("vencimento"));
+            parcelamento.setValorParcela(resultSet.getString("valor_parcela"));
+            parcelamento.setValorTotal(resultSet.getString("valor_total"));
+            parcelamento.setNumeroParcela(resultSet.getString("numero_parcela"));
+            parcelamento.setTotalParcela(resultSet.getString("total_parcela"));
+            parcelamento.setStatus(resultSet.getString("status"));
+
+            parcelamentos.add(parcelamento);
+        }
+        resultSet.close();
+        return parcelamentos;
+    }
+
+    public ObservableList<Parcelamento> buscaPorDescricao(String newValue) throws SQLException {
+        ObservableList<Parcelamento> parcelamentos = FXCollections.observableArrayList();
+        String parcelamentoSqlSelect = "select * from parcelamento where descricao like '%"+newValue+"%'";
+        ResultSet resultSet = new FabricaConexao().getResultSet(parcelamentoSqlSelect);
+        while (resultSet.next()) {
+            Parcelamento parcelamento = new Parcelamento();
+            parcelamento.setId(resultSet.getInt("id"));
+            parcelamento.setDescricao(resultSet.getString("descricao"));
+            parcelamento.setVencimento(resultSet.getString("vencimento"));
+            parcelamento.setValorParcela(resultSet.getString("valor_parcela"));
+            parcelamento.setValorTotal(resultSet.getString("valor_total"));
+            parcelamento.setNumeroParcela(resultSet.getString("numero_parcela"));
+            parcelamento.setTotalParcela(resultSet.getString("total_parcela"));
+            parcelamento.setStatus(resultSet.getString("status"));
+
+            parcelamentos.add(parcelamento);
+        }
+        resultSet.close();
+        return parcelamentos;
+    }
+
+    public ObservableList<Parcelamento> buscaPorVencimento(String newValue) throws SQLException {
+        ObservableList<Parcelamento> parcelamentos = FXCollections.observableArrayList();
+        String parcelamentoSqlSelect = "select * from parcelamento where vencimento like '%"+newValue+"%'";
+        ResultSet resultSet = new FabricaConexao().getResultSet(parcelamentoSqlSelect);
+        while (resultSet.next()) {
+            Parcelamento parcelamento = new Parcelamento();
+            parcelamento.setId(resultSet.getInt("id"));
+            parcelamento.setDescricao(resultSet.getString("descricao"));
+            parcelamento.setVencimento(resultSet.getString("vencimento"));
+            parcelamento.setValorParcela(resultSet.getString("valor_parcela"));
+            parcelamento.setValorTotal(resultSet.getString("valor_total"));
+            parcelamento.setNumeroParcela(resultSet.getString("numero_parcela"));
+            parcelamento.setTotalParcela(resultSet.getString("total_parcela"));
+            parcelamento.setStatus(resultSet.getString("status"));
+
+            parcelamentos.add(parcelamento);
+        }
+        resultSet.close();
+        return parcelamentos;
     }
 }
