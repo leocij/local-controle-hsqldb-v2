@@ -39,4 +39,8 @@ public class BibliotecaString {
     public String createTotalSaidaTable() {
         return "create table if not exists total_saida (id integer identity primary key, data varchar(20), valor varchar(30))";
     }
+
+    public String createParcelamentoTable() {
+        return "create table if not exists parcelamento (id integer identity primary key, descricao varchar(100), vencimento varchar(20), valor_parcela varchar(30), valor_total varchar(30), numero_parcela varchar(5), total_parcela varchar(5), status varchar(10))";
+    }
 }

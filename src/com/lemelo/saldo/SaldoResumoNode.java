@@ -236,7 +236,6 @@ public class SaldoResumoNode{
         gridPane.add(saidaBuscarPorDataLabel,0,0);
         gridPane.add(saidaBuscarPorDataTextField,0,1);
 
-
         Text saidaBuscarPorDescricaoLabel = new Text("Buscar Saída por descrição: ");
         saidaBuscarPorDescricaoLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
         saidaBuscarPorDescricaoTextField = new TextField();
