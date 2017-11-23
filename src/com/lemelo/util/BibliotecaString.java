@@ -17,11 +17,11 @@ public class BibliotecaString {
     }
 
     public String createEntradaTable() {
-        return "create table if not exists entrada (id integer identity primary key, data_hora varchar(20), descricao varchar(100), valor varchar(30), ultima_edicao varchar(20))";
+        return "create table if not exists entrada (id integer identity primary key, data_hora varchar(20), descricao varchar(200), valor varchar(30), ultima_edicao varchar(20))";
     }
 
     public String createSaidaTable() {
-        return "create table if not exists saida (id integer identity primary key, data_hora varchar(20), descricao varchar(100), valor varchar(30), ultima_edicao varchar(20))";
+        return "create table if not exists saida (id integer identity primary key, data_hora varchar(20), descricao varchar(200), valor varchar(30), ultima_edicao varchar(20))";
     }
 
     public String saidaSqlInsert(String dataHoraStr, String descricaoStr, String valorStr, String ultimaEdicaoStr) {
@@ -41,6 +41,18 @@ public class BibliotecaString {
     }
 
     public String createParcelamentoTable() {
-        return "create table if not exists parcelamento (id integer identity primary key, descricao varchar(100), vencimento varchar(20), valor_parcela varchar(30), valor_total varchar(30), numero_parcela varchar(5), total_parcela varchar(5), status varchar(10))";
+        return "create table if not exists parcelamento (id integer identity primary key, descricao varchar(200), vencimento varchar(20), valor_parcela varchar(30), valor_total varchar(30), numero_parcela varchar(5), total_parcela varchar(5), status varchar(10))";
+    }
+
+    public String createFixaTable() {
+        return "create table if not exists fixa (id integer identity primary key, descricao varchar(200), vencimento varchar(20), valor varchar(30))";
+    }
+
+    public String createGanhoTable() {
+        return "create table if not exists ganho (id integer identity primary key, data varchar(20), dia_semana varchar(20))";
+    }
+
+    public String createClienteTable() {
+        return "create table if not exists cliente (id integer identity primary key, nome varchar(200))";
     }
 }

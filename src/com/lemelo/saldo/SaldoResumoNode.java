@@ -56,7 +56,11 @@ public class SaldoResumoNode{
                     e1.printStackTrace();
                 }
                 String finalTotalEntradaStr = totalEntradaStr;
-                Platform.runLater(()->totalEntradaTextField.setText(finalTotalEntradaStr));
+                if(finalTotalEntradaStr.equals("")){
+                    finalTotalEntradaStr = "R$ 0,00";
+                }
+                String finalTotalEntradaNovoStr = "" + finalTotalEntradaStr;
+                Platform.runLater(()->totalEntradaTextField.setText(finalTotalEntradaNovoStr));
 
                 String totalSaidaStr = null;
                 try {
@@ -65,9 +69,14 @@ public class SaldoResumoNode{
                     e1.printStackTrace();
                 }
                 String finalTotalSaidaStr = totalSaidaStr;
-                Platform.runLater(()->totalSaidaTextField.setText(finalTotalSaidaStr));
+                if(finalTotalSaidaStr.equals("")){
+                    finalTotalSaidaStr = "R$ 0,00";
+                }
+                String finalTotalSaidaNovoStr = "" + finalTotalSaidaStr;
+                Platform.runLater(()->totalSaidaTextField.setText(finalTotalSaidaNovoStr));
 
                 try {
+
                     String totalEntradaNf = NumberFormat.getCurrencyInstance().parse(finalTotalEntradaStr).toString();
                     BigDecimal totalEntradaBdc = new BigDecimal(totalEntradaNf);
                     String totalSaidaNf = NumberFormat.getCurrencyInstance().parse(finalTotalSaidaStr).toString();

@@ -33,11 +33,11 @@ public class FixaNode {
     private Flag flag;
     private TableView<Fixa> tableView;
 
-    public Node executar(Tab fixaTab) {
+    public Node executar(Tab fixaTab) throws SQLException {
 
         GridPane descricaoGridPane = geraDescricaoGridPane();
 
-        GridPane fixaGridePane = geraFormularioGridPane();
+        GridPane formularioGridPane = geraFormularioGridPane();
 
         GridPane botoesGridPane = geraBotoesGridPane();
 
@@ -45,7 +45,7 @@ public class FixaNode {
         TableView<Fixa> fixaTableView = geraFixaTableView();
         GridPane fixaTableViewGridPane = geraFixaTableViewGridPane(fixaTableView);
 
-        GridPane principalGridPane = geraPrincipal(descricaoGridPane, fixaGridePane, botoesGridPane, fixaTableViewGridPane);
+        GridPane principalGridPane = geraPrincipal(descricaoGridPane, formularioGridPane, botoesGridPane, fixaTableViewGridPane);
 
         VBox vBox = new VBox(10);
         vBox.setPadding(new Insets(0, 2, 0, 2));
@@ -53,9 +53,6 @@ public class FixaNode {
 
         return vBox;
     }
-
-
-
 
     private GridPane geraDescricaoGridPane() {
         GridPane gridPane = new GridPane();
@@ -164,7 +161,11 @@ public class FixaNode {
                 fixaDao.insert(fixa);
                 limpaFormulario();
                 Platform.runLater(() -> {
-                    geraFixaTableView();
+                    try {
+                        geraFixaTableView();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 });
             }
         });
@@ -179,10 +180,12 @@ public class FixaNode {
     private void limpaFormulario() {
         descricaoTextField.setText("");
         vencimentoTextField.setText("");
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        vencimentoTextField.setText(sdf1.format(Calendar.getInstance().getTime()));
         valorTextField.setText("");
     }
 
-    private TableView<Fixa> geraFixaTableView() {
+    private TableView<Fixa> geraFixaTableView() throws SQLException {
         TableColumn<Fixa, String> descricaoColuna = new TableColumn<>("Descrição");
         descricaoColuna.setCellValueFactory(new PropertyValueFactory<>("descricao"));
 
@@ -195,15 +198,39 @@ public class FixaNode {
         FixaDao fixaDao = new FixaDao();
         ObservableList<Fixa> list = fixaDao.buscarPorMesAno();
 
+        tableView.getColumns().clear();
+        tableView.setItems(list);
+        tableView.getColumns().addAll(descricaoColuna, vencimentoColuna, valorColuna);
+
         return tableView;
     }
 
     private GridPane geraFixaTableViewGridPane(TableView<Fixa> fixaTableView) {
-        return null;
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(5, 2, 0, 2));
+        gridPane.setVgap(5);
+        gridPane.setHgap(5);
+        gridPane.setAlignment(Pos.TOP_LEFT);
+
+        fixaTableView.setPrefWidth(5000);
+        gridPane.add(fixaTableView,0,0);
+
+        return gridPane;
     }
 
-    private GridPane geraPrincipal(GridPane descricaoGridPane, GridPane fixaGridePane, GridPane botoesGridPane, GridPane fixaTableViewGridPane) {
-        return null;
+    private GridPane geraPrincipal(GridPane descricaoGridPane, GridPane formularioGridPane, GridPane botoesGridPane, GridPane fixaTableViewGridPane) {
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(5, 2, 0, 2));
+        gridPane.setVgap(5);
+        gridPane.setHgap(5);
+        gridPane.setAlignment(Pos.TOP_LEFT);
+
+        gridPane.add(descricaoGridPane,0,0);
+        gridPane.add(formularioGridPane, 0,1);
+        gridPane.add(botoesGridPane, 0,2);
+        gridPane.add(fixaTableViewGridPane,0,3);
+
+        return gridPane;
     }
 
     private String removeUltimoDigito(String str) {

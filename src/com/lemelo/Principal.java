@@ -1,7 +1,10 @@
 package com.lemelo;
 
 import com.lemelo.entrada.EntradaNode;
+import com.lemelo.fixa.Fixa;
+import com.lemelo.fixa.FixaDao;
 import com.lemelo.fixa.FixaNode;
+import com.lemelo.ganho.GanhoNode;
 import com.lemelo.parcelamento.ParcelamentoNode;
 import com.lemelo.saida.SaidaNode;
 import com.lemelo.util.FabricaConexao;
@@ -14,10 +17,15 @@ import javafx.scene.control.TabPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import java.sql.SQLException;
+import java.text.ParseException;
+
 public class Principal extends Application {
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException, ParseException {
         Class.forName("org.hsqldb.jdbcDriver");
         new FabricaConexao().createTables();
+        //new FixaDao().insert(new Fixa());
+        new FixaDao().atualizaFixa();
 
         launch(args);
     }
@@ -60,7 +68,7 @@ public class Principal extends Application {
         ganhoTab.setText("Ganhos");
         ganhoTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
         ganhoTab.setClosable(false);
-        ganhoTab.setContent(null);
+        ganhoTab.setContent(new GanhoNode().executar(ganhoTab));
         tabPane.getTabs().add(ganhoTab);
 
         Tab saldoResumoTab = new Tab();
