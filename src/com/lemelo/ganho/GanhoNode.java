@@ -25,6 +25,7 @@ public class GanhoNode {
     private TextField dataTextField;
     private TableView<Ganho> tableView;
     private Flag flag;
+    private ComboBox clienteComboBox;
 
     public Node executar(Tab ganhoTab) throws ParseException, SQLException {
 
@@ -63,11 +64,12 @@ public class GanhoNode {
         Text clienteLabel = new Text("Cliente: ");
         clienteLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
         gridPane.add(clienteLabel,1,0);
-        ChoiceBox clienteChoiceBox = new ChoiceBox();
+        clienteComboBox = new ComboBox();
+        clienteComboBox.setEditable(true);
         ClienteDao clienteDao = new ClienteDao();
         ObservableList<Cliente> clienteList = clienteDao.buscaClientes();
-        clienteChoiceBox.setItems(clienteList);
-        gridPane.add(clienteChoiceBox,1,1);
+        clienteComboBox.setItems(clienteList);
+        gridPane.add(clienteComboBox,1,1);
 
         return gridPane;
     }
@@ -86,6 +88,8 @@ public class GanhoNode {
         GanhoDao ganhoDao = new GanhoDao();
 
         salvarButton.setOnAction(event -> {
+            System.out.println("Passei aqui: " + clienteComboBox.getValue());
+
             String dataStr = dataTextField.getText();
 
             //Pega dia da semana por extenso
@@ -102,6 +106,8 @@ public class GanhoNode {
             Ganho ganho = new Ganho();
             ganho.setData(dataStr);
             ganho.setDiaSemana(diaSemanaStr);
+
+
 
             if(flag == Flag.EDITAR) {
                 //TODO

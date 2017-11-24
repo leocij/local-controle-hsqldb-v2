@@ -1,4 +1,4 @@
-/*C10*/SET SCHEMA PUBLIC
+/*C12*/SET SCHEMA PUBLIC
 create table if not exists cliente (id integer identity primary key, nome varchar(200))
 create table if not exists ganho (id integer identity primary key, data varchar(20), dia_semana varchar(20))
 create table if not exists fixa (id integer identity primary key, descricao varchar(200), vencimento varchar(20), valor varchar(30))
@@ -9,10 +9,6 @@ create table if not exists saldo (id integer identity primary key, data varchar(
 create table if not exists entrada (id integer identity primary key, data_hora varchar(20), descricao varchar(200), valor varchar(30), ultima_edicao varchar(20))
 create table if not exists saida (id integer identity primary key, data_hora varchar(20), descricao varchar(200), valor varchar(30), ultima_edicao varchar(20))
 DISCONNECT
-/*C11*/SET SCHEMA PUBLIC
-DISCONNECT
-/*C12*/SET SCHEMA PUBLIC
-DISCONNECT
 /*C13*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C14*/SET SCHEMA PUBLIC
@@ -22,4 +18,8 @@ DISCONNECT
 /*C16*/SET SCHEMA PUBLIC
 DISCONNECT
 /*C17*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C18*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C19*/SET SCHEMA PUBLIC
 DISCONNECT
