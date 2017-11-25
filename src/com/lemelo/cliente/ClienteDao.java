@@ -21,4 +21,11 @@ public class ClienteDao {
         resultSet.close();
         return clientes;
     }
+
+    public void insert(Cliente cliente) {
+        String nomeStr = cliente.getNome();
+
+        String clienteSqlInsert = "insert into cliente (nome) values ('"+nomeStr+"')";
+        new FabricaConexao().insert(clienteSqlInsert);
+    }
 }

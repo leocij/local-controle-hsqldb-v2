@@ -49,7 +49,7 @@ public class BibliotecaString {
     }
 
     public String createGanhoTable() {
-        return "create table if not exists ganho (id integer identity primary key, data varchar(20), dia_semana varchar(20))";
+        return "create table if not exists ganho (id integer identity primary key, data varchar(20), dia_semana varchar(20), cliente varchar(200), status varchar(10), sessao varchar(2), quantidade varchar(2), valor varchar(30))";
     }
 
     public String createClienteTable() {

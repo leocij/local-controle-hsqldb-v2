@@ -1,5 +1,6 @@
 package com.lemelo;
 
+import com.lemelo.cliente.ClienteNode;
 import com.lemelo.entrada.EntradaNode;
 import com.lemelo.fixa.Fixa;
 import com.lemelo.fixa.FixaDao;
@@ -78,7 +79,14 @@ public class Principal extends Application {
         saldoResumoTab.setContent(new SaldoResumoNode().executar(saldoResumoTab));
         tabPane.getTabs().add(saldoResumoTab);
 
-        Integer WIDTH_TAM = 763;
+        Tab clienteResumoTab =new Tab();
+        clienteResumoTab.setText("Clientes");
+        clienteResumoTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        clienteResumoTab.setClosable(false);
+        clienteResumoTab.setContent(new ClienteNode().executar(clienteResumoTab));
+        tabPane.getTabs().add(clienteResumoTab);
+
+        Integer WIDTH_TAM = 847;
         Integer HEIGHT_TAM = 680;
         Scene scene = new Scene(tabPane, WIDTH_TAM, HEIGHT_TAM, Color.GRAY);
         primaryStage.setMinWidth(WIDTH_TAM);
