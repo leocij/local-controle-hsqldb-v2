@@ -34,8 +34,9 @@ public class ParcelamentoNode {
     private Flag flag;
     private TableView<Parcelamento> tableView;
     private TextField parcelamentoBuscarPorDataTextField;
+    private TextField totalPagarTextField;
 
-    public Node executar(Tab parcelamentoTab) throws SQLException {
+    public Node executar(Tab parcelamentoTab) throws SQLException, ParseException {
 
         GridPane descricaoGridPane = geraDescricaoGridPane();
 
@@ -242,6 +243,8 @@ public class ParcelamentoNode {
                             geraParcelamentoTableView();
                         } catch (SQLException e) {
                             e.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
                     });
                 } catch (ParseException e) {
@@ -264,7 +267,7 @@ public class ParcelamentoNode {
         totalParcelaTextField.setText("");
     }
 
-    private TableView<Parcelamento> geraParcelamentoTableView() throws SQLException {
+    private TableView<Parcelamento> geraParcelamentoTableView() throws SQLException, ParseException {
 
         TableColumn<Parcelamento, String> descricaoColuna = new TableColumn<>("Descrição");
         descricaoColuna.setCellValueFactory(new PropertyValueFactory<>("descricao"));
@@ -290,6 +293,14 @@ public class ParcelamentoNode {
         ParcelamentoDao parcelamentoDao = new ParcelamentoDao();
 
         ObservableList<Parcelamento> list = parcelamentoDao.buscaPorMesAno();
+        BigDecimal somaBdc = BigDecimal.ZERO;
+        for(int i=0; i<list.size(); i++){
+            String valorNf = NumberFormat.getCurrencyInstance().parse(list.get(i).getValorParcela()).toString();
+            BigDecimal valorBdc = new BigDecimal(valorNf);
+            somaBdc = somaBdc.add(valorBdc);
+            String valorStr = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(somaBdc);
+            Platform.runLater(()->totalPagarTextField.setText(valorStr));
+        }
 
         tableView.getColumns().clear();
         tableView.setItems(list);
@@ -299,7 +310,17 @@ public class ParcelamentoNode {
             ObservableList<Parcelamento> list1 = null;
             try {
                 list1 = parcelamentoDao.buscaPorVencimento(newValue);
+                BigDecimal somaBdc1 = BigDecimal.ZERO;
+                for(int i=0; i<list1.size(); i++){
+                    String valorNf1 = NumberFormat.getCurrencyInstance().parse(list1.get(i).getValorParcela()).toString();
+                    BigDecimal valorBdc1 = new BigDecimal(valorNf1);
+                    somaBdc1 = somaBdc1.add(valorBdc1);
+                    String valorStr1 = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(somaBdc1);
+                    totalPagarTextField.setText(valorStr1);
+                }
             } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
             tableView.getColumns().clear();
@@ -311,7 +332,17 @@ public class ParcelamentoNode {
             ObservableList<Parcelamento> list1 = null;
             try {
                 list1 = parcelamentoDao.buscaPorDescricao(newValue);
+                BigDecimal somaBdc1 = BigDecimal.ZERO;
+                for(int i=0; i<list1.size(); i++){
+                    String valorNf1 = NumberFormat.getCurrencyInstance().parse(list1.get(i).getValorParcela()).toString();
+                    BigDecimal valorBdc1 = new BigDecimal(valorNf1);
+                    somaBdc1 = somaBdc1.add(valorBdc1);
+                    String valorStr1 = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(somaBdc1);
+                    totalPagarTextField.setText(valorStr1);
+                }
             } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
             tableView.getColumns().clear();
@@ -345,9 +376,15 @@ public class ParcelamentoNode {
         parcelamentoBuscarPorDescricaoTextField.setPrefWidth(5000);
         gridPane.add(parcelamentoBuscarPorDescricaoTextField,0,4);
 
+        Text totalPagarLabel = new Text("Total a pagar mediante a busca: ");
+        totalPagarLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        gridPane.add(totalPagarLabel,0,5);
+        totalPagarTextField = new TextField();
+        totalPagarTextField.setEditable(false);
+        totalPagarTextField.setMaxWidth(100);
+        gridPane.add(totalPagarTextField,0,6);
 
-
-        gridPane.add(parcelamentoTableView,0,5);
+        gridPane.add(parcelamentoTableView,0,7);
 
         return gridPane;
     }

@@ -7,27 +7,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3964637d-e7cf-4860-9139-eb470604e409" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/com/lemelo/cliente/ClienteNode.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/db.lck" afterPath="$PROJECT_DIR$/database/db.lck" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/Principal.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/Principal.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/cliente/Cliente.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/cliente/Cliente.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/cliente/ClienteDao.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/cliente/ClienteDao.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/ganho/Ganho.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/ganho/Ganho.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/ganho/GanhoDao.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/ganho/GanhoDao.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/ganho/GanhoNode.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/ganho/GanhoNode.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/util/BibliotecaString.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/util/BibliotecaString.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/util/FabricaConexao.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/util/FabricaConexao.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/parcelamento/ParcelamentoNode.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/parcelamento/ParcelamentoNode.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/db.log" afterPath="$PROJECT_DIR$/database/db.log" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/db.properties" afterPath="$PROJECT_DIR$/database/db.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/db.script" afterPath="$PROJECT_DIR$/database/db.script" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lemelo/Principal.java" afterPath="$PROJECT_DIR$/src/com/lemelo/Principal.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lemelo/cliente/Cliente.java" afterPath="$PROJECT_DIR$/src/com/lemelo/cliente/Cliente.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lemelo/cliente/ClienteDao.java" afterPath="$PROJECT_DIR$/src/com/lemelo/cliente/ClienteDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lemelo/ganho/Ganho.java" afterPath="$PROJECT_DIR$/src/com/lemelo/ganho/Ganho.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lemelo/ganho/GanhoDao.java" afterPath="$PROJECT_DIR$/src/com/lemelo/ganho/GanhoDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lemelo/ganho/GanhoNode.java" afterPath="$PROJECT_DIR$/src/com/lemelo/ganho/GanhoNode.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lemelo/util/BibliotecaString.java" afterPath="$PROJECT_DIR$/src/com/lemelo/util/BibliotecaString.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoNode.java" afterPath="$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoNode.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -37,75 +23,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="DockManager">
-    <window id="2">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="ParcelamentoDao.java" pinned="false" current-in-tab="false">
-              <entry file="file://$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoDao.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="136">
-                    <caret line="18" column="60" lean-forward="false" selection-start-line="18" selection-start-column="60" selection-end-line="18" selection-end-column="60" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-            <file leaf-file-name="SaldoResumoNode.java" pinned="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/src/com/lemelo/saldo/SaldoResumoNode.java">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state relative-caret-position="-289">
-                    <caret line="242" column="31" lean-forward="false" selection-start-line="242" selection-start-column="31" selection-end-line="242" selection-end-column="82" />
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GanhoNode.java" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/com/lemelo/ganho/GanhoNode.java">
+      <file leaf-file-name="ParcelamentoNode.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoNode.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="476">
-              <caret line="277" column="47" lean-forward="false" selection-start-line="277" selection-start-column="47" selection-end-line="277" selection-end-column="47" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="FabricaConexao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/lemelo/util/FabricaConexao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BibliotecaString.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/lemelo/util/BibliotecaString.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-238">
-              <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="GanhoDao.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/lemelo/ganho/GanhoDao.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="493">
-              <caret line="39" column="94" lean-forward="false" selection-start-line="39" selection-start-column="94" selection-end-line="39" selection-end-column="94" />
+            <state relative-caret-position="203">
+              <caret line="301" column="71" lean-forward="false" selection-start-line="301" selection-start-column="71" selection-end-line="301" selection-end-column="71" />
               <folding />
             </state>
           </provider>
@@ -165,7 +89,6 @@
         <option value="$PROJECT_DIR$/src/com/lemelo/entrada/EntradaDao.java" />
         <option value="$PROJECT_DIR$/src/com/lemelo/parcelamento/Parcelamento.java" />
         <option value="$PROJECT_DIR$/src/com/lemelo/entrada/EntradaNode.java" />
-        <option value="$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoNode.java" />
         <option value="$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoDao.java" />
         <option value="$PROJECT_DIR$/src/com/lemelo/fixa/Fixa.java" />
         <option value="$PROJECT_DIR$/src/com/lemelo/fixa/FixaNode.java" />
@@ -180,10 +103,11 @@
         <option value="$PROJECT_DIR$/src/com/lemelo/ganho/Ganho.java" />
         <option value="$PROJECT_DIR$/src/com/lemelo/ganho/GanhoDao.java" />
         <option value="$PROJECT_DIR$/src/com/lemelo/ganho/GanhoNode.java" />
+        <option value="$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoNode.java" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds">
     <option name="x" value="964" />
     <option name="width" value="961" />
     <option name="height" value="1040" />
@@ -206,10 +130,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
-      <pane id="Scratches" />
-      <pane id="AndroidView" />
       <pane id="Scope" />
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -490,7 +414,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="964" y="0" width="961" height="1040" extended-state="0" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -500,17 +424,17 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28541225" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29032257" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28541666" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28465608" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39323467" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39247313" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -557,7 +481,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="80" />
+      <option name="time" value="81" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -664,7 +588,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="10" column="35" lean-forward="false" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -672,10 +595,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="24" column="16" lean-forward="false" selection-start-line="24" selection-start-column="16" selection-end-line="24" selection-end-column="16" />
-          <folding>
-            <element signature="e#395#396#0" expanded="true" />
-            <element signature="e#427#428#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -683,7 +602,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="80" column="37" lean-forward="true" selection-start-line="80" selection-start-column="37" selection-end-line="80" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -691,23 +609,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="530">
           <caret line="271" column="4" lean-forward="false" selection-start-line="271" selection-start-column="4" selection-end-line="276" selection-end-column="5" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/lemelo/saldo/SaldoLogica.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="39" column="18" lean-forward="false" selection-start-line="39" selection-start-column="18" selection-end-line="39" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="564">
-          <caret line="237" column="39" lean-forward="true" selection-start-line="237" selection-start-column="39" selection-end-line="237" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -723,11 +624,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
           <caret line="52" column="31" lean-forward="false" selection-start-line="52" selection-start-column="31" selection-end-line="52" selection-end-column="31" />
-          <folding>
-            <element signature="e#1026#1027#0" expanded="true" />
-            <element signature="e#1070#1071#0" expanded="true" />
-            <element signature="e#1106#1107#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -735,31 +631,20 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="18" column="60" lean-forward="false" selection-start-line="18" selection-start-column="60" selection-end-line="18" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/lemelo/saldo/SaldoResumoNode.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-289">
-          <caret line="242" column="31" lean-forward="false" selection-start-line="242" selection-start-column="31" selection-end-line="242" selection-end-column="82" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/lemelo/util/BibliotecaString.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-238">
+        <state relative-caret-position="68">
           <caret line="4" column="13" lean-forward="false" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/lemelo/util/FabricaConexao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
+        <state relative-caret-position="697">
           <caret line="41" column="0" lean-forward="false" selection-start-line="41" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -767,17 +652,37 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="493">
           <caret line="39" column="94" lean-forward="false" selection-start-line="39" selection-start-column="94" selection-end-line="39" selection-end-column="94" />
-          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lemelo/saldo/SaldoResumoNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-289">
+          <caret line="242" column="31" lean-forward="false" selection-start-line="242" selection-start-column="31" selection-end-line="242" selection-end-column="82" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/lemelo/ganho/GanhoNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="476">
-          <caret line="277" column="47" lean-forward="false" selection-start-line="277" selection-start-column="47" selection-end-line="277" selection-end-column="47" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="-4420">
+          <caret line="74" column="0" lean-forward="true" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lemelo/saldo/SaldoLogica.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoNode.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="301" column="71" lean-forward="false" selection-start-line="301" selection-start-column="71" selection-end-line="301" selection-end-column="71" />
+          <folding />
         </state>
       </provider>
     </entry>
