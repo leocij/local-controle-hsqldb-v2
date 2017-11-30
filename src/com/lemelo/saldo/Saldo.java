@@ -3,9 +3,9 @@ package com.lemelo.saldo;
 public class Saldo {
     private Integer id;
     private String data;
-    private String totalEntrada;
-    private String totalSaida;
+    //private String sobrouMesPassado;
     private String saldo;
+    //private String dataUltimaConsultaSaldo;
 
     public Integer getId() {
         return id;
@@ -23,22 +23,6 @@ public class Saldo {
         this.data = data;
     }
 
-    public String getTotalEntrada() {
-        return totalEntrada;
-    }
-
-    public void setTotalEntrada(String totalEntrada) {
-        this.totalEntrada = totalEntrada;
-    }
-
-    public String getTotalSaida() {
-        return totalSaida;
-    }
-
-    public void setTotalSaida(String totalSaida) {
-        this.totalSaida = totalSaida;
-    }
-
     public String getSaldo() {
         return saldo;
     }
@@ -47,11 +31,13 @@ public class Saldo {
         this.saldo = saldo;
     }
 
+
     @Override
     public String toString() {
-        return "Data: " + data +
-                "Total da Entrada: " + totalEntrada +
-                "Total da Saida: " + totalSaida +
-                "Saldo: " + saldo;
+        return "Saldo{" +
+                "id=" + id +
+                ", data='" + data + '\'' +
+                ", saldo='" + saldo + '\'' +
+                '}';
     }
 }

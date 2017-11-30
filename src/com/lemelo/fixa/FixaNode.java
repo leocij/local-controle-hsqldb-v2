@@ -179,10 +179,15 @@ public class FixaNode {
 
     private void limpaFormulario() {
         descricaoTextField.setText("");
+        descricaoTextField.requestFocus();
+
         vencimentoTextField.setText("");
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         vencimentoTextField.setText(sdf1.format(Calendar.getInstance().getTime()));
+
         valorTextField.setText("");
+
+        numeroDigitado = "";
     }
 
     private TableView<Fixa> geraFixaTableView() throws SQLException {

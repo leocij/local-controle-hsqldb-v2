@@ -1,15 +1,9 @@
 package com.lemelo.entrada;
 
-import com.lemelo.saida.Saida;
 import com.lemelo.saldo.SaldoLogica;
-import com.lemelo.saldo.SaldoResumoNode;
 import com.lemelo.util.Flag;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -17,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -35,7 +28,7 @@ public class EntradaNode {
     private String ultimaEdicaoEditar;
     private Flag flag;
 
-    String numeroDigitado;
+    private String numeroDigitado;
 
     public Node executar(Tab entradaTab) throws SQLException {
 
@@ -65,7 +58,7 @@ public class EntradaNode {
         gridPane.add(descricaoTextField, 0, 3);
 
         entradaTab.setOnSelectionChanged(e->{
-            if (entradaTab.isSelected() == true) {
+            if (entradaTab.isSelected()) {
                 Platform.runLater(()->descricaoTextField.requestFocus());
             }
         });

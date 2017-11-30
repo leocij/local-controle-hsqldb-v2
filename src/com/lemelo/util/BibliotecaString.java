@@ -41,7 +41,7 @@ public class BibliotecaString {
     }
 
     public String createParcelamentoTable() {
-        return "create table if not exists parcelamento (id integer identity primary key, descricao varchar(200), vencimento varchar(20), valor_parcela varchar(30), valor_total varchar(30), numero_parcela varchar(5), total_parcela varchar(5), status varchar(10))";
+        return "create table if not exists parcelamento (id integer identity primary key, descricao varchar(200), vencimento varchar(20), valor_parcela varchar(30), valor_total varchar(30), numero_parcela varchar(5), total_parcela varchar(5), status varchar(10),data_alteracao varchar(20))";
     }
 
     public String createFixaTable() {
@@ -54,5 +54,14 @@ public class BibliotecaString {
 
     public String createClienteTable() {
         return "create table if not exists cliente (id integer identity primary key, nome varchar(200))";
+    }
+
+
+    public String createDataControleTable() {
+        return "create table if not exists data_controle (id integer identity primary key, data_controle varchar(20))";
+    }
+
+    public String createSobrouMesPassadoTable() {
+        return "create table if not exists sobrou_mes_passado (id integer identity primary key, data varchar(20), sobrou_mes_passado varchar(30))";
     }
 }

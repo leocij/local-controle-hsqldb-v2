@@ -1,11 +1,9 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="local-controle-hsqldb-v2:jar">
-    <output-path>$PROJECT_DIR$/../../testejar</output-path>
+    <output-path>$USER_HOME$/OneDrive/Software Controle</output-path>
     <root id="archive" name="local-controle-hsqldb-v2.jar">
-      <element id="directory" name="META-INF">
-        <element id="file-copy" path="$PROJECT_DIR$/../../testejar/META-INF/MANIFEST.MF" />
-      </element>
       <element id="module-output" name="local-controle-hsqldb-v2" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/hsqldb-2.4.0/hsqldb-2.4.0/hsqldb/lib/hsqldb.jar" path-in-jar="/" />
       <element id="extracted-dir" path="$PROJECT_DIR$/hsqldb_jar/hsqldb.jar" path-in-jar="/" />
     </root>
   </artifact>

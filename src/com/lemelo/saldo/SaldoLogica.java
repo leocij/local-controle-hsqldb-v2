@@ -37,7 +37,7 @@ public class SaldoLogica {
     }
 
 
-    public String buscaTotalEntrada(String mesAno) throws SQLException, ParseException {
+    public String buscaTotalEntrada(String mesAno) throws SQLException {
         TotalEntradaDao totalEntradaDao = new TotalEntradaDao();
         String totalEntradaStr = totalEntradaDao.buscaTotalEntrada(mesAno);
 

@@ -35,8 +35,12 @@ public class ParcelamentoNode {
     private TableView<Parcelamento> tableView;
     private TextField parcelamentoBuscarPorDataTextField;
     private TextField totalPagarTextField;
+    private Tab parcelamentoTab;
+    private TextField parcelamentoBuscarPorDescricaoSemPagarTextField;
 
     public Node executar(Tab parcelamentoTab) throws SQLException, ParseException {
+
+        this.parcelamentoTab = parcelamentoTab;
 
         GridPane descricaoGridPane = geraDescricaoGridPane();
 
@@ -48,13 +52,51 @@ public class ParcelamentoNode {
         TableView<Parcelamento> parcelamentoTableView = geraParcelamentoTableView();
         GridPane parcelamentoTableViewGridPane = geraParcelamentoTableViewGridPane(parcelamentoTableView);
 
+        manipulaTableView(tableView);
+
         GridPane principalGridPane = geraPrincipal(descricaoGridPane, formularioGridPane, botoesGridPane, parcelamentoTableViewGridPane);
+
+        parcelamentoTab.setOnSelectionChanged(e->{
+            if(parcelamentoTab.isSelected()==true) {
+                Platform.runLater(()->descricaoTextField.requestFocus());
+            }
+        });
 
         VBox vBox = new VBox(10);
         vBox.setPadding(new Insets(0, 2, 0, 2));
         vBox.getChildren().addAll(principalGridPane);
 
         return vBox;
+    }
+
+    private void manipulaTableView(TableView<Parcelamento> tableView) {
+        tableView.setOnMousePressed(event->{
+            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                Parcelamento parcelamento = tableView.getSelectionModel().getSelectedItem();
+                if (parcelamento != null) {
+                    Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+                    ButtonType pagarButtonType = new ButtonType("Mudar Status");
+                    ButtonType cancelarButtonType = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                    alert1.setHeaderText("O que deseja fazer com?\n\n" + parcelamento.toString());
+                    alert1.getButtonTypes().setAll(pagarButtonType, cancelarButtonType);
+                    alert1.showAndWait().ifPresent(escolha1->{
+                        if(escolha1 == pagarButtonType) {
+                            ParcelamentoDao parcelamentoDao = new ParcelamentoDao();
+                            parcelamentoDao.update(parcelamento);
+
+                            try {
+                                geraParcelamentoTableView();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     private GridPane geraPrincipal(GridPane descricaoGridPane, GridPane formularioGridPane, GridPane botoesGridPane, GridPane parcelamentoTableViewGridPane) {
@@ -199,6 +241,8 @@ public class ParcelamentoNode {
 
         ParcelamentoDao parcelamentoDao = new ParcelamentoDao();
 
+        salvarButton.defaultButtonProperty().bind(salvarButton.focusedProperty());
+
         salvarButton.setOnAction(event -> {
             String descricaoStr = descricaoTextField.getText();
             String vencimentoStr = vencimentoTextField.getText();
@@ -231,6 +275,7 @@ public class ParcelamentoNode {
             parcelamento.setValorParcela(valorParcelaStr);
 
             parcelamento.setStatus("-");
+            parcelamento.setDataAlteracao("-");
 
             if (flag == Flag.EDITAR) {
                 //TODO
@@ -251,6 +296,8 @@ public class ParcelamentoNode {
                     e.printStackTrace();
                 }
             }
+
+
         });
 
         Button novoButton = new Button("Novo");
@@ -262,9 +309,16 @@ public class ParcelamentoNode {
 
     private void limpaFormulario() {
         descricaoTextField.setText("");
-        vencimentoTextField.setText("");
+        descricaoTextField.requestFocus();
+
+
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        vencimentoTextField.setText(sdf1.format(Calendar.getInstance().getTime()));
+
         valorTotalTextField.setText("");
         totalParcelaTextField.setText("");
+
+        numeroDigitado = "";
     }
 
     private TableView<Parcelamento> geraParcelamentoTableView() throws SQLException, ParseException {
@@ -290,6 +344,9 @@ public class ParcelamentoNode {
         TableColumn<Parcelamento, String> statusColuna = new TableColumn<>("Status");
         statusColuna.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+        TableColumn<Parcelamento, String> dataAlteracaoColuna = new TableColumn<>("Dt. Alteração");
+        dataAlteracaoColuna.setCellValueFactory(new PropertyValueFactory<>("dataAlteracao"));
+
         ParcelamentoDao parcelamentoDao = new ParcelamentoDao();
 
         ObservableList<Parcelamento> list = parcelamentoDao.buscaPorMesAno();
@@ -304,53 +361,103 @@ public class ParcelamentoNode {
 
         tableView.getColumns().clear();
         tableView.setItems(list);
-        tableView.getColumns().addAll(descricaoColuna, vencimentoColuna, valorParcelaColuna, valorTotalColuna, numeroParcelaColuna, totalParcelaColuna, statusColuna);
+        tableView.getColumns().addAll(descricaoColuna, vencimentoColuna, valorParcelaColuna, valorTotalColuna, numeroParcelaColuna, totalParcelaColuna, statusColuna, dataAlteracaoColuna);
 
         Platform.runLater(()->parcelamentoBuscarPorDataTextField.textProperty().addListener((observable, oldValue, newValue)->{
-            ObservableList<Parcelamento> list1 = null;
-            try {
-                list1 = parcelamentoDao.buscaPorVencimento(newValue);
-                BigDecimal somaBdc1 = BigDecimal.ZERO;
-                for(int i=0; i<list1.size(); i++){
-                    String valorNf1 = NumberFormat.getCurrencyInstance().parse(list1.get(i).getValorParcela()).toString();
-                    BigDecimal valorBdc1 = new BigDecimal(valorNf1);
-                    somaBdc1 = somaBdc1.add(valorBdc1);
-                    String valorStr1 = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(somaBdc1);
-                    totalPagarTextField.setText(valorStr1);
+            if(newValue.equals("")) {
+                try {
+                    geraParcelamentoTableView();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
+            } else {
+                ObservableList<Parcelamento> list1 = null;
+                try {
+                    list1 = parcelamentoDao.buscaPorVencimento(newValue);
+                    BigDecimal somaBdc1 = BigDecimal.ZERO;
+                    for(int i=0; i<list1.size(); i++){
+                        String valorNf1 = NumberFormat.getCurrencyInstance().parse(list1.get(i).getValorParcela()).toString();
+                        BigDecimal valorBdc1 = new BigDecimal(valorNf1);
+                        somaBdc1 = somaBdc1.add(valorBdc1);
+                        String valorStr1 = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(somaBdc1);
+                        totalPagarTextField.setText(valorStr1);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                tableView.getColumns().clear();
+                tableView.setItems(list1);
+                tableView.getColumns().addAll(descricaoColuna, vencimentoColuna, valorParcelaColuna, valorTotalColuna, numeroParcelaColuna, totalParcelaColuna, statusColuna, dataAlteracaoColuna);
             }
-            tableView.getColumns().clear();
-            tableView.setItems(list1);
-            tableView.getColumns().addAll(descricaoColuna, vencimentoColuna, valorParcelaColuna, valorTotalColuna, numeroParcelaColuna, totalParcelaColuna, statusColuna);
         }));
 
         Platform.runLater(()->parcelamentoBuscarPorDescricaoTextField.textProperty().addListener((observable, oldValue, newValue)->{
-            ObservableList<Parcelamento> list1 = null;
-            try {
-                list1 = parcelamentoDao.buscaPorDescricao(newValue);
-                BigDecimal somaBdc1 = BigDecimal.ZERO;
-                for(int i=0; i<list1.size(); i++){
-                    String valorNf1 = NumberFormat.getCurrencyInstance().parse(list1.get(i).getValorParcela()).toString();
-                    BigDecimal valorBdc1 = new BigDecimal(valorNf1);
-                    somaBdc1 = somaBdc1.add(valorBdc1);
-                    String valorStr1 = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(somaBdc1);
-                    totalPagarTextField.setText(valorStr1);
+            if(newValue.equals("")) {
+                try {
+                    geraParcelamentoTableView();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
-                e.printStackTrace();
+            } else {
+                ObservableList<Parcelamento> list1 = null;
+                try {
+                    list1 = parcelamentoDao.buscaPorDescricao(newValue);
+                    BigDecimal somaBdc1 = BigDecimal.ZERO;
+                    for (int i = 0; i < list1.size(); i++) {
+                        String valorNf1 = NumberFormat.getCurrencyInstance().parse(list1.get(i).getValorParcela()).toString();
+                        BigDecimal valorBdc1 = new BigDecimal(valorNf1);
+                        somaBdc1 = somaBdc1.add(valorBdc1);
+                        String valorStr1 = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(somaBdc1);
+                        totalPagarTextField.setText(valorStr1);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                tableView.getColumns().clear();
+                tableView.setItems(list1);
+                tableView.getColumns().addAll(descricaoColuna, vencimentoColuna, valorParcelaColuna, valorTotalColuna, numeroParcelaColuna, totalParcelaColuna, statusColuna, dataAlteracaoColuna);
             }
-            tableView.getColumns().clear();
-            tableView.setItems(list1);
-            tableView.getColumns().addAll(descricaoColuna, vencimentoColuna, valorParcelaColuna, valorTotalColuna, numeroParcelaColuna, totalParcelaColuna, statusColuna);
         }));
 
-
+        Platform.runLater(()->parcelamentoBuscarPorDescricaoSemPagarTextField.textProperty().addListener((observable, oldValue, newValue)->{
+            if(newValue.equals("")) {
+                try {
+                    geraParcelamentoTableView();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                ObservableList<Parcelamento> list1 = null;
+                try {
+                    list1 = parcelamentoDao.buscaPorDescricaoSemPagar(newValue);
+                    BigDecimal somaBdc1 = BigDecimal.ZERO;
+                    for (int i = 0; i < list1.size(); i++) {
+                        String valorNf1 = NumberFormat.getCurrencyInstance().parse(list1.get(i).getValorParcela()).toString();
+                        BigDecimal valorBdc1 = new BigDecimal(valorNf1);
+                        somaBdc1 = somaBdc1.add(valorBdc1);
+                        String valorStr1 = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(somaBdc1);
+                        totalPagarTextField.setText(valorStr1);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                tableView.getColumns().clear();
+                tableView.setItems(list1);
+                tableView.getColumns().addAll(descricaoColuna, vencimentoColuna, valorParcelaColuna, valorTotalColuna, numeroParcelaColuna, totalParcelaColuna, statusColuna, dataAlteracaoColuna);
+            }
+        }));
 
         return tableView;
     }
@@ -376,15 +483,22 @@ public class ParcelamentoNode {
         parcelamentoBuscarPorDescricaoTextField.setPrefWidth(5000);
         gridPane.add(parcelamentoBuscarPorDescricaoTextField,0,4);
 
+        Text parcelamentoBuscarPorDescricaoSemPagarLabel = new Text("Buscar Parcelamento sem pagar por descrição: ");
+        parcelamentoBuscarPorDescricaoSemPagarLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        gridPane.add(parcelamentoBuscarPorDescricaoSemPagarLabel,0,5);
+        parcelamentoBuscarPorDescricaoSemPagarTextField = new TextField();
+        parcelamentoBuscarPorDescricaoSemPagarTextField.setPrefWidth(5000);
+        gridPane.add(parcelamentoBuscarPorDescricaoSemPagarTextField,0,6);
+
         Text totalPagarLabel = new Text("Total a pagar mediante a busca: ");
         totalPagarLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
-        gridPane.add(totalPagarLabel,0,5);
+        gridPane.add(totalPagarLabel,0,7);
         totalPagarTextField = new TextField();
         totalPagarTextField.setEditable(false);
         totalPagarTextField.setMaxWidth(100);
-        gridPane.add(totalPagarTextField,0,6);
+        gridPane.add(totalPagarTextField,0,8);
 
-        gridPane.add(parcelamentoTableView,0,7);
+        gridPane.add(parcelamentoTableView,0,9);
 
         return gridPane;
     }

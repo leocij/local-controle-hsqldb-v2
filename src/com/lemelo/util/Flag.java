@@ -1,5 +1,5 @@
 package com.lemelo.util;
 
 public enum Flag {
-    EDITAR
+    PAGAR, EDITAR
 }

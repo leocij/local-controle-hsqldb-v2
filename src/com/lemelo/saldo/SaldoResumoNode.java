@@ -1,11 +1,14 @@
 package com.lemelo.saldo;
 
+import com.lemelo.data_controle.DataControleDao;
 import com.lemelo.entrada.Entrada;
 import com.lemelo.entrada.EntradaDao;
 import com.lemelo.saida.Saida;
 import com.lemelo.saida.SaidaDao;
+import com.lemelo.sobrou_mes_passado.SobrouMesPassadoDao;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -14,7 +17,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -36,60 +38,103 @@ public class SaldoResumoNode{
     private TextField saidaBuscarPorDescricaoTextField;
     private TextField entradaBuscarPorDataTextField;
     private TextField entradaBuscarPorDescricaoTextField;
+    private TextField sobrouMesPassadoTextField;
+    private TextField ganhoRealTextField;
+    private TextField dataAtualTextField;
+    private TextField dataControleTextField;
 
-    public Node executar(Tab saldoResumoTab) throws SQLException, ParseException {
+    public Node executar(Tab saldoResumoTab) {
 
         GridPane cabecalhoGridPane = geraCabecalhoGridPane();
 
-        saldoResumoTab.setOnSelectionChanged(e->{
-            if(saldoResumoTab.isSelected()==true) {
-                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-                String dataAtual = sdf1.format(Calendar.getInstance().getTime());
-                String mesAno = dataAtual.substring(3,10);
+        saldoResumoTab.setOnSelectionChanged((Event e) ->{
+            if(saldoResumoTab.isSelected()) {
+
+                //Coloca data atual
+                SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                String dataAtualStr = sdf1.format(Calendar.getInstance().getTime());
+                String dataAtualMesAno = dataAtualStr.substring(3, 10);
+                dataAtualTextField.setText(dataAtualStr);
+                dataAtualTextField.setFocusTraversable(false);
+                dataAtualTextField.setEditable(false);
+
+                //Busca data de controle
+                String dataControleStr = null;
+                DataControleDao dataControleDao = new DataControleDao();
+                try {
+                    dataControleStr = dataControleDao.buscaDataControle();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+                dataControleTextField.setText(dataControleStr);
+
+                //Busca Total de Entrada
                 SaldoLogica saldoLogica = new SaldoLogica();
                 String totalEntradaStr = null;
                 try {
-                    totalEntradaStr = saldoLogica.buscaTotalEntrada(mesAno);
+                    totalEntradaStr = saldoLogica.buscaTotalEntrada(dataAtualMesAno);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
-                } catch (ParseException e1) {
-                    e1.printStackTrace();
                 }
-                String finalTotalEntradaStr = totalEntradaStr;
-                if(finalTotalEntradaStr.equals("")){
-                    finalTotalEntradaStr = "R$ 0,00";
+                if (totalEntradaStr==null || totalEntradaStr.equals("")) {
+                    totalEntradaStr = "R$ 0,00";
                 }
-                String finalTotalEntradaNovoStr = "" + finalTotalEntradaStr;
-                Platform.runLater(()->totalEntradaTextField.setText(finalTotalEntradaNovoStr));
+                totalEntradaTextField.setText(totalEntradaStr);
 
+                //Busca Total de Saída
                 String totalSaidaStr = null;
                 try {
-                    totalSaidaStr = saldoLogica.buscaTotalSaida(mesAno);
+                    totalSaidaStr = saldoLogica.buscaTotalSaida(dataAtualMesAno);
                 } catch (SQLException e1) {
                     e1.printStackTrace();
                 }
-                String finalTotalSaidaStr = totalSaidaStr;
-                if(finalTotalSaidaStr.equals("")){
-                    finalTotalSaidaStr = "R$ 0,00";
+                if (totalSaidaStr==null || totalSaidaStr.equals("")) {
+                    totalSaidaStr = "R$ 0,00";
                 }
-                String finalTotalSaidaNovoStr = "" + finalTotalSaidaStr;
-                Platform.runLater(()->totalSaidaTextField.setText(finalTotalSaidaNovoStr));
+                totalSaidaTextField.setText(totalSaidaStr);
 
+                SobrouMesPassadoDao sobrouMesPassadoDao = new SobrouMesPassadoDao();
+                String sobrouMesPassadoStr = null;
                 try {
+                    sobrouMesPassadoStr = sobrouMesPassadoDao.buscaSobrouMesPassado();
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+                if (sobrouMesPassadoStr==null || sobrouMesPassadoStr.equals("")) {
+                    sobrouMesPassadoStr = "R$ 0,00";
+                }
+                sobrouMesPassadoTextField.setText(sobrouMesPassadoStr);
 
-                    String totalEntradaNf = NumberFormat.getCurrencyInstance().parse(finalTotalEntradaStr).toString();
-                    BigDecimal totalEntradaBdc = new BigDecimal(totalEntradaNf);
-                    String totalSaidaNf = NumberFormat.getCurrencyInstance().parse(finalTotalSaidaStr).toString();
-                    BigDecimal totalSaidaBdc = new BigDecimal(totalSaidaNf);
-                    BigDecimal saldoMensalAtual = totalEntradaBdc.subtract(totalSaidaBdc);
-                    Platform.runLater(()->saldoAtualTextField.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(saldoMensalAtual)));
+                //Preenche Saldo Atual
+                String totalEntradaNf = null;
+                String totalSaidaNf = null;
+                try {
+                    totalEntradaNf = NumberFormat.getCurrencyInstance().parse(totalEntradaStr).toString();
+                    totalSaidaNf = NumberFormat.getCurrencyInstance().parse(totalSaidaStr).toString();
                 } catch (ParseException e1) {
                     e1.printStackTrace();
                 }
+                assert totalEntradaNf != null;
+                BigDecimal totalEntradaBdc = new BigDecimal(totalEntradaNf);
+                assert totalSaidaNf != null;
+                BigDecimal totalSaidaBdc = new BigDecimal(totalSaidaNf);
+                BigDecimal saldoMensalAtualBdc = totalEntradaBdc.subtract(totalSaidaBdc);
+                saldoAtualTextField.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(saldoMensalAtualBdc));
+
+                //Preenche Ganho Real
+                String sobrouMesPassadoNf = null;
+                try {
+                    sobrouMesPassadoNf = NumberFormat.getCurrencyInstance().parse(sobrouMesPassadoStr).toString();
+                } catch (ParseException e1) {
+                    e1.printStackTrace();
+                }
+                assert sobrouMesPassadoNf != null;
+                BigDecimal sobrouMesPassadoBdc = new BigDecimal(sobrouMesPassadoNf);
+                BigDecimal ganhoRealBdc = saldoMensalAtualBdc.subtract(sobrouMesPassadoBdc);
+                String ganhoRealStr = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(ganhoRealBdc);
+                ganhoRealTextField.setText(ganhoRealStr);
             }
         });
-
-
 
         TableView<Saida> saidaTableView = geraSaidaTableView();
         GridPane saidaGridPane = geraSaidaGridPane(saidaTableView);
@@ -120,7 +165,7 @@ public class SaldoResumoNode{
         return gridPane;
     }
 
-    private GridPane geraCabecalhoGridPane() throws SQLException, ParseException {
+    private GridPane geraCabecalhoGridPane() {
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(5, 2, 0, 2));
         gridPane.setVgap(5);
@@ -130,13 +175,14 @@ public class SaldoResumoNode{
         Text dataAtualLabel = new Text("Data Atual: ");
         dataAtualLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
         gridPane.add(dataAtualLabel, 0, 0);
-        TextField dataAtualTextField = new TextField();
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        String dataAtualStr = sdf1.format(Calendar.getInstance().getTime());
-        dataAtualTextField.setText(dataAtualStr);
-        dataAtualTextField.setFocusTraversable(false);
-        dataAtualTextField.setEditable(false);
+        dataAtualTextField = new TextField();
         gridPane.add(dataAtualTextField, 0, 1);
+
+        Text dataControleLabel = new Text("Data Controle:: ");
+        dataControleLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        gridPane.add(dataControleLabel,1,0);
+        dataControleTextField = new TextField();
+        gridPane.add(dataControleTextField,1,1);
 
         Text totalEntradaLabel = new Text("Total da Entrada: ");
         totalEntradaLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
@@ -150,11 +196,11 @@ public class SaldoResumoNode{
         totalSaidaTextField = new TextField();
         gridPane.add(totalSaidaTextField,1,3);
 
-        Text saldoPassadoLabel = new Text("Saldo mês passado: ");
-        saldoPassadoLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
-        gridPane.add(saldoPassadoLabel, 0, 4);
-        TextField saldoPassadoTextField = new TextField();
-        gridPane.add(saldoPassadoTextField,0,5);
+        Text sobrouMesPassadoLabel = new Text("Sobrou do mês passado: ");
+        sobrouMesPassadoLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        gridPane.add(sobrouMesPassadoLabel, 0, 4);
+        sobrouMesPassadoTextField = new TextField();
+        gridPane.add(sobrouMesPassadoTextField,0,5);
 
         Text saldoAtualLabel = new Text("Saldo mês atual: ");
         saldoAtualLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
@@ -165,13 +211,13 @@ public class SaldoResumoNode{
         Text ganhoRealLabel = new Text("Ganho real: ");
         ganhoRealLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
         gridPane.add(ganhoRealLabel, 2,4);
-        TextField ganhoRealTextField = new TextField();
+        ganhoRealTextField = new TextField();
         gridPane.add(ganhoRealTextField,2, 5);
 
         return gridPane;
     }
 
-    private TableView<Saida> geraSaidaTableView() throws SQLException {
+    private TableView<Saida> geraSaidaTableView() {
 
         TableColumn<Saida, String> dataHoraColuna = new TableColumn<>("Dt./Hr.");
         dataHoraColuna.setMinWidth(100);
@@ -216,19 +262,6 @@ public class SaldoResumoNode{
             tableView.getColumns().addAll(dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
         }));
 
-
-//        Platform.runLater(()->saidaBuscarPorDataTextField.addEventFilter(KeyEvent.KEY_PRESSED, e->{
-//            ObservableList<Saida> list = null;
-//            try {
-//                list = saidaDao.buscaSaidaPorData(saidaBuscarPorDataTextField.getText());
-//            } catch (SQLException e1) {
-//                e1.printStackTrace();
-//            }
-//            tableView.getColumns().clear();
-//            tableView.setItems(list);
-//            tableView.getColumns().addAll(dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
-//        }));
-
         return tableView;
     }
 
@@ -257,7 +290,7 @@ public class SaldoResumoNode{
         return gridPane;
     }
 
-    private TableView<Entrada> geraEntradaTableView() throws SQLException {
+    private TableView<Entrada> geraEntradaTableView() {
 
         TableColumn<Entrada, String> dataHoraColuna = new TableColumn<>("Dt./Hr.");
         dataHoraColuna.setMinWidth(100);

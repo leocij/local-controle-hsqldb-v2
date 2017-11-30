@@ -21,12 +21,13 @@ public class ParcelamentoDao {
         String valorTotalStr = parcelamento.getValorTotal();
         String totalParcelaStr = parcelamento.getTotalParcela();
         String statusStr = parcelamento.getStatus();
+        String dataAlteracao = parcelamento.getDataAlteracao();
 
         Integer totalParcelaInt = Integer.parseInt(totalParcelaStr);
         for (int i=0; i<totalParcelaInt; i++) {
 
-            String parcelamentoSqlInsert = "insert into parcelamento (descricao, vencimento, valor_parcela, valor_total, numero_parcela, total_parcela, status)"
-                    +" values ('"+descricaoStr+"','"+vencimentoStr+"','"+valorParcelaStr+"','"+valorTotalStr+"','"+Integer.toString(i + 1)+"','"+totalParcelaStr+"','"+statusStr+"')";
+            String parcelamentoSqlInsert = "insert into parcelamento (descricao, vencimento, valor_parcela, valor_total, numero_parcela, total_parcela, status, data_alteracao)"
+                    +" values ('"+descricaoStr+"','"+vencimentoStr+"','"+valorParcelaStr+"','"+valorTotalStr+"','"+Integer.toString(i + 1)+"','"+totalParcelaStr+"','"+statusStr+"','"+dataAlteracao+"')";
 
             new FabricaConexao().insert(parcelamentoSqlInsert);
 
@@ -50,17 +51,20 @@ public class ParcelamentoDao {
         String parcelamentoSqlSelect = "select * from parcelamento where vencimento like '%"+mesAno+"%'";
         ResultSet resultSet = new FabricaConexao().getResultSet(parcelamentoSqlSelect);
         while (resultSet.next()) {
-            Parcelamento parcelamento = new Parcelamento();
-            parcelamento.setId(resultSet.getInt("id"));
-            parcelamento.setDescricao(resultSet.getString("descricao"));
-            parcelamento.setVencimento(resultSet.getString("vencimento"));
-            parcelamento.setValorParcela(resultSet.getString("valor_parcela"));
-            parcelamento.setValorTotal(resultSet.getString("valor_total"));
-            parcelamento.setNumeroParcela(resultSet.getString("numero_parcela"));
-            parcelamento.setTotalParcela(resultSet.getString("total_parcela"));
-            parcelamento.setStatus(resultSet.getString("status"));
+            if (resultSet.getString("status").equals("-")) {
+                Parcelamento parcelamento = new Parcelamento();
+                parcelamento.setId(resultSet.getInt("id"));
+                parcelamento.setDescricao(resultSet.getString("descricao"));
+                parcelamento.setVencimento(resultSet.getString("vencimento"));
+                parcelamento.setValorParcela(resultSet.getString("valor_parcela"));
+                parcelamento.setValorTotal(resultSet.getString("valor_total"));
+                parcelamento.setNumeroParcela(resultSet.getString("numero_parcela"));
+                parcelamento.setTotalParcela(resultSet.getString("total_parcela"));
+                parcelamento.setStatus(resultSet.getString("status"));
+                parcelamento.setDataAlteracao(resultSet.getString("data_alteracao"));
 
-            parcelamentos.add(parcelamento);
+                parcelamentos.add(parcelamento);
+            }
         }
         resultSet.close();
         return parcelamentos;
@@ -80,6 +84,7 @@ public class ParcelamentoDao {
             parcelamento.setNumeroParcela(resultSet.getString("numero_parcela"));
             parcelamento.setTotalParcela(resultSet.getString("total_parcela"));
             parcelamento.setStatus(resultSet.getString("status"));
+            parcelamento.setDataAlteracao(resultSet.getString("data_alteracao"));
 
             parcelamentos.add(parcelamento);
         }
@@ -102,7 +107,44 @@ public class ParcelamentoDao {
             parcelamento.setTotalParcela(resultSet.getString("total_parcela"));
             parcelamento.setStatus(resultSet.getString("status"));
 
+
             parcelamentos.add(parcelamento);
+        }
+        resultSet.close();
+        return parcelamentos;
+    }
+
+    public void update(Parcelamento parcelamento) {
+        SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        String dataAlteracao = sdf3.format(Calendar.getInstance().getTime());
+        String parcelamentoSqlUpdate = "";
+        if (parcelamento.getStatus().equals("-")) {
+            parcelamentoSqlUpdate = "update parcelamento set status = 'pago', data_alteracao = '"+dataAlteracao+"' where id = " + parcelamento.getId();
+        } else if (parcelamento.getStatus().equals("pago")) {
+            parcelamentoSqlUpdate = "update parcelamento set status = '-', data_alteracao = '"+dataAlteracao+"' where id = " + parcelamento.getId();
+        }
+        new FabricaConexao().update(parcelamentoSqlUpdate);
+    }
+
+    public ObservableList<Parcelamento> buscaPorDescricaoSemPagar(String newValue) throws SQLException {
+        ObservableList<Parcelamento> parcelamentos = FXCollections.observableArrayList();
+        String parcelamentoSqlSelect = "select * from parcelamento where descricao like '%"+newValue+"%'";
+        ResultSet resultSet = new FabricaConexao().getResultSet(parcelamentoSqlSelect);
+        while (resultSet.next()) {
+            if(resultSet.getString("status").equals("-")){
+                Parcelamento parcelamento = new Parcelamento();
+                parcelamento.setId(resultSet.getInt("id"));
+                parcelamento.setDescricao(resultSet.getString("descricao"));
+                parcelamento.setVencimento(resultSet.getString("vencimento"));
+                parcelamento.setValorParcela(resultSet.getString("valor_parcela"));
+                parcelamento.setValorTotal(resultSet.getString("valor_total"));
+                parcelamento.setNumeroParcela(resultSet.getString("numero_parcela"));
+                parcelamento.setTotalParcela(resultSet.getString("total_parcela"));
+                parcelamento.setStatus(resultSet.getString("status"));
+                parcelamento.setDataAlteracao(resultSet.getString("data_alteracao"));
+
+                parcelamentos.add(parcelamento);
+            }
         }
         resultSet.close();
         return parcelamentos;

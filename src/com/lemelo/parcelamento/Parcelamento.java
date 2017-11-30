@@ -9,6 +9,7 @@ public class Parcelamento {
     private String numeroParcela;
     private String totalParcela;
     private String status;
+    private String dataAlteracao;
 
     public Integer getId() {
         return id;
@@ -72,5 +73,28 @@ public class Parcelamento {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDataAlteracao() {
+        return dataAlteracao;
+    }
+
+    public void setDataAlteracao(String dataAlteracao) {
+        this.dataAlteracao = dataAlteracao;
+    }
+
+    @Override
+    public String toString() {
+        return "Parcelamento{" +
+                "id=" + id +
+                ", descricao='" + descricao + '\'' +
+                ", vencimento='" + vencimento + '\'' +
+                ", valorParcela='" + valorParcela + '\'' +
+                ", valorTotal='" + valorTotal + '\'' +
+                ", numeroParcela='" + numeroParcela + '\'' +
+                ", totalParcela='" + totalParcela + '\'' +
+                ", status='" + status + '\'' +
+                ", dataAlteracao='" + dataAlteracao + '\'' +
+                '}';
     }
 }

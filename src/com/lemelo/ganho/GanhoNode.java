@@ -296,6 +296,7 @@ public class GanhoNode {
         //SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         //dataTextField.setText(sdf1.format(Calendar.getInstance().getTime()));
         clienteComboBox.setValue(null);
+        numeroDigitado = "";
     }
 
     private TableView<Ganho> geraGanhoTableView() throws SQLException {
