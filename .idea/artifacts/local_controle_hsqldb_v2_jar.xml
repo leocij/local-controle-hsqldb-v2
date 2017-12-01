@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="local-controle-hsqldb-v2:jar">
-    <output-path>$USER_HOME$/OneDrive/Software Controle</output-path>
+    <output-path>$PROJECT_DIR$/Saida_jar</output-path>
     <root id="archive" name="local-controle-hsqldb-v2.jar">
       <element id="module-output" name="local-controle-hsqldb-v2" />
       <element id="extracted-dir" path="$USER_HOME$/Downloads/hsqldb-2.4.0/hsqldb-2.4.0/hsqldb/lib/hsqldb.jar" path-in-jar="/" />

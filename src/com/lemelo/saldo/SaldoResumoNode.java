@@ -130,7 +130,7 @@ public class SaldoResumoNode{
                 }
                 assert sobrouMesPassadoNf != null;
                 BigDecimal sobrouMesPassadoBdc = new BigDecimal(sobrouMesPassadoNf);
-                BigDecimal ganhoRealBdc = saldoMensalAtualBdc.subtract(sobrouMesPassadoBdc);
+                BigDecimal ganhoRealBdc = totalEntradaBdc.subtract(sobrouMesPassadoBdc);
                 String ganhoRealStr = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(ganhoRealBdc);
                 ganhoRealTextField.setText(ganhoRealStr);
             }

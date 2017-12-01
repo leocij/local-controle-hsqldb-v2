@@ -7,46 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3964637d-e7cf-4860-9139-eb470604e409" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/com/lemelo/data_controle/DataControle.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/com/lemelo/data_controle/DataControleDao.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/com/lemelo/sobrou_mes_passado/SobrouMesPassado.java" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/src/com/lemelo/sobrou_mes_passado/SobrouMesPassadoDao.java" />
-      <change beforePath="$PROJECT_DIR$/.idea/artifacts/local_controle_hsqldb_v2_jar.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/local_controle_hsqldb_v2_jar.xml" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/database/db.lck" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/database/db.log" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/database/db.properties" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/database/db.script" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/Principal.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/Principal.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/entrada/EntradaDao.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/entrada/EntradaDao.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/entrada/EntradaNode.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/entrada/EntradaNode.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/fixa/FixaNode.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/fixa/FixaNode.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/ganho/GanhoNode.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/ganho/GanhoNode.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/parcelamento/Parcelamento.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/parcelamento/Parcelamento.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/parcelamento/ParcelamentoDao.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/parcelamento/ParcelamentoDao.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/parcelamento/ParcelamentoNode.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/parcelamento/ParcelamentoNode.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/saldo/Saldo.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/saldo/Saldo.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/saldo/SaldoDao.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/saldo/SaldoDao.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/saldo/SaldoLogica.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/saldo/SaldoLogica.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/saldo/SaldoResumoNode.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/saldo/SaldoResumoNode.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/util/BibliotecaString.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/util/BibliotecaString.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/util/FabricaConexao.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/util/FabricaConexao.class" />
-      <change beforePath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/util/Flag.class" afterPath="$PROJECT_DIR$/out/production/local-controle-hsqldb-v2/com/lemelo/util/Flag.class" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/Principal.java" afterPath="$PROJECT_DIR$/src/com/lemelo/Principal.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/entrada/EntradaDao.java" afterPath="$PROJECT_DIR$/src/com/lemelo/entrada/EntradaDao.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/entrada/EntradaNode.java" afterPath="$PROJECT_DIR$/src/com/lemelo/entrada/EntradaNode.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/fixa/FixaNode.java" afterPath="$PROJECT_DIR$/src/com/lemelo/fixa/FixaNode.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/ganho/GanhoNode.java" afterPath="$PROJECT_DIR$/src/com/lemelo/ganho/GanhoNode.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/parcelamento/Parcelamento.java" afterPath="$PROJECT_DIR$/src/com/lemelo/parcelamento/Parcelamento.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoDao.java" afterPath="$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoDao.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoNode.java" afterPath="$PROJECT_DIR$/src/com/lemelo/parcelamento/ParcelamentoNode.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/saldo/Saldo.java" afterPath="$PROJECT_DIR$/src/com/lemelo/saldo/Saldo.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/saldo/SaldoDao.java" afterPath="$PROJECT_DIR$/src/com/lemelo/saldo/SaldoDao.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/saldo/SaldoLogica.java" afterPath="$PROJECT_DIR$/src/com/lemelo/saldo/SaldoLogica.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/saldo/SaldoResumoNode.java" afterPath="$PROJECT_DIR$/src/com/lemelo/saldo/SaldoResumoNode.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/util/BibliotecaString.java" afterPath="$PROJECT_DIR$/src/com/lemelo/util/BibliotecaString.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/util/FabricaConexao.java" afterPath="$PROJECT_DIR$/src/com/lemelo/util/FabricaConexao.java" />
-      <change beforePath="$PROJECT_DIR$/src/com/lemelo/util/Flag.java" afterPath="$PROJECT_DIR$/src/com/lemelo/util/Flag.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/local_controle_hsqldb_v2_jar.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/local_controle_hsqldb_v2_jar.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/com/lemelo/saldo/SaldoResumoNode.java" afterPath="$PROJECT_DIR$/src/com/lemelo/saldo/SaldoResumoNode.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -57,7 +20,20 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf>
+      <file leaf-file-name="SaldoResumoNode.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/lemelo/saldo/SaldoResumoNode.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="431">
+              <caret line="138" column="63" lean-forward="false" selection-start-line="138" selection-start-column="63" selection-end-line="138" selection-end-column="63" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -128,10 +104,10 @@
         <option value="$PROJECT_DIR$/src/com/lemelo/data_controle/DataControleDao.java" />
         <option value="$PROJECT_DIR$/src/com/lemelo/sobrou_mes_passado/SobrouMesPassadoDao.java" />
         <option value="$PROJECT_DIR$/src/com/lemelo/saldo/SaldoLogica.java" />
-        <option value="$PROJECT_DIR$/src/com/lemelo/saldo/SaldoResumoNode.java" />
         <option value="$PROJECT_DIR$/src/com/lemelo/entrada/EntradaDao.java" />
         <option value="$PROJECT_DIR$/src/com/lemelo/entrada/EntradaNode.java" />
         <option value="$PROJECT_DIR$/src/com/lemelo/Principal.java" />
+        <option value="$PROJECT_DIR$/src/com/lemelo/saldo/SaldoResumoNode.java" />
       </list>
     </option>
   </component>
@@ -158,9 +134,10 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="AndroidView" />
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -245,13 +222,6 @@
               <item name="local-controle-hsqldb-v2" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="lemelo" type="462c0819:PsiDirectoryNode" />
-              <item name="sobrou_mes_passado" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="local-controle-hsqldb-v2" type="b2602c69:ProjectViewProjectNode" />
-              <item name="local-controle-hsqldb-v2" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="lemelo" type="462c0819:PsiDirectoryNode" />
               <item name="util" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -264,11 +234,10 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$USER_HOME$/OneDrive/Software Controle" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/Saida_jar" />
     <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -296,12 +265,6 @@
     </option>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <module />
-    </configuration>
     <configuration name="Principal" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
         <pattern>
@@ -320,6 +283,12 @@
       <option name="PASS_PARENT_ENVS" value="true" />
       <module name="local-controle-hsqldb-v2" />
       <envs />
+    </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -349,7 +318,6 @@
         </option>
         <option name="vmOptions" value="" />
       </ExternalSystemSettings>
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
     </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
@@ -386,6 +354,12 @@
       <module name="" />
       <envs />
     </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+    </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
       <option name="USE_SOCKET_TRANSPORT" value="true" />
       <option name="SERVER_MODE" value="false" />
@@ -419,12 +393,6 @@
       <envs />
       <properties />
       <listeners />
-    </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file id="idea.log" enabled="true" />
     </configuration>
     <recent_temporary>
       <list size="1">
@@ -467,12 +435,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43307087" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.43307087" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32977587" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.36676428" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.238653" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -657,7 +625,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4275">
           <caret line="29" column="13" lean-forward="false" selection-start-line="29" selection-start-column="13" selection-end-line="29" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -665,7 +632,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-34">
           <caret line="14" column="13" lean-forward="false" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -673,7 +639,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -681,7 +646,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="397">
           <caret line="38" column="42" lean-forward="false" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="42" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -689,7 +653,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="74" lean-forward="false" selection-start-line="12" selection-start-column="74" selection-end-line="12" selection-end-column="74" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -697,7 +660,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="452">
           <caret line="64" column="113" lean-forward="false" selection-start-line="64" selection-start-column="113" selection-end-line="64" selection-end-column="113" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -705,7 +667,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -713,7 +674,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="202">
           <caret line="21" column="18" lean-forward="false" selection-start-line="21" selection-start-column="18" selection-end-line="21" selection-end-column="18" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -721,25 +681,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
           <caret line="97" column="4" lean-forward="false" selection-start-line="97" selection-start-column="4" selection-end-line="106" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/lemelo/sobrou_mes_passado/SobrouMesPassadoDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="312">
-          <caret line="59" column="123" lean-forward="false" selection-start-line="59" selection-start-column="123" selection-end-line="59" selection-end-column="123" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lemelo/sobrou_mes_passado/SobrouMesPassadoDao.java" />
     <entry file="file://$PROJECT_DIR$/src/com/lemelo/entrada/TotalEntradaDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
           <caret line="9" column="113" lean-forward="false" selection-start-line="9" selection-start-column="113" selection-end-line="9" selection-end-column="113" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -747,7 +696,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
           <caret line="21" column="5" lean-forward="false" selection-start-line="21" selection-start-column="5" selection-end-line="21" selection-end-column="5" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -755,7 +703,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="303">
           <caret line="169" column="20" lean-forward="false" selection-start-line="169" selection-start-column="20" selection-end-line="172" selection-end-column="71" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -763,30 +710,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="34" column="76" lean-forward="false" selection-start-line="34" selection-start-column="76" selection-end-line="34" selection-end-column="76" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/lemelo/sobrou_mes_passado/SobrouMesPassado.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="15" column="29" lean-forward="false" selection-start-line="15" selection-start-column="29" selection-end-line="15" selection-end-column="29" />
-          <folding>
-            <element signature="e#186#187#0" expanded="false" />
-            <element signature="e#211#212#0" expanded="false" />
-            <element signature="e#248#249#0" expanded="false" />
-            <element signature="e#276#277#0" expanded="false" />
-            <element signature="e#334#335#0" expanded="false" />
-            <element signature="e#374#375#0" expanded="false" />
-            <element signature="e#406#407#0" expanded="false" />
-            <element signature="e#449#450#0" expanded="false" />
-            <element signature="e#488#489#0" expanded="false" />
-            <element signature="e#552#553#0" expanded="false" />
-            <element signature="e#608#609#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/lemelo/sobrou_mes_passado/SobrouMesPassado.java" />
     <entry file="file://$PROJECT_DIR$/src/com/lemelo/Principal.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="153">
@@ -797,8 +724,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/lemelo/saldo/SaldoResumoNode.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="159">
-          <caret line="68" column="63" lean-forward="false" selection-start-line="68" selection-start-column="63" selection-end-line="68" selection-end-column="63" />
+        <state relative-caret-position="431">
+          <caret line="138" column="63" lean-forward="false" selection-start-line="138" selection-start-column="63" selection-end-line="138" selection-end-column="63" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
