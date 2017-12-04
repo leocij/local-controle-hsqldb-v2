@@ -1,6 +1,7 @@
 package com.lemelo.cliente;
 
 import com.lemelo.util.Flag;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,6 +21,13 @@ public class ClienteNode {
     private TableView<Cliente> tableView;
 
     public Node executar(Tab clienteResumoTab) throws SQLException {
+
+        clienteResumoTab.setOnSelectionChanged(e->{
+            if(clienteResumoTab.isSelected()==true) {
+                Platform.runLater(()->nomeTextField.requestFocus());
+            }
+        });
+
         GridPane formularioGridPane = geraFormularioGridPane();
         GridPane botoesGridPane = geraBotoesGridPane();
         tableView = new TableView<>();
@@ -85,6 +93,7 @@ public class ClienteNode {
             } else {
                 clienteDao.insert(cliente);
                 nomeTextField.setText("");
+                nomeTextField.requestFocus();
                 try {
                     geraClienteTableView();
                 } catch (SQLException e) {

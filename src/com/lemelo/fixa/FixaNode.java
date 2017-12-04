@@ -35,6 +35,12 @@ public class FixaNode {
 
     public Node executar(Tab fixaTab) throws SQLException {
 
+        fixaTab.setOnSelectionChanged(e->{
+            if(fixaTab.isSelected()==true) {
+                Platform.runLater(()->descricaoTextField.requestFocus());
+            }
+        });
+
         GridPane descricaoGridPane = geraDescricaoGridPane();
 
         GridPane formularioGridPane = geraFormularioGridPane();

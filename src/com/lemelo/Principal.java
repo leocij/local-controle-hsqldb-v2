@@ -9,6 +9,7 @@ import com.lemelo.fixa.FixaDao;
 import com.lemelo.fixa.FixaNode;
 import com.lemelo.ganho.GanhoNode;
 import com.lemelo.parcelamento.ParcelamentoNode;
+import com.lemelo.relatorio.RelatorioNode;
 import com.lemelo.saida.SaidaNode;
 import com.lemelo.saldo.SaldoDao;
 import com.lemelo.saldo.SaldoLogica;
@@ -142,7 +143,14 @@ public class Principal extends Application {
         clienteResumoTab.setContent(new ClienteNode().executar(clienteResumoTab));
         tabPane.getTabs().add(clienteResumoTab);
 
-        Integer WIDTH_TAM = 847;
+        Tab relatorioTab = new Tab();
+        relatorioTab.setText("Relatório");
+        relatorioTab.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        relatorioTab.setClosable(false);
+        relatorioTab.setContent(new RelatorioNode().executar(relatorioTab));
+        tabPane.getTabs().add(relatorioTab);
+
+        Integer WIDTH_TAM = 940;
         Integer HEIGHT_TAM = 680;
         Scene scene = new Scene(tabPane, WIDTH_TAM, HEIGHT_TAM, Color.GRAY);
         primaryStage.setMinWidth(WIDTH_TAM);

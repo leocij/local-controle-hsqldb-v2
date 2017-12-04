@@ -19,14 +19,13 @@ import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class ParcelamentoNode {
     private TextField parcelamentoBuscarPorDescricaoTextField;
     private TextField descricaoTextField;
-    private TextField vencimentoTextField;
+    private DatePicker vencimentoDatePiker;
     private TextField valorTotalTextField;
     private TextField totalParcelaTextField;
     private String numeroDigitado;
@@ -141,10 +140,8 @@ public class ParcelamentoNode {
         Text vencimentoLabel = new Text("Vencimento: ");
         vencimentoLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
         gridPane.add(vencimentoLabel,0,0);
-        vencimentoTextField = new TextField();
-        gridPane.add(vencimentoTextField,0,1);
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        vencimentoTextField.setText(sdf1.format(Calendar.getInstance().getTime()));
+        vencimentoDatePiker = new DatePicker();
+        gridPane.add(vencimentoDatePiker,0,1);
 
         Text valorTotalLabel = new Text("Valor Total: ");
         valorTotalLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
@@ -245,7 +242,7 @@ public class ParcelamentoNode {
 
         salvarButton.setOnAction(event -> {
             String descricaoStr = descricaoTextField.getText();
-            String vencimentoStr = vencimentoTextField.getText();
+            String vencimentoStr = vencimentoDatePiker.getValue().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
             String valorTotalStr = valorTotalTextField.getText();
             String totalParcelaStr = totalParcelaTextField.getText();
 
@@ -311,10 +308,6 @@ public class ParcelamentoNode {
         descricaoTextField.setText("");
         descricaoTextField.requestFocus();
 
-
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        vencimentoTextField.setText(sdf1.format(Calendar.getInstance().getTime()));
-
         valorTotalTextField.setText("");
         totalParcelaTextField.setText("");
 
@@ -351,12 +344,12 @@ public class ParcelamentoNode {
 
         ObservableList<Parcelamento> list = parcelamentoDao.buscaPorMesAno();
         BigDecimal somaBdc = BigDecimal.ZERO;
-        for(int i=0; i<list.size(); i++){
-            String valorNf = NumberFormat.getCurrencyInstance().parse(list.get(i).getValorParcela()).toString();
+        for (Parcelamento aList : list) {
+            String valorNf = NumberFormat.getCurrencyInstance().parse(aList.getValorParcela()).toString();
             BigDecimal valorBdc = new BigDecimal(valorNf);
             somaBdc = somaBdc.add(valorBdc);
             String valorStr = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(somaBdc);
-            Platform.runLater(()->totalPagarTextField.setText(valorStr));
+            Platform.runLater(() -> totalPagarTextField.setText(valorStr));
         }
 
         tableView.getColumns().clear();

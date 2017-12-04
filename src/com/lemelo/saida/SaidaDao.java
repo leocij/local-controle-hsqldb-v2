@@ -107,4 +107,22 @@ public class SaidaDao {
         resultSet.close();
         return saidas;
     }
+
+    public ObservableList<Saida> buscaPorDescricaoMesAno(String newValue, String mesAno) throws SQLException {
+        ObservableList<Saida> saidas = FXCollections.observableArrayList();
+        String saidaSqlSelect = "select * from saida where descricao like '%"+newValue+"%' and data_hora like '%"+mesAno+"%'";
+        ResultSet resultSet = new FabricaConexao().getResultSet(saidaSqlSelect);
+        while (resultSet.next()) {
+            Saida saida = new Saida();
+            saida.setId(resultSet.getInt("id"));
+            saida.setDataHora(resultSet.getString("data_hora"));
+            saida.setDescricao(resultSet.getString("descricao"));
+            saida.setValor(resultSet.getString("valor"));
+            saida.setUltimaEdicao(resultSet.getString("ultima_edicao"));
+
+            saidas.add(saida);
+        }
+        resultSet.close();
+        return saidas;
+    }
 }

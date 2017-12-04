@@ -1,5 +1,86 @@
-/*C1*/SET SCHEMA SYSTEM_LOBS
-INSERT INTO BLOCKS VALUES(0,2147483647,0)
+/*C15*/SET SCHEMA PUBLIC
+create table if not exists sobrou_mes_passado (id integer identity primary key, data varchar(20), sobrou_mes_passado varchar(30))
+create table if not exists data_controle (id integer identity primary key, data_controle varchar(20))
+create table if not exists cliente (id integer identity primary key, nome varchar(200))
+create table if not exists ganho (id integer identity primary key, data varchar(20), dia_semana varchar(20), cliente varchar(200), status varchar(10), sessao varchar(2), quantidade varchar(2), valor varchar(30))
+create table if not exists fixa (id integer identity primary key, descricao varchar(200), vencimento varchar(20), valor varchar(30))
+create table if not exists parcelamento (id integer identity primary key, descricao varchar(200), vencimento varchar(20), valor_parcela varchar(30), valor_total varchar(30), numero_parcela varchar(5), total_parcela varchar(5), status varchar(10),data_alteracao varchar(20))
+create table if not exists total_saida (id integer identity primary key, data varchar(20), valor varchar(30))
+create table if not exists total_entrada (id integer identity primary key, data varchar(20), valor varchar(30))
+create table if not exists saldo (id integer identity primary key, data varchar(20), saldo varchar(30))
+create table if not exists entrada (id integer identity primary key, data_hora varchar(20), descricao varchar(200), valor varchar(30), ultima_edicao varchar(20))
+create table if not exists saida (id integer identity primary key, data_hora varchar(20), descricao varchar(200), valor varchar(30), ultima_edicao varchar(20))
+DISCONNECT
+/*C16*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C17*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C18*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C19*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C20*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C21*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C22*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C23*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C24*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C25*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C26*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C27*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C28*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C29*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C30*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C31*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C32*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C33*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C34*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C35*/SET SCHEMA PUBLIC
+INSERT INTO TOTAL_SAIDA VALUES(0,'04/12/2017','R$ 10,00')
 COMMIT
-/*C2*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C36*/SET SCHEMA PUBLIC
+INSERT INTO SAIDA VALUES(0,'04/12/2017 17:49','teste 1','R$ 10,00','-')
+COMMIT
+DISCONNECT
+/*C37*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C38*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C39*/SET SCHEMA PUBLIC
+DELETE FROM TOTAL_SAIDA WHERE ID=0
+INSERT INTO TOTAL_SAIDA VALUES(0,'04/12/2017','R$ 30,00')
+COMMIT
+DISCONNECT
+/*C40*/SET SCHEMA PUBLIC
+INSERT INTO SAIDA VALUES(1,'04/12/2017 17:49','teste 2','R$ 20,00','-')
+COMMIT
+DISCONNECT
+/*C41*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C42*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C43*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C44*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C45*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C46*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C47*/SET SCHEMA PUBLIC
 DISCONNECT
