@@ -11,8 +11,6 @@ import com.lemelo.ganho.GanhoNode;
 import com.lemelo.parcelamento.ParcelamentoNode;
 import com.lemelo.relatorio.RelatorioNode;
 import com.lemelo.saida.SaidaNode;
-import com.lemelo.saldo.SaldoDao;
-import com.lemelo.saldo.SaldoLogica;
 import com.lemelo.sobrou_mes_passado.SobrouMesPassadoDao;
 import com.lemelo.util.FabricaConexao;
 import com.lemelo.saldo.SaldoResumoNode;
@@ -80,10 +78,6 @@ public class Principal extends Application {
         entrada.setValor(sobrouMesPassadoStr);
 
         entrada.setUltimaEdicao("-");
-
-        //Atualiza total da entrada
-        SaldoLogica saldoLogica = new SaldoLogica();
-        saldoLogica.calcularEntrada(dataHoraStr, sobrouMesPassadoStr);
 
         new EntradaDao().insert(entrada);
     }

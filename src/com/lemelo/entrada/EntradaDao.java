@@ -99,4 +99,5 @@ public class EntradaDao {
         String entradaSqlInsert = "insert into entrada (data_hora, descricao, valor, ultima_edicao) values ('" + dataHoraStr + "','" + descricaoStr + "','" + valorStr + "', '" + ultimaEdicaoStr + "')";
         new FabricaConexao().insert(entradaSqlInsert);
     }
+
 }

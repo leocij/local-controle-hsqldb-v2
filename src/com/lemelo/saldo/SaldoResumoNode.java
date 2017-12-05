@@ -3,8 +3,10 @@ package com.lemelo.saldo;
 import com.lemelo.data_controle.DataControleDao;
 import com.lemelo.entrada.Entrada;
 import com.lemelo.entrada.EntradaDao;
+import com.lemelo.entrada.EntradaLogica;
 import com.lemelo.saida.Saida;
 import com.lemelo.saida.SaidaDao;
+import com.lemelo.saida.SaidaLogica;
 import com.lemelo.sobrou_mes_passado.SobrouMesPassadoDao;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -69,11 +71,13 @@ public class SaldoResumoNode{
                 dataControleTextField.setText(dataControleStr);
 
                 //Busca Total de Entrada
-                SaldoLogica saldoLogica = new SaldoLogica();
                 String totalEntradaStr = null;
                 try {
-                    totalEntradaStr = saldoLogica.buscaTotalEntrada(dataAtualMesAno);
+                    EntradaLogica entradaLogica = new EntradaLogica();
+                    totalEntradaStr = entradaLogica.calculaTotalEntrada(dataAtualMesAno);
                 } catch (SQLException e1) {
+                    e1.printStackTrace();
+                } catch (ParseException e1) {
                     e1.printStackTrace();
                 }
                 if (totalEntradaStr==null || totalEntradaStr.equals("")) {
@@ -84,8 +88,11 @@ public class SaldoResumoNode{
                 //Busca Total de Saída
                 String totalSaidaStr = null;
                 try {
-                    totalSaidaStr = saldoLogica.buscaTotalSaida(dataAtualMesAno);
+                    SaidaLogica saidaLogica = new SaidaLogica();
+                    totalSaidaStr = saidaLogica.calculaTotalSaida(dataAtualMesAno);
                 } catch (SQLException e1) {
+                    e1.printStackTrace();
+                } catch (ParseException e1) {
                     e1.printStackTrace();
                 }
                 if (totalSaidaStr==null || totalSaidaStr.equals("")) {

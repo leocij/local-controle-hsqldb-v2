@@ -16,9 +16,6 @@ public class FabricaConexao {
             statement.executeUpdate(new BibliotecaString().createGanhoTable());
             statement.executeUpdate(new BibliotecaString().createFixaTable());
             statement.executeUpdate(new BibliotecaString().createParcelamentoTable());
-            statement.executeUpdate(new BibliotecaString().createTotalSaidaTable());
-            statement.executeUpdate(new BibliotecaString().createTotalEntradaTable());
-            statement.executeUpdate(new BibliotecaString().createSaldoTable());
             statement.executeUpdate(new BibliotecaString().createEntradaTable());
             statement.executeUpdate(new BibliotecaString().createSaidaTable());
         } catch (SQLException e) {

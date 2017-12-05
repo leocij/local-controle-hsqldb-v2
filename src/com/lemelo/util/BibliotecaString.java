@@ -9,11 +9,7 @@ public class BibliotecaString {
         //Standalone
         //jdbc:hsqldb:file:E:/Leoci/Projetos Intellij/local-controle-hsqldb-v2/database/db
         //jdbc:hsqldb:file:D:/ProjetosIntellij/local-controle-hsqldb-v2/database/db
-        return "jdbc:hsqldb:file:database/db";
-    }
-
-    public String createSaldoTable() {
-        return "create table if not exists saldo (id integer identity primary key, data varchar(20), saldo varchar(30))";
+        return "jdbc:hsqldb:file:database_v1/db";
     }
 
     public String createEntradaTable() {
@@ -32,14 +28,6 @@ public class BibliotecaString {
         return "update saida set data_hora = '" + saida.getDataHora() + "', descricao = '" + saida.getDescricao() + "', valor = '" + saida.getValor() + "', ultima_edicao = '" + ultimaEdicaoEditar + "' where id = " + idEditar;
     }
 
-    public String createTotalEntradaTable() {
-        return "create table if not exists total_entrada (id integer identity primary key, data varchar(20), valor varchar(30))";
-    }
-
-    public String createTotalSaidaTable() {
-        return "create table if not exists total_saida (id integer identity primary key, data varchar(20), valor varchar(30))";
-    }
-
     public String createParcelamentoTable() {
         return "create table if not exists parcelamento (id integer identity primary key, descricao varchar(200), vencimento varchar(20), valor_parcela varchar(30), valor_total varchar(30), numero_parcela varchar(5), total_parcela varchar(5), status varchar(10),data_alteracao varchar(20))";
     }
@@ -55,7 +43,6 @@ public class BibliotecaString {
     public String createClienteTable() {
         return "create table if not exists cliente (id integer identity primary key, nome varchar(200))";
     }
-
 
     public String createDataControleTable() {
         return "create table if not exists data_controle (id integer identity primary key, data_controle varchar(20))";
