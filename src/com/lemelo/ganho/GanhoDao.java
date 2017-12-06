@@ -1,11 +1,15 @@
 package com.lemelo.ganho;
 
+import com.lemelo.entrada.Entrada;
+import com.lemelo.entrada.EntradaDao;
 import com.lemelo.util.FabricaConexao;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -110,5 +114,57 @@ public class GanhoDao {
         resultSet.close();
 
         return ganhos;
+    }
+
+    public void update(Ganho ganho) {
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        String dataStr = sdf1.format(Calendar.getInstance().getTime());
+        String sqlUpdate = "";
+        if (ganho.getStatus().equals("deve")) {
+            sqlUpdate = "update ganho set status = 'pagou', data = '"+dataStr+"' where id = " + ganho.getId();
+            insertEntrada(ganho);
+        } else if (ganho.getStatus().equals("pagou")){
+            sqlUpdate = "update ganho set status = 'deve', data = '"+dataStr+"' where id = " + ganho.getId();
+        }
+        new FabricaConexao().update(sqlUpdate);
+    }
+
+    private void insertEntrada(Ganho ganho) {
+        Entrada entrada = new Entrada();
+
+        SimpleDateFormat dataHoraSdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        String dataHoraStr = dataHoraSdf.format(Calendar.getInstance().getTime());
+        entrada.setDataHora(dataHoraStr);
+
+        entrada.setDescricao(ganho.getCliente() + " pagou no dia " + dataHoraStr);
+
+        BigDecimal quantidadeBdc = new BigDecimal(ganho.getQuantidade());
+
+        String valorStr = ganho.getValor();
+        if (valorStr.equals("")) {
+            valorStr = "R$ 0,00";
+        }
+        String valorNf = "";
+        try {
+            valorNf = NumberFormat.getCurrencyInstance().parse(valorStr).toString();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        BigDecimal valorBdc = new BigDecimal(valorNf);
+
+        BigDecimal totalValorBdc = valorBdc.multiply(quantidadeBdc);
+
+        String totalValorStr = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(totalValorBdc);
+
+        entrada.setValor(totalValorStr);
+
+        entrada.setUltimaEdicao("-");
+
+        EntradaDao entradaDao = new EntradaDao();
+        try {
+            entradaDao.insert(entrada);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

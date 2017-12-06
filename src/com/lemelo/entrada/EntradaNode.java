@@ -43,7 +43,8 @@ public class EntradaNode {
         Text dataHoraLabel = new Text("Dt/Hr: ");
         TextField dataHoraTextField = new TextField();
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
-        dataHoraTextField.setText(sdf1.format(Calendar.getInstance().getTime()));
+        String dataHoraStr1 = sdf1.format(Calendar.getInstance().getTime());
+        dataHoraTextField.setText(dataHoraStr1);
         dataHoraTextField.setFocusTraversable(false);
         dataHoraLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
         gridPane.add(dataHoraLabel, 0, 0);
@@ -58,7 +59,7 @@ public class EntradaNode {
 
         entradaTab.setOnSelectionChanged(e->{
             if (entradaTab.isSelected()) {
-                Platform.runLater(()->descricaoTextField.requestFocus());
+                Platform.runLater(descricaoTextField::requestFocus);
             }
         });
 
@@ -70,9 +71,7 @@ public class EntradaNode {
         valorTextField.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(new BigDecimal("0")));
 
         //Posiciona o cursor no fim da linha
-        valorTextField.setOnMousePressed(event -> {
-            Platform.runLater(()->valorTextField.positionCaret(valorTextField.getText().length()));
-        });
+        valorTextField.setOnMousePressed(event -> Platform.runLater(()->valorTextField.positionCaret(valorTextField.getText().length())));
 
         //Formatação em moeda corrente
         valorTextField.addEventFilter(KeyEvent.KEY_PRESSED, e -> {
@@ -89,7 +88,8 @@ public class EntradaNode {
                     Platform.runLater(()->valorTextField.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(new BigDecimal("0"))));
                 } else {
                     numeroDigitado = removeUltimoDigito(numeroDigitado);
-                    if(numeroDigitado.equals("") || numeroDigitado == null) {
+                    //TODO - testar se não vai dar problema, pois estava --- numeroDigitado == null
+                    if(numeroDigitado.equals("")) {
                         Platform.runLater(()->valorTextField.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(new BigDecimal("0"))));
                     } else {
                         Platform.runLater(()->valorTextField.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(new BigDecimal(numeroDigitado).divide(new BigDecimal("100")))));
@@ -121,9 +121,7 @@ public class EntradaNode {
         botoesGridPane.add(salvarButton, 0, 0);
         botoesGridPane.add(novoButton, 1, 0);
 
-        novoButton.setOnAction(event -> {
-            limpaFormulario(dataHoraTextField, descricaoTextField, valorTextField);
-        });
+        novoButton.setOnAction(event -> limpaFormulario(dataHoraTextField, descricaoTextField, valorTextField));
 
         TableView<Entrada> tableView = new TableView<>();
 
@@ -145,6 +143,16 @@ public class EntradaNode {
         EntradaDao entradaDao = new EntradaDao();
 
         entradaTableView(entradaDao, tableView, dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
+
+        entradaTab.setOnSelectionChanged(e->{
+            if (entradaTab.isSelected()) {
+                try {
+                    entradaTableView(entradaDao, tableView, dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
 
         salvarButton.defaultButtonProperty().bind(salvarButton.focusedProperty());
 

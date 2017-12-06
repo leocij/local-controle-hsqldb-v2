@@ -82,6 +82,8 @@ public class ClienteNode {
 
         ClienteDao clienteDao = new ClienteDao();
 
+        salvarButton.defaultButtonProperty().bind(salvarButton.focusedProperty());
+
         salvarButton.setOnAction(event -> {
             String nomeStr = nomeTextField.getText();
 

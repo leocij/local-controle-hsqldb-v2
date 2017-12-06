@@ -151,6 +151,8 @@ public class FixaNode {
 
         FixaDao fixaDao = new FixaDao();
 
+        salvarButton.defaultButtonProperty().bind(salvarButton.focusedProperty());
+
         salvarButton.setOnAction(event -> {
             String descricaoStr = descricaoTextField.getText();
             String vencimentoStr = vencimentoTextField.getText();

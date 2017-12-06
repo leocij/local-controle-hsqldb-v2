@@ -2,6 +2,8 @@ package com.lemelo.ganho;
 
 import com.lemelo.cliente.Cliente;
 import com.lemelo.cliente.ClienteDao;
+import com.lemelo.entrada.Entrada;
+import com.lemelo.entrada.EntradaDao;
 import com.lemelo.util.Flag;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -67,6 +69,8 @@ public class GanhoNode {
         TableView<Ganho> devedorTableView = geraDevedorTableView();
         GridPane devedorTableViewGridPane = geraDevedorTableViewGridPane(devedorTableView);
 
+        manipulaTableViewDevedor(tableViewDevedor);
+
         GridPane principalGridPane = geraPrincipalGridPane(formularioGridPane, botoesGridPane, ganhoTableViewGridPane,devedorTableViewGridPane);
 
         VBox vBox = new VBox(10);
@@ -75,6 +79,34 @@ public class GanhoNode {
 
         return vBox;
     }
+
+    private void manipulaTableViewDevedor(TableView<Ganho> tableViewDevedor) {
+        tableViewDevedor.setOnMousePressed(event -> {
+            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                Ganho ganho = tableViewDevedor.getSelectionModel().getSelectedItem();
+                if (ganho != null) {
+                    Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+                    ButtonType pagouButtonType = new ButtonType("Pagar");
+                    ButtonType cancelarButtonType = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                    alert1.setHeaderText("O que deseja fazer com?\n\n" + ganho.toString());
+                    alert1.getButtonTypes().setAll(pagouButtonType, cancelarButtonType);
+                    alert1.showAndWait().ifPresent(escolha1->{
+                        if (escolha1 == pagouButtonType) {
+                            GanhoDao ganhoDao = new GanhoDao();
+                            ganhoDao.update(ganho);
+                            try {
+                                geraDevedorTableView();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    }
+
 
     private GridPane geraDevedorTableViewGridPane(TableView<Ganho> devedorTableView) {
         GridPane gridPane = new GridPane();
@@ -230,6 +262,9 @@ public class GanhoNode {
         gridPane.add(salvarButton,0,1);
 
         GanhoDao ganhoDao = new GanhoDao();
+        EntradaDao entradaDao = new EntradaDao();
+
+        salvarButton.defaultButtonProperty().bind(salvarButton.focusedProperty());
 
         salvarButton.setOnAction(event -> {
 
@@ -262,6 +297,45 @@ public class GanhoNode {
             ganho.setStatus(statusStr);
             ganho.setQuantidade(quantidadeStr);
             ganho.setValor(valorStr);
+
+            Entrada entrada = null;
+
+            if (statusStr.equals("pagou")) {
+
+                entrada = new Entrada();
+
+                SimpleDateFormat dataHoraSdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+                String dataHoraStr = dataHoraSdf.format(Calendar.getInstance().getTime());
+                entrada.setDataHora(dataHoraStr);
+
+                entrada.setDescricao(clienteStr);
+
+                BigDecimal quantidadeBdc = new BigDecimal(quantidadeStr);
+                if (valorStr.equals("")) {
+                    valorStr = "R$ 0,00";
+                }
+                String valorNf = "";
+                try {
+                    valorNf = NumberFormat.getCurrencyInstance().parse(valorStr).toString();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                BigDecimal valorBdc = new BigDecimal(valorNf);
+
+                BigDecimal totalValorBdc = valorBdc.multiply(quantidadeBdc);
+
+                String totalValorStr = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(totalValorBdc);
+
+                entrada.setValor(totalValorStr);
+
+                entrada.setUltimaEdicao("-");
+
+                try {
+                    entradaDao.insert(entrada);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
 
             if(flag == Flag.EDITAR) {
                 //TODO
