@@ -69,6 +69,7 @@ public class SaldoResumoNode{
                     e1.printStackTrace();
                 }
                 dataControleTextField.setText(dataControleStr);
+                dataControleTextField.setEditable(false);
 
                 //Busca Total de Entrada
                 String totalEntradaStr = null;
@@ -84,6 +85,7 @@ public class SaldoResumoNode{
                     totalEntradaStr = "R$ 0,00";
                 }
                 totalEntradaTextField.setText(totalEntradaStr);
+                totalEntradaTextField.setEditable(false);
 
                 //Busca Total de Saída
                 String totalSaidaStr = null;
@@ -99,6 +101,7 @@ public class SaldoResumoNode{
                     totalSaidaStr = "R$ 0,00";
                 }
                 totalSaidaTextField.setText(totalSaidaStr);
+                totalSaidaTextField.setEditable(false);
 
                 SobrouMesPassadoDao sobrouMesPassadoDao = new SobrouMesPassadoDao();
                 String sobrouMesPassadoStr = null;
@@ -111,6 +114,7 @@ public class SaldoResumoNode{
                     sobrouMesPassadoStr = "R$ 0,00";
                 }
                 sobrouMesPassadoTextField.setText(sobrouMesPassadoStr);
+                sobrouMesPassadoTextField.setEditable(false);
 
                 //Preenche Saldo Atual
                 String totalEntradaNf = null;
@@ -127,6 +131,7 @@ public class SaldoResumoNode{
                 BigDecimal totalSaidaBdc = new BigDecimal(totalSaidaNf);
                 BigDecimal saldoMensalAtualBdc = totalEntradaBdc.subtract(totalSaidaBdc);
                 saldoAtualTextField.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(saldoMensalAtualBdc));
+                saldoAtualTextField.setEditable(false);
 
                 //Preenche Ganho Real
                 String sobrouMesPassadoNf = null;
@@ -140,6 +145,7 @@ public class SaldoResumoNode{
                 BigDecimal ganhoRealBdc = totalEntradaBdc.subtract(sobrouMesPassadoBdc);
                 String ganhoRealStr = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(ganhoRealBdc);
                 ganhoRealTextField.setText(ganhoRealStr);
+                ganhoRealTextField.setEditable(false);
             }
         });
 

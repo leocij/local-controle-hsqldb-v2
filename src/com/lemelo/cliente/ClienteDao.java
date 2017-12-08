@@ -28,4 +28,14 @@ public class ClienteDao {
         String clienteSqlInsert = "insert into cliente (nome) values ('"+nomeStr+"')";
         new FabricaConexao().insert(clienteSqlInsert);
     }
+
+    public void apagar(Integer id) {
+        String clienteSqlDelete = "delete from cliente where id = " + id;
+        new FabricaConexao().delete(clienteSqlDelete);
+    }
+
+    public void update(Cliente cliente, Integer idEditar) {
+        String clienteSqlUpdate = "update cliente set nome = '"+cliente.getNome()+"' where id = " + idEditar;
+        new FabricaConexao().update(clienteSqlUpdate);
+    }
 }

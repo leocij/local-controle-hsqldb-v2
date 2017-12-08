@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
@@ -40,6 +41,8 @@ public class GanhoNode {
     private TextField valorTextField;
     private TextField ganhoBuscarPorClienteTextField;
     private TableView<Ganho> tableViewDevedor;
+    private Integer idEditar;
+    private String sessaoEditar;
 
     public Node executar(Tab ganhoTab) throws ParseException, SQLException {
 
@@ -87,26 +90,76 @@ public class GanhoNode {
                 if (ganho != null) {
                     Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
                     ButtonType pagouButtonType = new ButtonType("Pagar");
+                    ButtonType editarButtonType = new ButtonType("Editar");
+                    ButtonType excluirButtonType = new ButtonType("Excluir");
                     ButtonType cancelarButtonType = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
 
                     alert1.setHeaderText("O que deseja fazer com?\n\n" + ganho.toString());
-                    alert1.getButtonTypes().setAll(pagouButtonType, cancelarButtonType);
+                    alert1.getButtonTypes().setAll(pagouButtonType, editarButtonType, excluirButtonType, cancelarButtonType);
                     alert1.showAndWait().ifPresent(escolha1->{
                         if (escolha1 == pagouButtonType) {
                             GanhoDao ganhoDao = new GanhoDao();
                             ganhoDao.update(ganho);
                             try {
                                 geraDevedorTableView();
+                                geraGanhoTableView();
                             } catch (SQLException e) {
                                 e.printStackTrace();
                             }
+                        } else if (escolha1 == editarButtonType) {
+                            flag = Flag.EDITAR;
+                            idEditar = ganho.getId();
+
+                            String dataStr = ganho.getData();
+                            DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                            LocalDate localDate = LocalDate.parse(dataStr,dtf1);
+                            dataDatePicker.setValue(localDate);
+
+                            //String diaSemanaStr = ganho.getDiaSemana();
+
+                            ObservableList<Cliente> clienteList = FXCollections.observableArrayList();
+                            Cliente cliente = new Cliente();
+                            cliente.setNome(ganho.getCliente());
+                            clienteList.add(cliente);
+                            clienteComboBox.setItems(clienteList);
+                            clienteComboBox.getSelectionModel().select(0);
+
+                            String statusStr = ganho.getStatus();
+                            statusComboBox.setValue(statusStr);
+
+                            sessaoEditar = ganho.getSessao();
+
+                            String quantidadeStr = ganho.getQuantidade();
+                            quantidadeComboBox.setValue(quantidadeStr);
+
+                            valorTextField.setText(ganho.getValor());
+                        } else if (escolha1 == excluirButtonType) {
+                            Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+
+                            ButtonType simButtonType = new ButtonType("Sim");
+                            ButtonType naoButtonType = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                            alert2.setHeaderText("Deseja realmente excluir?\n\n" + ganho.toString());
+                            alert2.getButtonTypes().setAll(simButtonType, naoButtonType);
+                            alert2.showAndWait().ifPresent(escolha2 -> {
+                                if (escolha2 == simButtonType) {
+                                    GanhoDao ganhoDao = new GanhoDao();
+                                    ganhoDao.apagar(ganho.getId());
+                                    try {
+                                        geraDevedorTableView();
+                                        geraGanhoTableView();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+
                         }
                     });
                 }
             }
         });
     }
-
 
     private GridPane geraDevedorTableViewGridPane(TableView<Ganho> devedorTableView) {
         GridPane gridPane = new GridPane();
@@ -165,9 +218,7 @@ public class GanhoNode {
         Text dataLabel = new Text("Data: ");
         dataLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
         gridPane.add(dataLabel,0,0);
-        dataDatePicker = new DatePicker();
-        //SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        //dataDatePicker.setText(sdf1.format(Calendar.getInstance().getTime()));
+        dataDatePicker = new DatePicker(LocalDate.now());
         gridPane.add(dataDatePicker,0,1);
 
         Text clienteLabel = new Text("Cliente: ");
@@ -338,38 +389,70 @@ public class GanhoNode {
             }
 
             if(flag == Flag.EDITAR) {
-                //TODO
-            } {
+                ganhoDao.updateEditar(ganho,idEditar,sessaoEditar);
+                flag = null;
+            } else {
                 try {
                     ganhoDao.insert(ganho);
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
-                limpaFormulario();
-                Platform.runLater(()->{
-                    try {
-                        geraGanhoTableView();
-                        geraDevedorTableView();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                });
+
             }
+
+            limpaFormulario();
+            Platform.runLater(()->{
+                try {
+                    geraGanhoTableView();
+                    geraDevedorTableView();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            });
         });
+
+
 
         Button novoButton = new Button("Novo");
         novoButton.setStyle("-fx-font: normal bold 15px 'verdana' ");
         gridPane.add(novoButton,1,1);
 
+        novoButton.setOnAction(event -> {
+            dataDatePicker = new DatePicker(LocalDate.now());
 
+            clienteComboBox = new ComboBox<>();
+            ClienteDao clienteDao = new ClienteDao();
+            ObservableList<Cliente> clienteList = null;
+            try {
+                clienteList = clienteDao.buscaClientes();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            clienteComboBox.setItems(clienteList);
+
+            statusComboBox = new ComboBox();
+            ObservableList<String> statusList = FXCollections.observableArrayList("pagou","deve");
+            statusComboBox.setItems(statusList);
+
+            quantidadeComboBox = new ComboBox();
+            quantidadeComboBox.setMaxWidth(50);
+            ObservableList<String> quantidadeList = FXCollections.observableArrayList("1","2","3","4","5","6","7","8");
+            quantidadeComboBox.setItems(quantidadeList);
+
+            valorTextField = new TextField();
+            valorTextField.setMaxWidth(80);
+            valorTextField.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(new BigDecimal("0")));
+
+            numeroDigitado = "";
+
+            flag = null;
+        });
 
         return gridPane;
     }
 
     private void limpaFormulario() {
-        //SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        //dataTextField.setText(sdf1.format(Calendar.getInstance().getTime()));
-        clienteComboBox.setValue(null);
+        dataDatePicker = new DatePicker(LocalDate.now());
         numeroDigitado = "";
     }
 

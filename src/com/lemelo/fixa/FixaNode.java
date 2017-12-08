@@ -226,6 +226,7 @@ public class FixaNode {
         gridPane.setAlignment(Pos.TOP_LEFT);
 
         fixaTableView.setPrefWidth(5000);
+        fixaTableView.setPrefHeight(5000);
         gridPane.add(fixaTableView,0,0);
 
         return gridPane;

@@ -19,6 +19,8 @@ public class ClienteNode {
     private TextField nomeTextField;
     private Flag flag;
     private TableView<Cliente> tableView;
+    private Integer idEditar;
+    private String ultimaEdicaoEditar;
 
     public Node executar(Tab clienteResumoTab) throws SQLException {
 
@@ -35,6 +37,49 @@ public class ClienteNode {
         GridPane clienteTableViewGridPane = geraClienteTableViewGridPane(clienteTableView);
         GridPane principalGridPane = geraPrincipal(formularioGridPane, botoesGridPane, clienteTableViewGridPane);
 
+        tableView.setOnMousePressed(event->{
+            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
+                Cliente cliente = tableView.getSelectionModel().getSelectedItem();
+
+                if (cliente != null) {
+                    Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+
+                    ButtonType editarButtonType = new ButtonType("Editar");
+                    ButtonType excluirButtonType = new ButtonType("Excluir");
+                    ButtonType cancelarButtonType = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                    alert1.setHeaderText("O que deseja fazer com?\n\n" + cliente.toString());
+                    alert1.getButtonTypes().setAll(editarButtonType, excluirButtonType, cancelarButtonType);
+                    alert1.showAndWait().ifPresent(escolha1->{
+                        if (escolha1 == editarButtonType) {
+                            flag = Flag.EDITAR;
+                            idEditar = cliente.getId();
+                            nomeTextField.setText(cliente.getNome());
+                        } else if (escolha1 == excluirButtonType) {
+                            Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+
+                            ButtonType simButtonType = new ButtonType("Sim");
+                            ButtonType naoButtonType = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                            alert2.setHeaderText("Deseja realmente excluir?\n\n" + cliente.toString());
+                            alert2.getButtonTypes().setAll(simButtonType, naoButtonType);
+                            alert2.showAndWait().ifPresent(escolha2 ->{
+                                ClienteDao clienteDao = new ClienteDao();
+                                if (escolha2 == simButtonType) {
+                                    clienteDao.apagar(cliente.getId());
+                                    try {
+                                        geraClienteTableView();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            }
+        });
+
         VBox vBox = new VBox(10);
         vBox.setPadding(new Insets(0, 2, 0, 2));
         vBox.getChildren().addAll(principalGridPane);
@@ -50,6 +95,7 @@ public class ClienteNode {
         gridPane.setAlignment(Pos.TOP_LEFT);
 
         clienteTableView.setPrefWidth(5000);
+        clienteTableView.setPrefHeight(5000);
         gridPane.add(clienteTableView,0,0);
 
         return gridPane;
@@ -91,22 +137,33 @@ public class ClienteNode {
             cliente.setNome(nomeStr);
 
             if (flag == Flag.EDITAR) {
-                //TODO
+                clienteDao.update(cliente, idEditar);
+                flag = null;
             } else {
                 clienteDao.insert(cliente);
                 nomeTextField.setText("");
                 nomeTextField.requestFocus();
-                try {
-                    geraClienteTableView();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            }
+            try {
+                geraClienteTableView();
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
         });
 
         Button novoButton = new Button("Novo");
         novoButton.setStyle("-fx-font: normal bold 15px 'verdana' ");
         gridPane.add(novoButton,1,1);
+
+        novoButton.setOnAction(event -> {
+            nomeTextField.setText("");
+            flag = null;
+            try {
+                geraClienteTableView();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        });
 
         return gridPane;
     }

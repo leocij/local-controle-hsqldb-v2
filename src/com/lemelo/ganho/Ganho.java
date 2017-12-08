@@ -73,4 +73,15 @@ public class Ganho {
     public void setValor(String valor) {
         this.valor = valor;
     }
+
+    @Override
+    public String toString() {
+        return "Data: " + data +
+                "\nDia da semana: " + diaSemana +
+                "\nCliente: " + cliente +
+                "\nStatus: " + status +
+                "\nSessão: " + sessao +
+                "\nQuantidade: " + quantidade +
+                "\nValor: " + valor;
+    }
 }

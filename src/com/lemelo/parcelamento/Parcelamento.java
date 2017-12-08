@@ -85,16 +85,13 @@ public class Parcelamento {
 
     @Override
     public String toString() {
-        return "Parcelamento{" +
-                "id=" + id +
-                ", descricao='" + descricao + '\'' +
-                ", vencimento='" + vencimento + '\'' +
-                ", valorParcela='" + valorParcela + '\'' +
-                ", valorTotal='" + valorTotal + '\'' +
-                ", numeroParcela='" + numeroParcela + '\'' +
-                ", totalParcela='" + totalParcela + '\'' +
-                ", status='" + status + '\'' +
-                ", dataAlteracao='" + dataAlteracao + '\'' +
-                '}';
+        return "Descrição: " + descricao +
+                "\nVencimento: " + vencimento +
+                "\nValor da Parcela: " + valorParcela +
+                "\nValor Total: " + valorTotal +
+                "\nNúmero da Parcela: " + numeroParcela +
+                "\nTotal de Parcelas: " + totalParcela +
+                "\nStatus: " + status +
+                "\nData de Alteração: " + dataAlteracao;
     }
 }

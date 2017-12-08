@@ -117,7 +117,7 @@ public class GanhoDao {
     }
 
     public void update(Ganho ganho) {
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         String dataStr = sdf1.format(Calendar.getInstance().getTime());
         String sqlUpdate = "";
         if (ganho.getStatus().equals("deve")) {
@@ -166,5 +166,15 @@ public class GanhoDao {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateEditar(Ganho ganho, Integer idEditar, String sessaoEditar) {
+        String ganhoSqlUpdate = "update ganho set data = '"+ganho.getData()+"', dia_semana = '"+ganho.getDiaSemana()+"', cliente = '"+ganho.getCliente()+"', status = '"+ganho.getStatus()+"', sessao = '"+sessaoEditar+"', quantidade = '"+ganho.getQuantidade()+"', valor = '"+ganho.getValor()+"' where id = " + idEditar;
+        new FabricaConexao().update(ganhoSqlUpdate);
+    }
+
+    public void apagar(Integer id) {
+        String ganhoSqlDelete = "delete from ganho where id = " + id;
+        new FabricaConexao().delete(ganhoSqlDelete);
     }
 }
