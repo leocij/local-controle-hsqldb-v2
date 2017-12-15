@@ -89,4 +89,20 @@ public class SaidaDao {
         resultSet.close();
         return saidas;
     }
+
+    public void insertSaida(String descricao, String numeroParcela, String valorParcela) {
+        SimpleDateFormat dataHoraSdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+        String dataHoraStr = dataHoraSdf.format(Calendar.getInstance().getTime());
+        String descricaoStr = descricao+" - parcela de número "+numeroParcela;
+        String valorStr = valorParcela;
+        String ultimaEdicaoStr = "-";
+
+        String saidaSqlInsert = new BibliotecaString().saidaSqlInsert(dataHoraStr,descricaoStr,valorStr,ultimaEdicaoStr);
+        new FabricaConexao().insert(saidaSqlInsert);
+    }
+
+    public void removeSaida(String descricao, String numeroParcela, String valorParcela) {
+        String saidaSqlDelete = "delete from saida where descricao like '"+descricao+" - parcela de número "+numeroParcela+"' and valor like '"+valorParcela+"'";
+        new FabricaConexao().delete(saidaSqlDelete);
+    }
 }

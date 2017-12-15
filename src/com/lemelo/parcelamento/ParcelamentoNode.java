@@ -19,7 +19,10 @@ import java.math.RoundingMode;
 import java.sql.SQLException;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Locale;
 
 public class ParcelamentoNode {
@@ -36,6 +39,10 @@ public class ParcelamentoNode {
     private TextField totalPagarTextField;
     private Tab parcelamentoTab;
     private TextField parcelamentoBuscarPorDescricaoSemPagarTextField;
+    private Integer idEditar;
+    private String numeroParcelaEditar;
+    private String statusEditar;
+    private String dataAlteracaoEditar;
 
     public Node executar(Tab parcelamentoTab) throws SQLException, ParseException {
 
@@ -74,13 +81,15 @@ public class ParcelamentoNode {
                 Parcelamento parcelamento = tableView.getSelectionModel().getSelectedItem();
                 if (parcelamento != null) {
                     Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-                    ButtonType pagarButtonType = new ButtonType("Mudar Status");
+                    ButtonType mudarStatusButtonType = new ButtonType("Mudar Status");
+                    ButtonType editarButtonType = new ButtonType("Editar");
+                    ButtonType excluirButtonType = new ButtonType("Excluir");
                     ButtonType cancelarButtonType = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
 
                     alert1.setHeaderText("O que deseja fazer com?\n\n" + parcelamento.toString());
-                    alert1.getButtonTypes().setAll(pagarButtonType, cancelarButtonType);
+                    alert1.getButtonTypes().setAll(mudarStatusButtonType,editarButtonType,excluirButtonType, cancelarButtonType);
                     alert1.showAndWait().ifPresent(escolha1->{
-                        if(escolha1 == pagarButtonType) {
+                        if(escolha1 == mudarStatusButtonType) {
                             ParcelamentoDao parcelamentoDao = new ParcelamentoDao();
                             parcelamentoDao.update(parcelamento);
 
@@ -91,6 +100,55 @@ public class ParcelamentoNode {
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
+                        } else if (escolha1 == editarButtonType) {
+                            flag = Flag.EDITAR;
+                            idEditar = parcelamento.getId();
+
+                            String descricaoStr = parcelamento.getDescricao();
+                            descricaoTextField.setText(descricaoStr);
+
+                            String vencimentoStr = parcelamento.getVencimento();
+                            DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                            LocalDate localDate = LocalDate.parse(vencimentoStr,dtf1);
+                            vencimentoDatePiker.setValue(localDate);
+
+                            String valorParcelaStr = parcelamento.getValorParcela();
+                            valorTotalTextField.setText(valorParcelaStr);
+
+                            String valorTotalStr = parcelamento.getValorTotal();
+                            valorTotalTextField.setText(valorTotalStr);
+
+                            numeroParcelaEditar = parcelamento.getNumeroParcela();
+
+                            String totalParcelaStr = parcelamento.getTotalParcela();
+                            totalParcelaTextField.setText(totalParcelaStr);
+
+                            statusEditar = parcelamento.getStatus();
+
+                            SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
+                            dataAlteracaoEditar = sdf3.format(Calendar.getInstance().getTime());
+                        } else if (escolha1 == excluirButtonType) {
+                            Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
+
+                            ButtonType simButtonType = new ButtonType("Sim");
+                            ButtonType naoButtonType = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
+
+                            alert2.setHeaderText("Deseja realmente excluir?\n\n" + parcelamento.toString());
+                            alert2.getButtonTypes().setAll(simButtonType, naoButtonType);
+                            alert2.showAndWait().ifPresent(escolha2->{
+                                if (escolha2 == simButtonType) {
+                                    ParcelamentoDao parcelamentoDao = new ParcelamentoDao();
+                                    parcelamentoDao.apagar(parcelamento.getId());
+
+                                    try {
+                                        geraParcelamentoTableView();
+                                    } catch (SQLException e) {
+                                        e.printStackTrace();
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
                         }
                     });
                 }
@@ -275,25 +333,26 @@ public class ParcelamentoNode {
             parcelamento.setDataAlteracao("-");
 
             if (flag == Flag.EDITAR) {
-                //TODO
+                parcelamentoDao.updateEditar(parcelamento,idEditar,numeroParcelaEditar,statusEditar,dataAlteracaoEditar);
+                flag = null;
             } else {
                 try {
                     parcelamentoDao.insert(parcelamento);
-                    limpaFormulario();
-                    Platform.runLater(() -> {
-                        try {
-                            geraParcelamentoTableView();
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                    });
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
 
+            limpaFormulario();
+            Platform.runLater(() -> {
+                try {
+                    geraParcelamentoTableView();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            });
 
         });
 
@@ -342,7 +401,7 @@ public class ParcelamentoNode {
 
         ParcelamentoDao parcelamentoDao = new ParcelamentoDao();
 
-        ObservableList<Parcelamento> list = parcelamentoDao.buscaPorMesAno();
+        ObservableList<Parcelamento> list = parcelamentoDao.buscaPorSemPagar();
         BigDecimal somaBdc = BigDecimal.ZERO;
         for (Parcelamento aList : list) {
             String valorNf = NumberFormat.getCurrencyInstance().parse(aList.getValorParcela()).toString();

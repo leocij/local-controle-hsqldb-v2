@@ -148,6 +148,16 @@ public class SaidaNode {
 
         saidaTableView(saidaDao, tableView, dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
 
+        saidaTab.setOnSelectionChanged(e->{
+            if (saidaTab.isSelected()) {
+                try {
+                    saidaTableView(saidaDao, tableView, dataHoraColuna, descricaoColuna, valorColuna, ultimaEdicaoColuna);
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        });
+
         salvarButton.defaultButtonProperty().bind(salvarButton.focusedProperty());
 
         salvarButton.setOnAction(event -> {

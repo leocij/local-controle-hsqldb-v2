@@ -94,6 +94,28 @@ public class GanhoDao {
         return ganhos;
     }
 
+    public ObservableList<Ganho> buscaGanhador() throws SQLException {
+        ObservableList<Ganho> ganhos = FXCollections.observableArrayList();
+        String ganhoSqlSelect = "select * from ganho where status like 'pagou' order by cliente asc";
+        ResultSet resultSet = new FabricaConexao().getResultSet(ganhoSqlSelect);
+        while (resultSet.next()) {
+            Ganho ganho = new Ganho();
+            ganho.setId(resultSet.getInt("id"));
+            ganho.setData(resultSet.getString("data"));
+            ganho.setDiaSemana(resultSet.getString("dia_semana"));
+            ganho.setCliente(resultSet.getString("cliente"));
+            ganho.setStatus(resultSet.getString("status"));
+            ganho.setSessao(resultSet.getString("sessao"));
+            ganho.setQuantidade(resultSet.getString("quantidade"));
+            ganho.setValor(resultSet.getString("valor"));
+
+            ganhos.add(ganho);
+        }
+        resultSet.close();
+
+        return ganhos;
+    }
+
     public ObservableList<Ganho> buscaDevedor() throws SQLException {
         ObservableList<Ganho> ganhos = FXCollections.observableArrayList();
         String ganhoSqlSelect = "select * from ganho where status like 'deve' order by cliente asc";
@@ -152,9 +174,9 @@ public class GanhoDao {
         }
         BigDecimal valorBdc = new BigDecimal(valorNf);
 
-        BigDecimal totalValorBdc = valorBdc.multiply(quantidadeBdc);
+        //BigDecimal totalValorBdc = valorBdc.multiply(quantidadeBdc);
 
-        String totalValorStr = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(totalValorBdc);
+        String totalValorStr = NumberFormat.getCurrencyInstance(Locale.getDefault()).format(valorBdc);
 
         entrada.setValor(totalValorStr);
 
@@ -168,13 +190,71 @@ public class GanhoDao {
         }
     }
 
-    public void updateEditar(Ganho ganho, Integer idEditar, String sessaoEditar) {
-        String ganhoSqlUpdate = "update ganho set data = '"+ganho.getData()+"', dia_semana = '"+ganho.getDiaSemana()+"', cliente = '"+ganho.getCliente()+"', status = '"+ganho.getStatus()+"', sessao = '"+sessaoEditar+"', quantidade = '"+ganho.getQuantidade()+"', valor = '"+ganho.getValor()+"' where id = " + idEditar;
+    public void updateEditar(Ganho ganho, Integer idEditar) {
+        String ganhoSqlUpdate = "update ganho set data = '"+ganho.getData()+"', dia_semana = '"+ganho.getDiaSemana()+"', cliente = '"+ganho.getCliente()+"', status = '"+ganho.getStatus()+"', sessao = '"+ganho.getQuantidade()+"', quantidade = '"+ganho.getQuantidade()+"', valor = '"+ganho.getValor()+"' where id = " + idEditar;
         new FabricaConexao().update(ganhoSqlUpdate);
     }
 
     public void apagar(Integer id) {
         String ganhoSqlDelete = "delete from ganho where id = " + id;
         new FabricaConexao().delete(ganhoSqlDelete);
+    }
+
+
+    public ObservableList<Ganho> buscarPorQuantidadeDeMeses(String newValue) throws SQLException, ParseException {
+        if (newValue.equals("")) {
+            newValue = "0";
+        }
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String dataAtual = sdf1.format(Calendar.getInstance().getTime());
+        String mesAno = dataAtual.substring(3,10);
+
+        SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
+        Date date1 = sdf2.parse(dataAtual);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date1);
+        cal.add(Calendar.MONTH, -Integer.parseInt(newValue));
+        Date date2 = cal.getTime();
+        SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy");
+        String dataAtras = sdf3.format(date2);
+
+        ObservableList<Ganho> ganhos = FXCollections.observableArrayList();
+        String ganhoSqlSelect = "select * from ganho where data between '"+dataAtras+"' and '"+dataAtual+"'";
+        ResultSet resultSet = new FabricaConexao().getResultSet(ganhoSqlSelect);
+        while (resultSet.next()) {
+            Ganho ganho = new Ganho();
+            ganho.setId(resultSet.getInt("id"));
+            ganho.setData(resultSet.getString("data"));
+            ganho.setDiaSemana(resultSet.getString("dia_semana"));
+            ganho.setCliente(resultSet.getString("cliente"));
+            ganho.setStatus(resultSet.getString("status"));
+            ganho.setSessao(resultSet.getString("sessao"));
+            ganho.setQuantidade(resultSet.getString("quantidade"));
+            ganho.setValor(resultSet.getString("valor"));
+
+            ganhos.add(ganho);
+        }
+        resultSet.close();
+
+        return ganhos;
+    }
+
+    public Integer buscarQuantidadeMeses() throws SQLException {
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String dataAtual = sdf1.format(Calendar.getInstance().getTime());
+        String mesAnoAtual = dataAtual.substring(3,10);
+
+        Integer quantidadeMeses = 1;
+        String sqlSelect = "select * from ganho";
+        ResultSet resultSet = new FabricaConexao().getResultSet(sqlSelect);
+        while (resultSet.next()) {
+            String dataStr = resultSet.getString("data");
+            String mesAnoResult = dataStr.substring(3,10);
+
+            if (!mesAnoAtual.equals(mesAnoResult)) {
+                quantidadeMeses++;
+            }
+        }
+        return quantidadeMeses;
     }
 }

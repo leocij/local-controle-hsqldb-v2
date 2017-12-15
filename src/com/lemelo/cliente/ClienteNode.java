@@ -21,6 +21,7 @@ public class ClienteNode {
     private TableView<Cliente> tableView;
     private Integer idEditar;
     private String ultimaEdicaoEditar;
+    private TextField contagemTextField;
 
     public Node executar(Tab clienteResumoTab) throws SQLException {
 
@@ -108,6 +109,8 @@ public class ClienteNode {
         ClienteDao clienteDao = new ClienteDao();
         ObservableList<Cliente> list = clienteDao.buscaClientes();
 
+        contagemTextField.setText(""+list.size());
+
         tableView.getColumns().clear();
         tableView.setItems(list);
         tableView.getColumns().addAll(nomeColuna);
@@ -181,6 +184,12 @@ public class ClienteNode {
         nomeTextField = new TextField();
         nomeTextField.setPrefWidth(5000);
         gridPane.add(nomeTextField,0,1);
+
+        Text contagemLabel = new Text("Contagem: ");
+        contagemLabel.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        gridPane.add(contagemLabel,1,0);
+        contagemTextField = new TextField();
+        gridPane.add(contagemTextField,1,1);
 
         return gridPane;
     }
