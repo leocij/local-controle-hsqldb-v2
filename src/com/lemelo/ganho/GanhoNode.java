@@ -46,6 +46,9 @@ public class GanhoNode {
     private TableView<Ganho> tableViewGanhador;
     private TextField ganhoBuscarPorQuantidadeDeMesesTextField;
     private ComboBox<String> ganhoBuscarPorQuantidadeDeMesesComboBox;
+    private Button listarTudoButton;
+    private ComboBox<String> buscarPorStatusComboBox;
+    private ComboBox<Cliente> buscarPorClienteComboBox;
 
     public Node executar(Tab ganhoTab) throws SQLException {
 
@@ -75,19 +78,8 @@ public class GanhoNode {
             }
         });
 
-//        tableViewGanhador = new TableView<>();
-//        TableView<Ganho> ganhadorTableView = geraGanhadorTableView();
-//        GridPane ganhadorTableViewGridPane = geraGanhadorTableViewGridPane(ganhadorTableView);
-//
-//        manipulaTableViewGanhador(tableViewGanhador);
-//
-//        tableViewDevedor = new TableView<>();
-//        TableView<Ganho> devedorTableView = geraDevedorTableView();
-//        GridPane devedorTableViewGridPane = geraDevedorTableViewGridPane(devedorTableView);
-//
-//        manipulaTableViewDevedor(tableViewDevedor);
 
-        GridPane principalGridPane = geraPrincipalGridPane(formularioGridPane, botoesGridPane, buscasGridPane, ganhoTableViewGridPane/*, ganhadorTableViewGridPane, devedorTableViewGridPane*/);
+        GridPane principalGridPane = geraPrincipalGridPane(formularioGridPane, botoesGridPane, buscasGridPane, ganhoTableViewGridPane);
 
         VBox vBox = new VBox(10);
         vBox.setPadding(new Insets(0,2,0,2));
@@ -96,23 +88,30 @@ public class GanhoNode {
         return vBox;
     }
 
-
-
     private void manipulaTableView(TableView<Ganho> tableView) {
         tableView.setOnMousePressed(event -> {
             if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
                 Ganho ganho = tableView.getSelectionModel().getSelectedItem();
                 if (ganho != null) {
                     Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
+                    ButtonType pagarButtonType = new ButtonType("Pagar");
                     ButtonType editarButtonType = new ButtonType("Editar");
                     ButtonType excluirButtonType = new ButtonType("Excluir");
                     ButtonType cancelarButtonType = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
 
                     alert1.setHeaderText("O que deseja fazer com?\n\n" + ganho.toString());
-                    alert1.getButtonTypes().setAll(editarButtonType, excluirButtonType, cancelarButtonType);
+                    alert1.getButtonTypes().setAll(pagarButtonType, editarButtonType, excluirButtonType, cancelarButtonType);
 
                     alert1.showAndWait().ifPresent(escolha1->{
-                        if (escolha1 == editarButtonType) {
+                        if (escolha1 == pagarButtonType) {
+                            GanhoDao ganhoDao = new GanhoDao();
+                            ganhoDao.update(ganho);
+                            try {
+                                geraGanhoTableView();
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
+                        } else if (escolha1 == editarButtonType) {
                             flag = Flag.EDITAR;
                             idEditar = ganho.getId();
 
@@ -152,77 +151,6 @@ public class GanhoNode {
                                     GanhoDao ganhoDao = new GanhoDao();
                                     ganhoDao.apagar(ganho.getId());
                                     try {
-//                                        geraGanhadorTableView();
-//                                        geraDevedorTableView();
-                                        geraGanhoTableView();
-                                    } catch (SQLException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            });
-
-                        }
-                    });
-                }
-            }
-        });
-    }
-
-    private void manipulaTableViewGanhador(TableView<Ganho> tableViewGanhador) {
-        tableViewGanhador.setOnMousePressed(event -> {
-            if (event.isPrimaryButtonDown() && event.getClickCount() == 2) {
-                Ganho ganho = tableViewGanhador.getSelectionModel().getSelectedItem();
-                if (ganho != null) {
-                    Alert alert1 = new Alert(Alert.AlertType.CONFIRMATION);
-                    ButtonType editarButtonType = new ButtonType("Editar");
-                    ButtonType excluirButtonType = new ButtonType("Excluir");
-                    ButtonType cancelarButtonType = new ButtonType("Cancelar", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-                    alert1.setHeaderText("O que deseja fazer com?\n\n" + ganho.toString());
-                    alert1.getButtonTypes().setAll(editarButtonType, excluirButtonType, cancelarButtonType);
-                    alert1.showAndWait().ifPresent(escolha1->{
-                        if (escolha1 == editarButtonType) {
-                            flag = Flag.EDITAR;
-                            idEditar = ganho.getId();
-
-                            String dataStr = ganho.getData();
-                            DateTimeFormatter dtf1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-                            LocalDate localDate = LocalDate.parse(dataStr,dtf1);
-                            dataDatePicker.setValue(localDate);
-
-                            //String diaSemanaStr = ganho.getDiaSemana();
-
-                            ObservableList<Cliente> clienteList = FXCollections.observableArrayList();
-                            Cliente cliente = new Cliente();
-                            cliente.setNome(ganho.getCliente());
-                            clienteList.add(cliente);
-                            clienteComboBox.setItems(clienteList);
-                            clienteComboBox.getSelectionModel().select(0);
-
-                            String statusStr = ganho.getStatus();
-                            statusComboBox.setValue(statusStr);
-
-                            sessaoEditar = ganho.getSessao();
-
-                            String quantidadeStr = ganho.getQuantidade();
-                            quantidadeComboBox.setValue(quantidadeStr);
-
-                            valorTextField.setText(ganho.getValor());
-                        } else if (escolha1 == excluirButtonType) {
-                            Alert alert2 = new Alert(Alert.AlertType.CONFIRMATION);
-
-                            ButtonType simButtonType = new ButtonType("Sim");
-                            ButtonType naoButtonType = new ButtonType("Não", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-                            alert2.setHeaderText("Deseja realmente excluir?\n\n" + ganho.toString());
-                            alert2.getButtonTypes().setAll(simButtonType, naoButtonType);
-                            alert2.showAndWait().ifPresent(escolha2 -> {
-                                if (escolha2 == simButtonType) {
-                                    GanhoDao ganhoDao = new GanhoDao();
-                                    ganhoDao.apagar(ganho.getId());
-                                    try {
-                                        geraDevedorTableView();
-                                        geraGanhadorTableView();
                                         geraGanhoTableView();
                                     } catch (SQLException e) {
                                         e.printStackTrace();
@@ -356,7 +284,7 @@ public class GanhoNode {
 
         GanhoDao ganhoDao = new GanhoDao();
 
-        ObservableList<Ganho> list1 = ganhoDao.buscaGanhador();
+        ObservableList<Ganho> list1 = ganhoDao.buscaPagador();
 
         tableViewGanhador.getColumns().clear();
         tableViewGanhador.setItems(list1);
@@ -604,6 +532,12 @@ public class GanhoNode {
             }
 
             limpaFormulario();
+            try {
+                atualizaGanhoBuscarPorQuantidadeDeMeses();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
 //            Platform.runLater(()->{
 //                try {
 //                    geraGanhoTableView();
@@ -651,7 +585,22 @@ public class GanhoNode {
             flag = null;
         });
 
+        listarTudoButton = new Button("Listar Tudo");
+        listarTudoButton.setStyle("-fx-font: normal bold 15px 'verdana' ");
+        gridPane.add(listarTudoButton,2,1);
+
         return gridPane;
+    }
+
+    private void atualizaGanhoBuscarPorQuantidadeDeMeses() throws SQLException {
+        ganhoBuscarPorQuantidadeDeMesesComboBox.setItems(null);
+        GanhoDao ganhoDao = new GanhoDao();
+        Integer quantidadeMesesInt = ganhoDao.buscarQuantidadeMeses();
+        ObservableList<String> listString = FXCollections.observableArrayList();
+        for (int i=0; i<quantidadeMesesInt; i++) {
+            listString.add(""+(i+1));
+        }
+        ganhoBuscarPorQuantidadeDeMesesComboBox.setItems(listString);
     }
 
     private void limpaFormulario() {
@@ -666,28 +615,26 @@ public class GanhoNode {
         gridPane.setHgap(5);
         gridPane.setAlignment(Pos.TOP_LEFT);
 
-        Text ganhoBuscarPorClienteLabel = new Text("Buscar ganhos por cliente: ");
-        ganhoBuscarPorClienteLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
-        gridPane.add(ganhoBuscarPorClienteLabel,0,0);
-        ganhoBuscarPorClienteTextField = new TextField();
-        gridPane.add(ganhoBuscarPorClienteTextField,0,1);
+        Text buscarPorLabel = new Text("Buscar por: ");
+        buscarPorLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        gridPane.add(buscarPorLabel,0,0);
 
-        Text ganhoBuscarPorQuantidadeDeMesesLabel = new Text("Nro meses: ");
-        ganhoBuscarPorQuantidadeDeMesesLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
-        gridPane.add(ganhoBuscarPorQuantidadeDeMesesLabel,1,0);
-//        ganhoBuscarPorQuantidadeDeMesesTextField = new TextField();
-//        gridPane.add(ganhoBuscarPorQuantidadeDeMesesTextField,1,1);
+        Text buscarPorClienteLabel = new Text("Cliente");
+        buscarPorClienteLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        gridPane.add(buscarPorClienteLabel,0,1);
+        buscarPorClienteComboBox = new ComboBox<>();
+        ClienteDao clienteDao = new ClienteDao();
+        ObservableList<Cliente> clienteList = clienteDao.buscaClientes();
+        buscarPorClienteComboBox.setItems(clienteList);
+        gridPane.add(buscarPorClienteComboBox,0,2);
 
-        ganhoBuscarPorQuantidadeDeMesesComboBox = new ComboBox<>();
-        ganhoBuscarPorQuantidadeDeMesesComboBox.setMaxWidth(200);
-        GanhoDao ganhoDao = new GanhoDao();
-        Integer quantidadeMesesInt = ganhoDao.buscarQuantidadeMeses();
-        ObservableList<String> listString = FXCollections.observableArrayList();
-        for (int i=0; i<quantidadeMesesInt; i++) {
-            listString.add(""+i+1);
-        }
-        ganhoBuscarPorQuantidadeDeMesesComboBox.setItems(listString);
-        gridPane.add(ganhoBuscarPorQuantidadeDeMesesComboBox,1,1);
+        Text buscarPorStatusLabel = new Text("Status");
+        buscarPorStatusLabel.setStyle("-fx-font: normal bold 14px 'verdana' ");
+        gridPane.add(buscarPorStatusLabel,1,1);
+        buscarPorStatusComboBox = new ComboBox<>();
+        ObservableList<String> pagouDeveList = FXCollections.observableArrayList("pagou","deve");
+        buscarPorStatusComboBox.setItems(pagouDeveList);
+        gridPane.add(buscarPorStatusComboBox,1,2);
 
         return gridPane;
     }
@@ -723,7 +670,7 @@ public class GanhoNode {
         tableView.setItems(list1);
         tableView.getColumns().addAll(dataColuna,diaSemanaColuna,clienteColuna,statusColuna,sessaoColuna,qtdeColuna,valorColuna);
 
-        Platform.runLater(()->ganhoBuscarPorClienteTextField.textProperty().addListener((observable, oldValue, newValue)->{
+        Platform.runLater(()->buscarPorClienteComboBox.valueProperty().addListener((observable, oldValue, newValue)->{
             ObservableList<Ganho> list2 = null;
             try {
                 list2 = ganhoDao.buscaPorCliente(newValue);
@@ -735,15 +682,15 @@ public class GanhoNode {
             tableView.getColumns().addAll(dataColuna,diaSemanaColuna,clienteColuna,statusColuna,sessaoColuna,qtdeColuna,valorColuna);
         }));
 
-        Platform.runLater(()->ganhoBuscarPorQuantidadeDeMesesComboBox.valueProperty().addListener((observable, oldValue, newValue)->{
-
-            //todo Corrigir isto aqui
-
+        Platform.runLater(()-> buscarPorStatusComboBox.valueProperty().addListener((observable, oldValue, newValue)->{
             ObservableList<Ganho> list3 = null;
             try {
-                list3 = ganhoDao.buscarPorQuantidadeDeMeses(newValue);
-            } catch (ParseException e) {
-                e.printStackTrace();
+                if (newValue.equals("pagou")) {
+                    list3 = ganhoDao.buscaPagador();
+                } else if (newValue.equals("deve")) {
+                    list3 = ganhoDao.buscaDevedor();
+                }
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -751,6 +698,18 @@ public class GanhoNode {
             tableView.setItems(list3);
             tableView.getColumns().addAll(dataColuna,diaSemanaColuna,clienteColuna,statusColuna,sessaoColuna,qtdeColuna,valorColuna);
         }));
+
+        listarTudoButton.setOnAction(event -> {
+            ObservableList<Ganho> list3 = null;
+            try {
+                list3 = ganhoDao.listarTudo();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            tableView.getColumns().clear();
+            tableView.setItems(list3);
+            tableView.getColumns().addAll(dataColuna,diaSemanaColuna,clienteColuna,statusColuna,sessaoColuna,qtdeColuna,valorColuna);
+        });
 
         return tableView;
     }

@@ -1,5 +1,6 @@
 package com.lemelo.ganho;
 
+import com.lemelo.cliente.Cliente;
 import com.lemelo.entrada.Entrada;
 import com.lemelo.entrada.EntradaDao;
 import com.lemelo.util.FabricaConexao;
@@ -72,7 +73,7 @@ public class GanhoDao {
         return ganhos;
     }
 
-    public ObservableList<Ganho> buscaPorCliente(String newValue) throws SQLException {
+    public ObservableList<Ganho> buscaPorCliente(Cliente newValue) throws SQLException {
         ObservableList<Ganho> ganhos = FXCollections.observableArrayList();
         String ganhoSqlSelect = "select * from ganho where cliente like '%"+newValue+"%' order by sessao asc";
         ResultSet resultSet = new FabricaConexao().getResultSet(ganhoSqlSelect);
@@ -94,7 +95,7 @@ public class GanhoDao {
         return ganhos;
     }
 
-    public ObservableList<Ganho> buscaGanhador() throws SQLException {
+    public ObservableList<Ganho> buscaPagador() throws SQLException {
         ObservableList<Ganho> ganhos = FXCollections.observableArrayList();
         String ganhoSqlSelect = "select * from ganho where status like 'pagou' order by cliente asc";
         ResultSet resultSet = new FabricaConexao().getResultSet(ganhoSqlSelect);
@@ -205,21 +206,95 @@ public class GanhoDao {
         if (newValue.equals("")) {
             newValue = "0";
         }
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        String dataAtual = sdf1.format(Calendar.getInstance().getTime());
-        String mesAno = dataAtual.substring(3,10);
+
+        String dataUltimoRegistroSelect = "select data from ganho order by id desc limit 1";
+        ResultSet resultSet2 = new FabricaConexao().getResultSet(dataUltimoRegistroSelect);
+        resultSet2.next();
+        String dataUltimoRegistro = resultSet2.getString("data");
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("dd/MM/yyyy");
-        Date date1 = sdf2.parse(dataAtual);
+        Date date1 = sdf2.parse(dataUltimoRegistro);
         Calendar cal = Calendar.getInstance();
         cal.setTime(date1);
         cal.add(Calendar.MONTH, -Integer.parseInt(newValue));
         Date date2 = cal.getTime();
         SimpleDateFormat sdf3 = new SimpleDateFormat("dd/MM/yyyy");
         String dataAtras = sdf3.format(date2);
+        String dataAtrasMesAno = dataAtras.substring(3,10);
 
         ObservableList<Ganho> ganhos = FXCollections.observableArrayList();
-        String ganhoSqlSelect = "select * from ganho where data between '"+dataAtras+"' and '"+dataAtual+"'";
+        for (int i=0; i<Integer.parseInt(newValue); i++) {
+            String ganhoSqlSelect = "select * from ganho where data like '%"+dataAtrasMesAno+"%'";
+            ResultSet resultSet = new FabricaConexao().getResultSet(ganhoSqlSelect);
+            while (resultSet.next()) {
+                Ganho ganho = new Ganho();
+                ganho.setId(resultSet.getInt("id"));
+                ganho.setData(resultSet.getString("data"));
+                ganho.setDiaSemana(resultSet.getString("dia_semana"));
+                ganho.setCliente(resultSet.getString("cliente"));
+                ganho.setStatus(resultSet.getString("status"));
+                ganho.setSessao(resultSet.getString("sessao"));
+                ganho.setQuantidade(resultSet.getString("quantidade"));
+                ganho.setValor(resultSet.getString("valor"));
+
+                ganhos.add(ganho);
+            }
+            resultSet.close();
+
+            SimpleDateFormat sdf4 = new SimpleDateFormat("dd/MM/yyyy");
+            Date date3 = sdf4.parse(dataAtras);
+            Calendar cal1 = Calendar.getInstance();
+            cal1.setTime(date3);
+            cal1.add(Calendar.MONTH, 1);
+            Date date4 = cal1.getTime();
+            SimpleDateFormat sdf5 = new SimpleDateFormat("dd/MM/yyyy");
+            dataAtras = sdf5.format(date4);
+            dataAtrasMesAno = dataAtras.substring(3,10);
+
+            System.out.println();
+        }
+
+        return ganhos;
+    }
+
+    public Integer buscarQuantidadeMeses() throws SQLException {
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        String dataAtual = sdf1.format(Calendar.getInstance().getTime());
+        String mesAnoAtual = dataAtual.substring(3,10);
+
+        Integer quantidadeMeses = 1;
+        String sqlSelect = "select * from ganho";
+        ResultSet resultSet = new FabricaConexao().getResultSet(sqlSelect);
+
+        int[][] matriz = new int[2300][20];
+
+        for (int i=2000; i<2300; i++) {
+            for (int j=0; j<12; j++) {
+                matriz[i][j] = 0;
+            }
+        }
+
+        while (resultSet.next()) {
+            String dataStr = resultSet.getString("data");
+            int mesInt = Integer.parseInt(dataStr.substring(3,5));
+            int anoInt = Integer.parseInt(dataStr.substring(6,10));
+            matriz[anoInt][mesInt]++;
+        }
+
+        for (int i=2000; i<2300; i++) {
+            for (int j=0; j<12; j++) {
+                if(matriz[i][j] != 0) {
+                    quantidadeMeses++;
+                }
+            }
+        }
+
+        return quantidadeMeses;
+    }
+
+    public ObservableList<Ganho> listarTudo() throws SQLException {
+        ObservableList<Ganho> ganhos = FXCollections.observableArrayList();
+        String ganhoSqlSelect = "select * from ganho";
         ResultSet resultSet = new FabricaConexao().getResultSet(ganhoSqlSelect);
         while (resultSet.next()) {
             Ganho ganho = new Ganho();
@@ -237,24 +312,5 @@ public class GanhoDao {
         resultSet.close();
 
         return ganhos;
-    }
-
-    public Integer buscarQuantidadeMeses() throws SQLException {
-        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
-        String dataAtual = sdf1.format(Calendar.getInstance().getTime());
-        String mesAnoAtual = dataAtual.substring(3,10);
-
-        Integer quantidadeMeses = 1;
-        String sqlSelect = "select * from ganho";
-        ResultSet resultSet = new FabricaConexao().getResultSet(sqlSelect);
-        while (resultSet.next()) {
-            String dataStr = resultSet.getString("data");
-            String mesAnoResult = dataStr.substring(3,10);
-
-            if (!mesAnoAtual.equals(mesAnoResult)) {
-                quantidadeMeses++;
-            }
-        }
-        return quantidadeMeses;
     }
 }
